@@ -1,0 +1,144 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>DSMongoDBApi</Name>
+    <RootNamespace>DSMongoDBApi</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>ad0a70b5-5067-4015-8863-bf90d5876835</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>app.ts</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <EnableTypeScript>true</EnableTypeScript>
+    <StartWebBrowser>false</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="app.ts" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="tsconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dist\" />
+    <Folder Include="src\" />
+    <Folder Include="src\api\common\" />
+    <Folder Include="src\api\controllers\" />
+    <Folder Include="src\api\controllers\collections\drop\" />
+    <Folder Include="src\api\controllers\conections\add\" />
+    <Folder Include="src\api\controllers\documents\delete\" />
+    <Folder Include="src\api\controllers\documents\get\" />
+    <Folder Include="src\api\controllers\documents\put\" />
+    <Folder Include="src\api\controllers\documents\patch\" />
+    <Folder Include="src\api\controllers\messages\" />
+    <Folder Include="src\api\controllers\collections\" />
+    <Folder Include="src\api\controllers\conections\" />
+    <Folder Include="src\api\controllers\documents\" />
+    <Folder Include="src\api\controllers\health\" />
+    <Folder Include="src\api\interfaces\get\" />
+    <Folder Include="src\api\interfaces\delete\" />
+    <Folder Include="src\api\interfaces\put\" />
+    <Folder Include="src\api\interfaces\patch\" />
+    <Folder Include="src\api\decorators\" />
+    <Folder Include="src\api\routes\" />
+    <Folder Include="src\api\models\" />
+    <Folder Include="src\api\" />
+    <Folder Include="src\api\interfaces\" />
+    <Folder Include="src\drivers\" />
+    <Folder Include="src\drivers\interface\" />
+    <Folder Include="src\drivers\controller\" />
+    <Folder Include="src\utilities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\api\common\apiData.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\api\common\Common.ts" />
+    <TypeScriptCompile Include="src\api\common\CommonConstants.ts" />
+    <TypeScriptCompile Include="src\api\common\HTTPStatusCodes.ts" />
+    <TypeScriptCompile Include="src\api\controllers\collections\drop\collections.ts" />
+    <TypeScriptCompile Include="src\api\controllers\conections\add\connections.ts" />
+    <TypeScriptCompile Include="src\api\controllers\documents\delete\Documents.ts" />
+    <TypeScriptCompile Include="src\api\controllers\documents\get\Documents.ts" />
+    <TypeScriptCompile Include="src\api\controllers\documents\patch\Documents.ts" />
+    <TypeScriptCompile Include="src\api\controllers\documents\put\Documents.ts" />
+    <TypeScriptCompile Include="src\api\controllers\health\Health.ts" />
+    <TypeScriptCompile Include="src\api\controllers\messages\Messages.ts" />
+    <TypeScriptCompile Include="src\api\decorators\decorators.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\delete\IDocuments.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\get\Icollections.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\get\Iconnections.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\get\IDocuments.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\get\IHealth.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\get\IMessages.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\patch\IDocuments.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\put\IDocuments.ts" />
+    <TypeScriptCompile Include="src\api\routes\routes.ts" />
+    <TypeScriptCompile Include="src\api\routes\setGeneralRoute.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\IRoutes.ts" />
+    <TypeScriptCompile Include="src\api\models\AuthClients.ts" />
+    <TypeScriptCompile Include="src\api\models\Connection.ts" />
+    <TypeScriptCompile Include="src\api\models\findDataResult.ts" />
+    <TypeScriptCompile Include="src\api\models\logStructures.ts" />
+    <TypeScriptCompile Include="src\api\models\messageObject.ts" />
+    <TypeScriptCompile Include="src\drivers\controller\MongoDb.ts" />
+    <TypeScriptCompile Include="src\drivers\interface\IMongoDb.ts" />
+    <TypeScriptCompile Include="src\utilities\Bunyan.ts" />
+    <TypeScriptCompile Include="src\utilities\Decorators.ts" />
+    <TypeScriptCompile Include="src\utilities\Utility.ts" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

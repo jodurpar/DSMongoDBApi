@@ -1,0 +1,25 @@
+{
+  "name": "dsmongodb-api",
+  "version": "0.0.0",
+  "description": "DSMongoDBApi",
+  "main": "app.js",
+  "author": {
+    "name": "Jose Duran Pareja"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "start": "set NODE_ENV=production && node app"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.14",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.14",
+    "bunyan-elasticsearch-bulk": "^2.0.4",
+    "mongodb": "^3.5.9",
+    "restify": "^8.5.1",
+    "restify-cors-middleware": "^1.1.1"
+  }
+}

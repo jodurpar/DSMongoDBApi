@@ -11,10 +11,9 @@ const MongoClient = require('mongodb').MongoClient;
 
 import { Authorization, getMethodName } from '../../decorators/decorators';
 import { _apiData } from '../../../../app';
-// var connections: Array<Connection> = require('../../../../mongoDatabases.json')
 
-var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
-
+// var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('./mongoDatabases.json');
+import { connections } from '../../../../app';
 
 export namespace api100 {
 
@@ -96,32 +95,43 @@ export namespace api100 {
                 let databases: Array<object> = new Array<object>();
                 try {
                     let count = 0;
-                    connections.forEach(async connection => {
-                        try {
-                            await this.checkConnection(connection)
-                                .then(result => {
-                                    databases.push({ connectionName: connection.connectionName, databaseName: connection.databaseName, url: connection.url, status: CommonConstants.OK });
-                                    if (++count >= connections.length) {
-                                        resolve({ api: _apiData, databases: databases });
-                                    }
-                                })
-                                .catch(e => {
-                                    databases.push({ connectionName: connection.connectionName, databaseName: connection.databaseName, url: connection.url, error: e });
-                                    if (++count >= connections.length) {
-                                        reject({ api: _apiData, databases: databases });
-                                    }
-                                })
-                        }
-                        catch (e) {
-                            databases.push({ connectionName: connection.connectionName, databaseName: connection.databaseName, url: connection.url, error: e });
-                            reject({ api: _apiData, databases: databases });
-                        }
-                    })
+                    if (connections.length < 1) {
+                        databases.push({ error: 'no active connections' });
+                        reject({ api: _apiData, databases: databases });
+                    }
+                    else {
+                        connections.forEach(async connection => {
+                            try {
+                                await this.checkConnection(connection)
+                                    .then(result => {
+                                        databases.push({ connectionName: connection.connectionName, databaseName: connection.databaseName, url: connection.url, status: CommonConstants.OK });
+                                        if (++count >= connections.length) {
+                                            resolve({ api: _apiData, databases: databases });
+                                        }
+                                    })
+                                    .catch(e => {
+                                        databases.push({ connectionName: connection.connectionName, databaseName: connection.databaseName, url: connection.url, error: e });
+                                        if (++count >= connections.length) {
+                                            reject({ api: _apiData, databases: databases });
+                                        }
+                                    })
+                            }
+                            catch (e) {
+                                databases.push({ connectionName: connection.connectionName, databaseName: connection.databaseName, url: connection.url, error: e });
+                                reject({ api: _apiData, databases: databases });
+                            }
+                        })
+                    }
 
                     //})
                 }
                 catch (e) {
-                    databases.push({ error: 'connections ' + e });
+                    if (connections) {
+                        databases.push({ error: 'no active connections'  });
+                    }
+                    else {
+                        databases.push({ error: 'connections ' + e });
+                    }
                     reject({ api: _apiData, databases: databases });
                 }
             })

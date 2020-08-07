@@ -1,7 +1,8 @@
 ﻿
 var bunyan = require('bunyan');
 import BunyanElasticSearch = require('bunyan-elasticsearch-bulk');
-import { Utility as Util } from '../utilities/Utility'
+import { Utility as Util } from '../utilities/Utility';
+import { _apiData } from '../../app';
 
 namespace Utility {
     export class Bunyan {
@@ -17,7 +18,12 @@ namespace Utility {
 
         
 
-        public get Log(): any { return this._log };
+        public get Log(): any {
+            if (!this._log) {
+                this.createLoggers();
+            }
+            return this._log
+        };
         public get ElLog(): any {
             if (this._elLog != undefined) { return this._elLog }
             else { return this._ielLog; }
@@ -27,7 +33,6 @@ namespace Utility {
 
         constructor() {
             this._version = "1.0";
-            this.createLoggers();
             this._ielLog = new esLog();
         }
 
@@ -44,22 +49,18 @@ namespace Utility {
 
         createLoggers() {
             this._log = bunyan.createLogger({
-                name: 'standard',                     
+                name: _apiData.apiName,                     
                 level: 'trace',      // Optional, 'trace', debug, info, warn, error, fatal
                 stream: process.stdout,           // Optional, see "Streams" section
-
-                 extra : 'dsExampleApi'
             });
             this._elLog = bunyan.createLogger({
                 name: 'elastic',                     
                 level: 'trace',      // Optional, 'trace', debug, info, warn, error, fatal
                 stream: BunyanElasticSearch({
-                    indexPattern: '[dsExampleApi-]YYYY.MM.DD',
+                    indexPattern: `${_apiData.apiName}`, 
                     type: 'logs',
                     node: 'http://localhost:9200'
                 }),
-
-                extra: 'dsExampleApi'
             });
 
         }

@@ -1,0 +1,1 @@
+{"version":3,"file":"messageObject.js","sourceRoot":"","sources":["../../../../src/api/models/messageObject.ts"],"names":[],"mappings":";;;AACA,MAAa,aAAa;IAMtB,YAAY,YAAoB,EAAE,MAAc,EAAE,IAAY;QAC1D,IAAI,CAAC,YAAY,GAAG,YAAY,CAAC;QACjC,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACrB,CAAC;CACJ;AAXD,sCAWC"}

@@ -26,7 +26,7 @@ class Routes extends Utility_1.Utility.version {
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'get', '/TestMessages', '/TestMessagesAsync', '/:message', '/messages', 'Messages', 'TestMessages').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'get', '/Health', '/HealthAsync', '', '/health', 'Health', 'Health').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'get', '/Collections/Drop', '/CollectionsAsync/Drop', '', '/collections/drop', 'collections', 'dropCollection').then(result => { }).catch(e => { });
-                setGeneralRoute_1.setGeneralRoute.Set(server, 'get', '/Connections/Add', '/ConnectionsAsync/Add', '', '/connections/add', 'connections', 'addConnection').then(result => { }).catch(e => { });
+                setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/Connections', '/ConnectionsAsync', '', '/connections/add', 'connections', 'addConnection').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'get', '/Documents', '/DocumentsAsync', '', '/documents/get', 'Documents', 'GetDocuments').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/Documents', '/DocumentsAsync', '', '/documents/put', 'Documents', 'PutDocuments').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/Documents', '/DocumentsAsync', '/:database/:collection', '/Documents/put', 'Documents', 'PutDocuments').then(result => { }).catch(e => { });
@@ -52,3 +52,4 @@ class Routes extends Utility_1.Utility.version {
     }
 }
 exports.Routes = Routes;
+//# sourceMappingURL=routes.js.map

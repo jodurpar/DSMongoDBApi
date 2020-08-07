@@ -3,13 +3,15 @@
     "module": "commonjs",
     "target": "es6",
     "lib": [ "es6" ],
-    "sourceMap": false,
+    "sourceMap": true,
+    
     "noImplicitAny": false,
     "experimentalDecorators": true,
-    "outDir": "./dist",
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "wwwroot"
   ]
 }

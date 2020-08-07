@@ -32,6 +32,20 @@
     <None Include="app.ts" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\api-docs\favicon-16x16.png" />
+    <Content Include="src\api-docs\favicon-32x32.png" />
+    <Content Include="src\api-docs\index.html" />
+    <Content Include="src\api-docs\oauth2-redirect.html" />
+    <Content Include="src\api-docs\swagger-ui-bundle.js" />
+    <Content Include="src\api-docs\swagger-ui-bundle.js.map" />
+    <Content Include="src\api-docs\swagger-ui-standalone-preset.js" />
+    <Content Include="src\api-docs\swagger-ui-standalone-preset.js.map" />
+    <Content Include="src\api-docs\swagger-ui.css" />
+    <Content Include="src\api-docs\swagger-ui.css.map" />
+    <Content Include="src\api-docs\swagger-ui.js" />
+    <Content Include="src\api-docs\swagger-ui.js.map" />
+    <Content Include="src\api-docs\swaggerdoc.js" />
+    <Content Include="src\mongoDatabases.json" />
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
@@ -40,16 +54,17 @@
     <Folder Include="src\api\common\" />
     <Folder Include="src\api\controllers\" />
     <Folder Include="src\api\controllers\collections\drop\" />
-    <Folder Include="src\api\controllers\conections\add\" />
+    <Folder Include="src\api\controllers\connections\add\" />
     <Folder Include="src\api\controllers\documents\delete\" />
     <Folder Include="src\api\controllers\documents\get\" />
     <Folder Include="src\api\controllers\documents\put\" />
     <Folder Include="src\api\controllers\documents\patch\" />
     <Folder Include="src\api\controllers\messages\" />
     <Folder Include="src\api\controllers\collections\" />
-    <Folder Include="src\api\controllers\conections\" />
+    <Folder Include="src\api\controllers\connections\" />
     <Folder Include="src\api\controllers\documents\" />
     <Folder Include="src\api\controllers\health\" />
+    <Folder Include="src\api\controllers\swagger\" />
     <Folder Include="src\api\interfaces\get\" />
     <Folder Include="src\api\interfaces\delete\" />
     <Folder Include="src\api\interfaces\put\" />
@@ -62,6 +77,7 @@
     <Folder Include="src\drivers\" />
     <Folder Include="src\drivers\interface\" />
     <Folder Include="src\drivers\controller\" />
+    <Folder Include="src\api-docs\" />
     <Folder Include="src\utilities\" />
   </ItemGroup>
   <ItemGroup>
@@ -72,17 +88,19 @@
     <TypeScriptCompile Include="src\api\common\CommonConstants.ts" />
     <TypeScriptCompile Include="src\api\common\HTTPStatusCodes.ts" />
     <TypeScriptCompile Include="src\api\controllers\collections\drop\collections.ts" />
-    <TypeScriptCompile Include="src\api\controllers\conections\add\connections.ts" />
+    <TypeScriptCompile Include="src\api\controllers\connections\add\connection.ts" />
+    <TypeScriptCompile Include="src\api\controllers\connections\add\connections.ts" />
     <TypeScriptCompile Include="src\api\controllers\documents\delete\Documents.ts" />
     <TypeScriptCompile Include="src\api\controllers\documents\get\Documents.ts" />
     <TypeScriptCompile Include="src\api\controllers\documents\patch\Documents.ts" />
     <TypeScriptCompile Include="src\api\controllers\documents\put\Documents.ts" />
     <TypeScriptCompile Include="src\api\controllers\health\Health.ts" />
     <TypeScriptCompile Include="src\api\controllers\messages\Messages.ts" />
+    <TypeScriptCompile Include="src\api\controllers\swagger\swagger.ts" />
     <TypeScriptCompile Include="src\api\decorators\decorators.ts" />
     <TypeScriptCompile Include="src\api\interfaces\delete\IDocuments.ts" />
-    <TypeScriptCompile Include="src\api\interfaces\get\Icollections.ts" />
-    <TypeScriptCompile Include="src\api\interfaces\get\Iconnections.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\put\Iconnections.ts" />
+    <TypeScriptCompile Include="src\api\interfaces\put\Iconnection.ts" />
     <TypeScriptCompile Include="src\api\interfaces\get\IDocuments.ts" />
     <TypeScriptCompile Include="src\api\interfaces\get\IHealth.ts" />
     <TypeScriptCompile Include="src\api\interfaces\get\IMessages.ts" />

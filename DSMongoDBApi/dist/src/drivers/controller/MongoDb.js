@@ -10,14 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const Utility_1 = require("../../utilities/Utility");
 const MongoClient = require('mongodb').MongoClient;
-const Mongodb = require('mongodb');
+const Mongo = require('mongodb');
 var connections = Utility_1.Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
 class MongoDb {
     constructor() {
         this.databases = [];
     }
     ObjectId(value) {
-        return new Mongodb.ObjectId(value);
+        return new Mongo.ObjectId(value);
     }
     getDb(connectionName, onComplete, onError) {
         try {
@@ -32,7 +32,7 @@ class MongoDb {
                 let db = this.databases[connectionName];
                 if (db == undefined) {
                     const _self = this;
-                    MongoClient.connect(connection.url, { useNewUrlParser: true }, function (e, dbase) {
+                    MongoClient.connect(connection.url, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, dbase) {
                         try {
                             if (e) {
                                 onError(e);
@@ -129,7 +129,7 @@ class MongoDb {
         });
     }
     addConnection(data, onComplete, onError) {
-        if (data == undefined) {
+        if (data === undefined) {
             onError("No data for connection" /* NODATAFORCONNECTION */);
             return ("No data for connection" /* NODATAFORCONNECTION */);
         }
@@ -442,3 +442,4 @@ class MongoDb {
 }
 module.exports = new MongoDb();
 //}
+//# sourceMappingURL=MongoDb.js.map

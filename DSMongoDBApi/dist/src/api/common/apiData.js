@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.apiData = void 0;
 class apiData {
     constructor() {
-        this._apiName = 'dsExampleApi';
+        this._apiName = 'dsMongoDBApi';
         this._apiVersion = '0.0.1';
         this._apiSupportedVersions = ['1.0.0'];
         this._apiHost = 'localhost';
@@ -54,3 +54,4 @@ class apiData {
     }
 }
 exports.apiData = apiData;
+//# sourceMappingURL=apiData.js.map

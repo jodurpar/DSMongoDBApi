@@ -101,3 +101,4 @@ exports.server.on('after', restify.plugins.metrics({ server: exports.server }, f
 exports.server.listen(exports._apiData.apiPort, function () {
     Bunyan.Log.info('%s listening at %s', exports.server.name, exports.server.url);
 });
+//# sourceMappingURL=app.js.map

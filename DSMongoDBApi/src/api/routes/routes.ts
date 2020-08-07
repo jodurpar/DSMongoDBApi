@@ -22,7 +22,8 @@ export class Routes extends Utility.version implements IRoutes {
 			setGeneralRoute.Set(server, 'get', '/TestMessages', '/TestMessagesAsync', '/:message', '/messages', 'Messages', 'TestMessages').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'get', '/Health', '/HealthAsync', '', '/health', 'Health', 'Health').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'get', '/Collections/Drop', '/CollectionsAsync/Drop', '', '/collections/drop', 'collections', 'dropCollection').then(result => { }).catch(e => { });
-			setGeneralRoute.Set(server, 'get', '/Connections/Add', '/ConnectionsAsync/Add', '', '/connections/add', 'connections', 'addConnection').then(result => { }).catch(e => { });
+			setGeneralRoute.Set(server, 'put', '/Connection', '/ConnectionAsync', '', '/connections/add', 'connection', 'addConnection').then(result => { }).catch(e => { });
+            setGeneralRoute.Set(server, 'put', '/Connections', '/ConnectionsAsync', '', '/connections/add', 'connections', 'addConnections').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'get', '/Documents', '/DocumentsAsync', '', '/documents/get', 'Documents', 'GetDocuments').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'put', '/Documents', '/DocumentsAsync', '', '/documents/put', 'Documents', 'PutDocuments').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'put', '/Documents', '/DocumentsAsync', '/:database/:collection', '/Documents/put', 'Documents', 'PutDocuments').then(result => { }).catch(e => { });

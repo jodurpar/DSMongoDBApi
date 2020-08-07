@@ -9,7 +9,7 @@ declare const enum CommonConstants {
     COLLECTION = 'Collection',
 	CONNECTION = 'Connection',
     CONNECTIONS = 'Connections',
-    CONNECTIONNAME = 'ConnectionName',
+    CONNECTIONNAME = 'connectionName',
     CONTENTLENGTH = 'Content-Length',
     CONTENTTYPE = 'Content-Type',
     DATABASE = 'Database',

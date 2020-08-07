@@ -20,8 +20,7 @@ const Utility_1 = require("../../../utilities/Utility");
 const MongoClient = require('mongodb').MongoClient;
 const decorators_1 = require("../../decorators/decorators");
 const app_1 = require("../../../../app");
-// var connections: Array<Connection> = require('../../../../mongoDatabases.json')
-var connections = Utility_1.Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
+var connections = Utility_1.Utility.fileUtility.readFileAsObject('./mongoDatabases.json');
 var api100;
 (function (api100) {
     let Health = class Health extends Utility_1.Utility.version {
@@ -108,7 +107,12 @@ var api100;
                         //})
                     }
                     catch (e) {
-                        databases.push({ error: 'connections ' + e });
+                        if (connections) {
+                            databases.push({ error: 'no active connections' });
+                        }
+                        else {
+                            databases.push({ error: 'connections ' + e });
+                        }
                         reject({ api: app_1._apiData, databases: databases });
                     }
                 });
@@ -126,3 +130,4 @@ var api100;
     ], Health);
     api100.Health = Health;
 })(api100 = exports.api100 || (exports.api100 = {}));
+//# sourceMappingURL=Health.js.map

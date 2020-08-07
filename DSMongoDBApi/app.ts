@@ -1,17 +1,23 @@
 
+
 import path = require('path');
 
-import * as restify from "restify";
+import * as restify from 'restify';
 import Bunyan = require('./src/utilities/Bunyan');
 import { logsStructure } from './src/api/models/logStructures';
 import { Utility } from './src/utilities/Utility';
 import { AuthClients, AuthClient } from './src/api/models/AuthClients';
 import { Routes } from './src/api/routes/routes';
 import { apiData } from "./src/api/common/apiData";
+import { Connection } from './src/api/models/Connection';
 
 const corssMidleware = require('restify-cors-middleware');
 
-export let _apiData = new apiData();
+export let _apiData = apiData;
+
+export let  connections: Array<Connection> = Utility.fileUtility.readFileAsObject('./mongoDatabases.json');
+
+if (connections === undefined || !Array.isArray(connections)) connections = new Array<Connection>();
 
 // #region apiData
 
@@ -112,6 +118,7 @@ server.get('/', function (req, res, next) {
 });
 
 // #endregion
+
 
 Bunyan.Log.info('setting metrics...');
 

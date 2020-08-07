@@ -3,12 +3,14 @@
 import { IMongoDb } from '../interface/IMongoDb';
 import { Connection } from '../../api/models/Connection';
 import { Utility } from '../../utilities/Utility';
-import { connect } from 'http2';
+
 
 const MongoClient = require('mongodb').MongoClient;
-const Mongodb = require('mongodb');
+const Mongo = require('mongodb');
 
-var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
+// var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
+import { connections } from '../../../app';
+
 
 class MongoDb implements IMongoDb {
 
@@ -19,7 +21,7 @@ class MongoDb implements IMongoDb {
 	}
 
 	public ObjectId(value: string) {
-		return new Mongodb.ObjectId(value);
+		return new Mongo.ObjectId(value);
 	}
 
     private getDb(connectionName: string, onComplete, onError) {
@@ -39,7 +41,7 @@ class MongoDb implements IMongoDb {
 
                 if (db == undefined) {
                     const _self = this;
-                    MongoClient.connect(connection.url, { useNewUrlParser: true }, function (e, dbase) {
+                    MongoClient.connect(connection.url, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, dbase) {
                         try {
                             if (e) {
                                 onError(e);
@@ -102,8 +104,6 @@ class MongoDb implements IMongoDb {
         });
     }
 
-
-
     closeMongo() {
         MongoClient.close({});
     }
@@ -137,17 +137,15 @@ class MongoDb implements IMongoDb {
         });
     }
 
-    addConnection(data: object, onComplete, onError) {
-
-        if (data == undefined) {
+    addConnection(data: Connection, onComplete, onError) {
+        
+        if (data === undefined) {
             onError(CommonConstants.NODATAFORCONNECTION);
             return (CommonConstants.NODATAFORCONNECTION);
         }
-        else if (data[CommonConstants.CONNECTIONNAME] != undefined && data['url'] != undefined) {
+        else if (data[CommonConstants.CONNECTIONNAME] !== undefined && data['url'] !== undefined) {
             try {
-                let connection: Connection = { connectionName: data[CommonConstants.CONNECTIONNAME], databaseName: data[CommonConstants.DATABASENAME], url: data['url'], type: data['type'], user: data['user'], password: data['password'], encrypted: data['encrypted'] };
-                if (connections === undefined) connections = new Array<Connection>();
-                connections.push(connection);
+                connections.push(data);
                 onComplete(CommonConstants.OK);
                 return (CommonConstants.OK);
             }
@@ -156,18 +154,71 @@ class MongoDb implements IMongoDb {
                 return (error);
             }
         }
+        else {
+            return (`Bad data ${data[CommonConstants.CONNECTIONNAME]} or ${data['url']}`)
+        }
     }
 
-    addConnectionAsync(data: object, onComplete, onError) {
+    addConnectionAsync(data: Connection, onComplete, onError) {
         return new Promise<object>(async (resolve, reject) => {
             if (data == undefined) {
                 onError(CommonConstants.NODATAFORCONNECTION);
             }
             else if (data[CommonConstants.CONNECTIONNAME] != undefined && data['url'] != undefined) {
                 try {
-                    let connection: Connection = { connectionName: data[CommonConstants.CONNECTIONNAME], databaseName: data[CommonConstants.DATABASENAME], url: data['url'], type: data['type'], user: data['user'], password: data['password'], encrypted: data['encrypted'] };
-                    if (connections === undefined) connections = new Array<Connection>();
-                    connections.push(connection);
+                    connections.push(data);
+                    onComplete(CommonConstants.OK);
+                    resolve({});
+                }
+                catch (error) {
+                    onError(CommonConstants.ERROR + CommonConstants.TWOPOINTS + ' ' + error);
+                    reject(error);
+                }
+            }
+        });
+    }
+
+    addConnections(data: Array<Connection>, onComplete, onError) {
+
+        if (data === undefined) {
+            onError(CommonConstants.NODATAFORCONNECTION);
+            return (CommonConstants.NODATAFORCONNECTION);
+        }
+        else if (data[CommonConstants.CONNECTIONNAME] !== undefined && data['url'] !== undefined) {
+            try {
+                // let connection: Connection = { connectionName: data[CommonConstants.CONNECTIONNAME], databaseName: data[CommonConstants.DATABASENAME], url: data['url'], type: data['type'], user: data['user'], password: data['password'], encrypted: data['encrypted'] };
+                while (connections.length > 0) {
+                    connections.pop();
+                }
+                for (let j = 0; j < data.length; j++) {
+                    connections.push(data[j]);
+                }
+                onComplete(CommonConstants.OK);
+                return (CommonConstants.OK);
+            }
+            catch (error) {
+                onError(error);
+                return (error);
+            }
+        }
+        else {
+            return (`Bad data ${data[CommonConstants.CONNECTIONNAME]} or ${data['url']}`)
+        }
+    }
+
+    addConnectionsAsync(data: Array<Connection>, onComplete, onError) {
+        return new Promise<object>(async (resolve, reject) => {
+            if (data == undefined) {
+                onError(CommonConstants.NODATAFORCONNECTION);
+            }
+            else if (data[CommonConstants.CONNECTIONNAME] != undefined && data['url'] != undefined) {
+                try {
+                    while (connections.length > 0) {
+                        connections.pop();
+                    }
+                    for (let j = 0; j < data.length; j++) {
+                        connections.push(data[j]);
+                    }
                     onComplete(CommonConstants.OK);
                     resolve({});
                 }
@@ -241,8 +292,6 @@ class MongoDb implements IMongoDb {
         });
     }
 
-
-
     addDocuments(connectionName: string, collection: string, data: object, onComplete, onError) {
         try {
             this.getDb(connectionName, function (db) {
@@ -271,6 +320,7 @@ class MongoDb implements IMongoDb {
             onError(e.message);
         }
     }
+
     async addDocumentsAsync(connectionName: string, collection: string, data: object): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {
             try {
@@ -324,6 +374,7 @@ class MongoDb implements IMongoDb {
             onError(e.message, '');
         }
     }
+
     async deleteDocumentsAsync(connectionName: string, collection: string, filter: object): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {
             try {
@@ -406,7 +457,6 @@ class MongoDb implements IMongoDb {
         });
     }
 
-
     updateDocuments(connectionName: string, collection: string, filter: object, data: object, onComplete, onError) {
         try {
             this.getDb(connectionName, function (db) {
@@ -432,6 +482,7 @@ class MongoDb implements IMongoDb {
             onError(e.message, '');
         }
     }
+
     async updateDocumentsAsync(connectionName: string, collection: string, filter: object, data: object): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {
             try {

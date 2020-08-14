@@ -24,15 +24,15 @@ const app_1 = require("../../../../app");
 const app_2 = require("../../../../app");
 var api100;
 (function (api100) {
-    let Health = class Health extends Utility_1.Utility.version {
+    let Health = class Health extends Utility_1.version {
         Health(req, res) {
             return __awaiter(this, void 0, void 0, function* () {
                 yield this.Check()
                     .then(_message => {
-                    res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, _message));
+                    res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, _message));
                 })
                     .catch(e => {
-                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
+                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
                 });
             });
         }
@@ -43,23 +43,23 @@ var api100;
                     try {
                         yield this.Check()
                             .then(_message => {
-                            Utility_1.Utility.Messages.sendObjectMessageAsync(200 /* OK */, "Ok" /* OK */, _message)
+                            Utility_1.Messages.sendObjectMessageAsync(200 /* OK */, "Ok" /* OK */, _message)
                                 .then(result => {
                                 res.send(200 /* OK */, result);
                                 resolve(result);
                             })
                                 .catch(e => {
-                                res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
+                                res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
                             });
                         })
                             .catch(e => {
-                            res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
-                            resolve(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e)));
+                            res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
+                            resolve(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e)));
                         });
                     }
                     catch (error) {
-                        res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, { status: error }));
-                        reject(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, error, Utility_1.Utility.method.getMethodName(_self) + ' ' + this.Version));
+                        res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, { status: error }));
+                        reject(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, error, Utility_1.method.getMethodName(_self) + ' ' + this.Version));
                     }
                 }));
             });

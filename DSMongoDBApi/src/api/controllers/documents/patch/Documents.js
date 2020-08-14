@@ -21,12 +21,12 @@ const MongoDb = require("../../../../drivers/controller/MongoDb");
 const decorators_1 = require("../../../decorators/decorators");
 var api100;
 (function (api100) {
-    let Documents = class Documents extends Utility_1.Utility.version {
+    let Documents = class Documents extends Utility_1.version {
         PatchDocuments(req, res) {
             return __awaiter(this, void 0, void 0, function* () {
                 const _self = this;
                 try {
-                    let [database, collection, filter, data, options] = Utility_1.Utility.params.assign(req);
+                    let [database, collection, filter, data, options] = Utility_1.params.assign(req);
                     const updateData = { $set: data };
                     if (filter['_id'] !== undefined) {
                         filter = { _id: MongoDb.ObjectId(filter['_id']) };
@@ -34,35 +34,35 @@ var api100;
                     if (options !== undefined && options["multi" /* MULTI */] === "true" /* TRUE */) {
                         yield MongoDb.updateDocuments(database, collection, filter, updateData, function (err, doc) {
                             if (doc === undefined || doc === null || doc.value === undefined || doc.value === null) {
-                                const error = Utility_1.Utility.status.getStatusFromMessage("not found" /* NOTFOUND */);
-                                res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.Utility.method.getMethodName(_self)));
+                                const error = Utility_1.status.getStatusFromMessage("not found" /* NOTFOUND */);
+                                res.send(error, Utility_1.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.method.getMethodName(_self)));
                             }
                             else {
                                 res.send(200 /* OK */, doc.value);
                             }
                         }, function (e) {
-                            const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                            res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self)));
+                            const error = Utility_1.status.getStatusFromMessage(e.message);
+                            res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self)));
                         });
                     }
                     else {
                         yield MongoDb.updateDocument(database, collection, filter, updateData, function (err, doc) {
                             if (doc === undefined || doc === null || doc.value === undefined || doc.value === null) {
-                                const error = Utility_1.Utility.status.getStatusFromMessage("not found" /* NOTFOUND */);
-                                res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.Utility.method.getMethodName(_self)));
+                                const error = Utility_1.status.getStatusFromMessage("not found" /* NOTFOUND */);
+                                res.send(error, Utility_1.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.method.getMethodName(_self)));
                             }
                             else {
                                 res.send(200 /* OK */, doc.value);
                             }
                         }, function (e) {
-                            const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                            res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self)));
+                            const error = Utility_1.status.getStatusFromMessage(e.message);
+                            res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self)));
                         });
                     }
                 }
                 catch (e) {
-                    const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                    res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self)));
+                    const error = Utility_1.status.getStatusFromMessage(e.message);
+                    res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self)));
                 }
             });
         }
@@ -71,7 +71,7 @@ var api100;
                 const _self = this;
                 return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                     try {
-                        let [database, collection, filter, data, options] = Utility_1.Utility.params.assign(req);
+                        let [database, collection, filter, data, options] = Utility_1.params.assign(req);
                         const updateData = { $set: data };
                         if (filter['_id'] !== undefined) {
                             filter = { _id: MongoDb.ObjectId(filter['_id']) };
@@ -80,38 +80,38 @@ var api100;
                             yield MongoDb.updateDocumentsAsync(database, collection, filter, updateData)
                                 .then((results) => __awaiter(this, void 0, void 0, function* () {
                                 if (results === undefined || results === null || results.value === undefined || results.value === null) {
-                                    const error = Utility_1.Utility.status.getStatusFromMessage("not found" /* NOTFOUND */);
-                                    resolve(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.Utility.method.getMethodName(_self))));
+                                    const error = Utility_1.status.getStatusFromMessage("not found" /* NOTFOUND */);
+                                    resolve(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.method.getMethodName(_self))));
                                 }
                                 else {
                                     resolve(yield res.send(200 /* OK */, results.value));
                                 }
                             }))
                                 .catch((e) => __awaiter(this, void 0, void 0, function* () {
-                                const error = Utility_1.Utility.status.getStatusFromMessage(e);
-                                resolve(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self))));
+                                const error = Utility_1.status.getStatusFromMessage(e);
+                                resolve(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self))));
                             }));
                         }
                         else {
                             yield MongoDb.updateDocumentAsync(database, collection, filter, updateData)
                                 .then((results) => __awaiter(this, void 0, void 0, function* () {
                                 if (results === undefined || results === null || results.value === undefined || results.value === null) {
-                                    const error = Utility_1.Utility.status.getStatusFromMessage("not found" /* NOTFOUND */);
-                                    resolve(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.Utility.method.getMethodName(_self))));
+                                    const error = Utility_1.status.getStatusFromMessage("not found" /* NOTFOUND */);
+                                    resolve(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.method.getMethodName(_self))));
                                 }
                                 else {
                                     resolve(yield res.send(200 /* OK */, results.value));
                                 }
                             }))
                                 .catch((e) => __awaiter(this, void 0, void 0, function* () {
-                                const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                                resolve(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self))));
+                                const error = Utility_1.status.getStatusFromMessage(e.message);
+                                resolve(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self))));
                             }));
                         }
                     }
                     catch (e) {
-                        const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                        resolve(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self))));
+                        const error = Utility_1.status.getStatusFromMessage(e.message);
+                        resolve(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self))));
                     }
                 }));
             });

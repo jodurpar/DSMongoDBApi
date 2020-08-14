@@ -1,6 +1,6 @@
 ﻿import { restify } from 'restify';
 
-import { Utility } from '../../../utilities/Utility'
+import { version, Messages, method } from '../../../utilities/Utility'
 import { IHealth } from '../../interfaces/get/IHealth';
 import { IMongoDb } from '../../../drivers/interface/IMongoDb';
 import { Connection } from '../../models/Connection';
@@ -18,19 +18,19 @@ import { connections } from '../../../../app';
 export namespace api100 {
 
     @Authorization
-    export class Health extends Utility.version implements IHealth {
+    export class Health extends version implements IHealth {
 
         @getMethodName
         public async Health(req: restify.request, res: restify.response) {
             await this.Check()
                 .then(_message => {
                     res.send(HTTPStatusCodes.OK,
-                        Utility.Messages.sendObjectMessage(HTTPStatusCodes.OK, CommonConstants.OK, _message)
+                        Messages.sendObjectMessage(HTTPStatusCodes.OK, CommonConstants.OK, _message)
                     );
                 })
                 .catch(e => {
                     res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
-                        Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e)
+                        Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e)
                     );
                 })
         }
@@ -43,32 +43,32 @@ export namespace api100 {
                     await this.Check()
                         .then(_message => {
 
-                            Utility.Messages.sendObjectMessageAsync(HTTPStatusCodes.OK, CommonConstants.OK, _message)
+                            Messages.sendObjectMessageAsync(HTTPStatusCodes.OK, CommonConstants.OK, _message)
                                 .then(result => {
                                     res.send(HTTPStatusCodes.OK,result);
                                     resolve(result);
                                 })
                                 .catch(e => {
-                                    res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR, Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e));
+                                    res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR, Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e));
                                 })
                         })
                         .catch( e => {
                             res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
-                                Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e)
+                                Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e)
                             );
-                            resolve( Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
+                            resolve( Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
                                 CommonConstants.ERROR,
-                                Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e))
+                                Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, e))
                             );
                         })
                 }
                 catch (error) {
                     res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
-                        Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, { status: error })
+                        Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, CommonConstants.ERROR, { status: error })
                     );
-                    reject( Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
+                    reject( Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
                         error,
-                        Utility.method.getMethodName(_self) + ' ' + this.Version)
+                        method.getMethodName(_self) + ' ' + this.Version)
                     );
                 }
             });

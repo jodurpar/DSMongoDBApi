@@ -1,6 +1,6 @@
 ﻿import { restify } from 'restify';
 
-import { Utility } from '../../../../utilities/Utility'
+import { version, status, Messages, method, stringsUtility } from '../../../../utilities/Utility'
 import { IDocuments } from '../../../interfaces/get/IDocuments';
 
 import MongoDb = require('../../../../drivers/controller/MongoDb');
@@ -9,7 +9,7 @@ import { Authorization, getMethodName } from '../../../decorators/decorators';
 export namespace api100 {
 
     @Authorization
-    export class Documents extends Utility.version implements IDocuments {
+    export class Documents extends version implements IDocuments {
 
 
         @getMethodName
@@ -26,22 +26,22 @@ export namespace api100 {
                 MongoDb.readDocuments(req.params.connection != undefined ? req.params.connection : req.params.database, req.params.collection, filter, selectedFields
 					, function (err, doc) {
 						if ( doc === undefined || doc === null || (doc.length !== undefined && doc.length < 1) ) {
-							const error = Utility.status.getStatusFromMessage(CommonConstants.NOTFOUND);
-							res.send(error, Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + CommonConstants.NOTFOUND, Utility.method.getMethodName(_self)));
+							const error = status.getStatusFromMessage(CommonConstants.NOTFOUND);
+							res.send(error, Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + CommonConstants.NOTFOUND, method.getMethodName(_self)));
 						}
 						else {
 							res.send(HTTPStatusCodes.OK, doc);
 						}
                     }
                     , function (e, doc) {
-                        const error = Utility.status.getStatusFromMessage(e.message);
-                        res.send(error, Utility.Messages.sendObjectMessage(error, e.message, Utility.method.getMethodName(_self)));
+                        const error = status.getStatusFromMessage(e.message);
+                        res.send(error, Messages.sendObjectMessage(error, e.message, method.getMethodName(_self)));
                     }
                 );
             }
             catch (e) {
-                const error = Utility.status.getStatusFromMessage(e.message);
-                res.send(error, Utility.Messages.sendObjectMessage(error, e.message, Utility.method.getMethodName(_self)));
+                const error = status.getStatusFromMessage(e.message);
+                res.send(error, Messages.sendObjectMessage(error, e.message, method.getMethodName(_self)));
             }
 
 
@@ -61,24 +61,24 @@ export namespace api100 {
                     MongoDb.readDocumentsAsync(req.params.connection != undefined ? req.params.connection : req.params.database, req.params.collection, filter,selectedFields)
                         .then(async result => {
 							if (result === undefined || result === null || (result.length !== undefined && result.length < 1)) {
-								const error = Utility.status.getStatusFromMessage(CommonConstants.NOTFOUND);
-								resolve(await res.send(error, Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + CommonConstants.NOTFOUND, Utility.method.getMethodName(_self))));
+								const error = status.getStatusFromMessage(CommonConstants.NOTFOUND);
+								resolve(await res.send(error, Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + CommonConstants.NOTFOUND, method.getMethodName(_self))));
 							}
 							else {
 								resolve(await res.send(HTTPStatusCodes.OK, result));
 							}
                         })
                         .catch(async e => {
-                            const error = Utility.status.getStatusFromMessage(e.message);
-                            resolve(await res.send(error, await Utility.Messages.sendObjectMessage(error, e.message, Utility.method.getMethodName(_self))))
+                            const error = status.getStatusFromMessage(e.message);
+                            resolve(await res.send(error, await Messages.sendObjectMessage(error, e.message, method.getMethodName(_self))))
                         })
                 }
                 catch (e) {
-                    const error = Utility.status.getStatusFromMessage(e.message);
-                    reject(res.send(error, Utility.Messages.sendObjectMessage(error,
+                    const error = status.getStatusFromMessage(e.message);
+                    reject(res.send(error, Messages.sendObjectMessage(error,
                         e.message,
-                        Utility.stringsUtility.format('{0}{1} {2}',
-                            Utility.method.getMethodName(_self),
+                        stringsUtility.format('{0}{1} {2}',
+                            method.getMethodName(_self),
                             CommonConstants.TWOPOINTS,
                             req.params.filter))
                     ));

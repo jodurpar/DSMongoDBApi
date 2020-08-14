@@ -31,7 +31,7 @@ class setGeneralRoute {
                             resolve(common_1.Common.executeSync(req, res, next, pathName, className + '.' + methodName));
                         }
                         catch (e) {
-                            reject(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, className + "." /* POINT */ + methodName));
+                            reject(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, className + "." /* POINT */ + methodName));
                         }
                     }));
                 });
@@ -48,7 +48,7 @@ class setGeneralRoute {
                                 resolve(yield common_1.Common.executeAsync(req, res, next, pathName, className + "." /* POINT */ + methodName));
                             }
                             catch (e) {
-                                reject(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, className + "." /* POINT */ + methodName));
+                                reject(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, className + "." /* POINT */ + methodName));
                             }
                         }));
                     }
@@ -58,7 +58,7 @@ class setGeneralRoute {
                                 resolve(yield common_1.Common.executeAsync(req, res, next, pathName, className + '.' + methodName));
                             }
                             catch (e) {
-                                reject(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, className + "." /* POINT */ + methodName));
+                                reject(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, className + "." /* POINT */ + methodName));
                             }
                         }));
                     }

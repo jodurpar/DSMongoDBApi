@@ -1,7 +1,7 @@
 ﻿
 var bunyan = require('bunyan');
 import BunyanElasticSearch = require('bunyan-elasticsearch-bulk');
-import { Utility as Util } from '../utilities/Utility';
+import { fileUtility } from '../utilities/Utility';
 import { _apiData } from '../../app';
 
 namespace Utility {
@@ -67,7 +67,7 @@ namespace Utility {
 
         // TODO load bunyan loggers from file
         createLoggersFromFile() {
-            let loggers : [] = Util.fileUtility.readFileAsObject('./bunyanloggers.json');
+            let loggers : [] = fileUtility.readFileAsObject('./bunyanloggers.json');
             loggers.forEach(logger => {
 
             })

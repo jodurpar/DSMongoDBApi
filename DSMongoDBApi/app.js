@@ -8,7 +8,7 @@ const routes_1 = require("./src/api/routes/routes");
 const apiData_1 = require("./src/api/common/apiData");
 const corssMidleware = require('restify-cors-middleware');
 exports._apiData = apiData_1.apiData;
-exports.connections = Utility_1.Utility.fileUtility.readFileAsObject('./mongoDatabases.json');
+exports.connections = Utility_1.fileUtility.readFileAsObject('./mongoDatabases.json');
 if (exports.connections === undefined || !Array.isArray(exports.connections))
     exports.connections = new Array();
 // #region apiData
@@ -69,7 +69,7 @@ exports.server.pre(function (req, res, next) {
 });
 exports.server.on('restifyError', function (req, res, err, callback) {
     err.toJSON = function customToJSON() {
-        return Utility_1.Utility.Messages.sendObjectMessage(404 /* NOT_FOUND */, err.name, err.message);
+        return Utility_1.Messages.sendObjectMessage(404 /* NOT_FOUND */, err.name, err.message);
     };
     err.toString = function customToString() {
         return err.name + ' : ' + err.message;
@@ -78,7 +78,7 @@ exports.server.on('restifyError', function (req, res, err, callback) {
 });
 process.on('uncaughtException', function (err) {
     if (err.stack.indexOf('elasticsearch') > 0) {
-        console.log('Bunyan log: elasticsearch not running');
+        Bunyan.Log.info('elasticsearch not running');
         Bunyan.elasticseachDown();
     }
     else

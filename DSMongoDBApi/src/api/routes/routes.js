@@ -13,7 +13,7 @@ exports.Routes = void 0;
 const Banyan = require("../../utilities/Bunyan");
 const Utility_1 = require("../../utilities/Utility");
 const setGeneralRoute_1 = require("./setGeneralRoute");
-class Routes extends Utility_1.Utility.version {
+class Routes extends Utility_1.version {
     get Statistics() { return this._statistics; }
     set Statistics(value) {
         if (value !== undefined)
@@ -46,7 +46,7 @@ class Routes extends Utility_1.Utility.version {
                 return;
             }
             catch (e) {
-                Banyan.Log.error(Utility_1.Utility.Messages.sendMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, "Unable to execute SetRoutes."));
+                Banyan.Log.error(Utility_1.Messages.sendMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, "Unable to execute SetRoutes."));
                 return;
             }
         });

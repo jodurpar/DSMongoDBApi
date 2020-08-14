@@ -167,13 +167,13 @@ class MongoDb {
         }));
     }
     addConnections(data, onComplete, onError) {
-        if (data === undefined) {
+        if (data === undefined || !Array.isArray(data) || data.length < 1) {
             onError("No data for connection" /* NODATAFORCONNECTION */);
             return ("No data for connection" /* NODATAFORCONNECTION */);
         }
-        else if (data["connectionName" /* CONNECTIONNAME */] !== undefined && data['url'] !== undefined) {
+        else { // if (data[CommonConstants.CONNECTIONNAME] !== undefined && data['url'] !== undefined) {
             try {
-                // let connection: Connection = { connectionName: data[CommonConstants.CONNECTIONNAME], databaseName: data[CommonConstants.DATABASENAME], url: data['url'], type: data['type'], user: data['user'], password: data['password'], encrypted: data['encrypted'] };
+                // connections = [];
                 while (app_1.connections.length > 0) {
                     app_1.connections.pop();
                 }
@@ -188,9 +188,9 @@ class MongoDb {
                 return (error);
             }
         }
-        else {
-            return (`Bad data ${data["connectionName" /* CONNECTIONNAME */]} or ${data['url']}`);
-        }
+        //else {
+        //    return (`Bad data ${data[CommonConstants.CONNECTIONNAME]} or ${data['url']}`)
+        //}
     }
     addConnectionsAsync(data, onComplete, onError) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {

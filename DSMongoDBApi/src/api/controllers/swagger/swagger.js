@@ -7,7 +7,7 @@ const app_1 = require("../../../../app");
 const swaggerJSDoc = require('swagger-jsdoc');
 var api100;
 (function (api100) {
-    class swagger extends Utility_1.Utility.version {
+    class swagger extends Utility_1.version {
         static get SwaggerSpec() { return swagger.swaggerSpec; }
         readSwagger(req, res) {
             res.send(swagger.swaggerSpec);

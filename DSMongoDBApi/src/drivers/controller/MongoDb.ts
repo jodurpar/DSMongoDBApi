@@ -2,14 +2,14 @@
 
 import { IMongoDb } from '../interface/IMongoDb';
 import { Connection } from '../../api/models/Connection';
-import { Utility } from '../../utilities/Utility';
+import { Messages } from '../../utilities/Utility';
 
 
 const MongoClient = require('mongodb').MongoClient;
 const Mongo = require('mongodb');
 
 // var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
-import { connections } from '../../../app';
+import { connections }  from '../../../app';
 
 
 class MongoDb implements IMongoDb {
@@ -180,13 +180,13 @@ class MongoDb implements IMongoDb {
 
     addConnections(data: Array<Connection>, onComplete, onError) {
 
-        if (data === undefined) {
+        if (data === undefined || !Array.isArray(data) || data.length < 1) {
             onError(CommonConstants.NODATAFORCONNECTION);
             return (CommonConstants.NODATAFORCONNECTION);
         }
-        else if (data[CommonConstants.CONNECTIONNAME] !== undefined && data['url'] !== undefined) {
+        else { // if (data[CommonConstants.CONNECTIONNAME] !== undefined && data['url'] !== undefined) {
             try {
-                // let connection: Connection = { connectionName: data[CommonConstants.CONNECTIONNAME], databaseName: data[CommonConstants.DATABASENAME], url: data['url'], type: data['type'], user: data['user'], password: data['password'], encrypted: data['encrypted'] };
+                // connections = [];
                 while (connections.length > 0) {
                     connections.pop();
                 }
@@ -201,9 +201,9 @@ class MongoDb implements IMongoDb {
                 return (error);
             }
         }
-        else {
-            return (`Bad data ${data[CommonConstants.CONNECTIONNAME]} or ${data['url']}`)
-        }
+        //else {
+        //    return (`Bad data ${data[CommonConstants.CONNECTIONNAME]} or ${data['url']}`)
+        //}
     }
 
     addConnectionsAsync(data: Array<Connection>, onComplete, onError) {

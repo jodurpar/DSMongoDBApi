@@ -1,10 +1,10 @@
 ﻿
 import Banyan = require('../../utilities/Bunyan');
-import { Utility } from '../../utilities/Utility';
+import { Messages, version } from '../../utilities/Utility';
 
 import { setGeneralRoute } from './setGeneralRoute';
 
-export class Routes extends Utility.version implements IRoutes {
+export class Routes extends version implements IRoutes {
 
     private _statistics: boolean;
 
@@ -46,7 +46,7 @@ export class Routes extends Utility.version implements IRoutes {
         }
 
         catch (e) {
-            Banyan.Log.error(Utility.Messages.sendMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, "Unable to execute SetRoutes."));
+            Banyan.Log.error(Messages.sendMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, "Unable to execute SetRoutes."));
             return;
         }
     }

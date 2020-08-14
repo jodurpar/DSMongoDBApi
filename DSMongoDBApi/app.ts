@@ -5,7 +5,7 @@ import path = require('path');
 import * as restify from 'restify';
 import Bunyan = require('./src/utilities/Bunyan');
 import { logsStructure } from './src/api/models/logStructures';
-import { Utility } from './src/utilities/Utility';
+import { Messages, fileUtility } from './src/utilities/Utility';
 import { AuthClients, AuthClient } from './src/api/models/AuthClients';
 import { Routes } from './src/api/routes/routes';
 import { apiData } from "./src/api/common/apiData";
@@ -15,7 +15,7 @@ const corssMidleware = require('restify-cors-middleware');
 
 export let _apiData = apiData;
 
-export let  connections: Array<Connection> = Utility.fileUtility.readFileAsObject('./mongoDatabases.json');
+export let  connections: Array<Connection> = fileUtility.readFileAsObject('./mongoDatabases.json');
 
 if (connections === undefined || !Array.isArray(connections)) connections = new Array<Connection>();
 
@@ -85,7 +85,7 @@ server.pre(function (req, res, next) {
 
 server.on('restifyError', function (req, res, err, callback) {
     err.toJSON = function customToJSON() {
-        return Utility.Messages.sendObjectMessage(HTTPStatusCodes.NOT_FOUND, err.name, err.message);
+        return Messages.sendObjectMessage(HTTPStatusCodes.NOT_FOUND, err.name, err.message);
     };
     err.toString = function customToString() {
         return err.name + ' : ' + err.message;
@@ -96,7 +96,7 @@ server.on('restifyError', function (req, res, err, callback) {
 
 process.on('uncaughtException', function (err) {
     if (err.stack.indexOf('elasticsearch') > 0) {
-        console.log('Bunyan log: elasticsearch not running');
+        Bunyan.Log.info('elasticsearch not running');
         Bunyan.elasticseachDown();
     }
     else console.log('Caught exception: ' + err);

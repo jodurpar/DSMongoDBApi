@@ -1,7 +1,7 @@
 ﻿import { restify } from 'restify';
 import * as fs from 'fs';
 
-import { Utility } from '../../../utilities/Utility';
+import { version } from '../../../utilities/Utility';
 import { _apiData } from '../../../../app';
 
 
@@ -9,7 +9,7 @@ const swaggerJSDoc = require('swagger-jsdoc');
 
 export namespace api100 {
 
-	export class swagger extends Utility.version {
+	export class swagger extends version {
 
 		// Swagger init
 		// swagger definition

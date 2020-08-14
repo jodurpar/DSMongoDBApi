@@ -1,6 +1,6 @@
 ﻿import { restify } from 'restify';
 
-import { Utility } from '../../../utilities/Utility'
+import { version, Messages as MessagesUtil, status,stringsUtility,method } from '../../../utilities/Utility'
 import { IMessages } from '../../interfaces/get/IMessages';
 
 import { Authorization, getMethodName } from '../../decorators/decorators'
@@ -8,16 +8,16 @@ import { Authorization, getMethodName } from '../../decorators/decorators'
 export namespace api100 {
 
     @Authorization
-    export class Messages extends Utility.version implements IMessages {
+    export class Messages extends version implements IMessages {
 
         @getMethodName
         public TestMessages(req: restify.request, res: restify.response) {
             let _message = req.params.message != undefined ? req.params.message : req.body.message;
             res.send(HTTPStatusCodes.OK,
-                Utility.Messages.sendObjectMessage(HTTPStatusCodes.OK,
+                MessagesUtil.sendObjectMessage(HTTPStatusCodes.OK,
                     CommonConstants.OK,
-                    Utility.stringsUtility.format('{0}{1} {2} {3}{4} {5}',
-                        Utility.method.getMethodName(this),
+                    stringsUtility.format('{0}{1} {2} {3}{4} {5}',
+                        method.getMethodName(this),
                         CommonConstants.TWOPOINTS,
                         this.Version,
                         CommonConstants.RECIEVED,
@@ -34,10 +34,10 @@ export namespace api100 {
             return new Promise<object>(async (resolve, reject) => {
                 try {
                     res.send(HTTPStatusCodes.OK,
-                        Utility.Messages.sendObjectMessage(HTTPStatusCodes.OK,
+                        MessagesUtil.sendObjectMessage(HTTPStatusCodes.OK,
                             CommonConstants.OK,
-                            Utility.stringsUtility.format('{0}{1} {2} {3}{4} {5}',
-                                Utility.method.getMethodName(_self),
+                            stringsUtility.format('{0}{1} {2} {3}{4} {5}',
+                                method.getMethodName(_self),
                                 CommonConstants.TWOPOINTS,
                                 this.Version,
                                 CommonConstants.RECIEVED,
@@ -45,10 +45,10 @@ export namespace api100 {
                                 _message)
                         )
                     );
-                    resolve(await Utility.Messages.sendObjectMessageAsync(HTTPStatusCodes.OK,
+                    resolve(await MessagesUtil.sendObjectMessageAsync(HTTPStatusCodes.OK,
                         CommonConstants.OK,
-                        Utility.stringsUtility.format('{0} {1} {2}{3} {4}',
-                            Utility.method.getMethodName(_self),
+                        stringsUtility.format('{0} {1} {2}{3} {4}',
+                            method.getMethodName(_self),
                             this.Version,
                             CommonConstants.RECIEVED,
                             CommonConstants.TWOPOINTS,
@@ -57,9 +57,9 @@ export namespace api100 {
                     );
                 }
                 catch (error) {
-                    reject(await Utility.Messages.sendObjectMessageAsync(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
+                    reject(await MessagesUtil.sendObjectMessageAsync(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
                         error,
-                        Utility.method.getMethodName(_self) + ' ' + this.Version)
+                        method.getMethodName(_self) + ' ' + this.Version)
                     );
                 }
             });

@@ -58,7 +58,7 @@ var Utility;
         }
         // TODO load bunyan loggers from file
         createLoggersFromFile() {
-            let loggers = Utility_1.Utility.fileUtility.readFileAsObject('./bunyanloggers.json');
+            let loggers = Utility_1.fileUtility.readFileAsObject('./bunyanloggers.json');
             loggers.forEach(logger => {
             });
         }

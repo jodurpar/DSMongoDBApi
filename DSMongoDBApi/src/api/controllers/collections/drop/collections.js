@@ -21,22 +21,22 @@ const MongoDb = require("../../../../drivers/controller/MongoDb");
 const decorators_1 = require("../../../decorators/decorators");
 var api100;
 (function (api100) {
-    let collections = class collections extends Utility_1.Utility.version {
+    let collections = class collections extends Utility_1.version {
         dropCollection(req, res) {
             return __awaiter(this, void 0, void 0, function* () {
                 let _self = this;
-                let [database, collection] = Utility_1.Utility.params.assign(req);
+                let [database, collection] = Utility_1.params.assign(req);
                 yield MongoDb.dropCollection(database, collection)
                     .then(value => {
                     if (value == true) {
-                        res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, undefined));
+                        res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, undefined));
                     }
                     else {
-                        res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.stringsUtility.format('{0}{1} {2} {3} {4}{5} {6} {7}', "Collection" /* COLLECTION */, ":" /* TWOPOINTS */, collection, "in" /* IN */, "Database" /* DATABASE */, ":" /* TWOPOINTS */, database, "can't be deleted" /* CANTBEDELETED */), Utility_1.Utility.method.getMethodName(_self)));
+                        res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, Utility_1.stringsUtility.format('{0}{1} {2} {3} {4}{5} {6} {7}', "Collection" /* COLLECTION */, ":" /* TWOPOINTS */, collection, "in" /* IN */, "Database" /* DATABASE */, ":" /* TWOPOINTS */, database, "can't be deleted" /* CANTBEDELETED */), Utility_1.method.getMethodName(_self)));
                     }
                 })
                     .catch(e => {
-                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.Utility.method.getMethodName(_self)));
+                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.method.getMethodName(_self)));
                 });
             });
         }
@@ -44,18 +44,18 @@ var api100;
             return __awaiter(this, void 0, void 0, function* () {
                 let _self = this;
                 return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-                    let [database, collection] = Utility_1.Utility.params.assign(req);
+                    let [database, collection] = Utility_1.params.assign(req);
                     yield MongoDb.dropCollection(database, collection)
                         .then((value) => __awaiter(this, void 0, void 0, function* () {
                         if (value == true) {
-                            resolve(yield Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, undefined));
+                            resolve(yield Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, undefined));
                         }
                         else {
-                            reject(yield Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.stringsUtility.format('{0}{1} {2} {3} {4}{5} {6} {7}', "Collection" /* COLLECTION */, ":" /* TWOPOINTS */, collection, "in" /* IN */, "Database" /* DATABASE */, ":" /* TWOPOINTS */, database, "can't be deleted" /* CANTBEDELETED */), Utility_1.Utility.method.getMethodName(_self)));
+                            reject(yield Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, Utility_1.stringsUtility.format('{0}{1} {2} {3} {4}{5} {6} {7}', "Collection" /* COLLECTION */, ":" /* TWOPOINTS */, collection, "in" /* IN */, "Database" /* DATABASE */, ":" /* TWOPOINTS */, database, "can't be deleted" /* CANTBEDELETED */), Utility_1.method.getMethodName(_self)));
                         }
                     }))
                         .catch((e) => __awaiter(this, void 0, void 0, function* () {
-                        reject(yield Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.Utility.method.getMethodName(_self)));
+                        reject(yield Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.method.getMethodName(_self)));
                     }));
                 }));
             });

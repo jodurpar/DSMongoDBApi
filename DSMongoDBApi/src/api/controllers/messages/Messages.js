@@ -20,21 +20,21 @@ const Utility_1 = require("../../../utilities/Utility");
 const decorators_1 = require("../../decorators/decorators");
 var api100;
 (function (api100) {
-    let Messages = class Messages extends Utility_1.Utility.version {
+    let Messages = class Messages extends Utility_1.version {
         TestMessages(req, res) {
             let _message = req.params.message != undefined ? req.params.message : req.body.message;
-            res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, Utility_1.Utility.stringsUtility.format('{0}{1} {2} {3}{4} {5}', Utility_1.Utility.method.getMethodName(this), ":" /* TWOPOINTS */, this.Version, "Recieved" /* RECIEVED */, ":" /* TWOPOINTS */, _message)));
+            res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, Utility_1.stringsUtility.format('{0}{1} {2} {3}{4} {5}', Utility_1.method.getMethodName(this), ":" /* TWOPOINTS */, this.Version, "Recieved" /* RECIEVED */, ":" /* TWOPOINTS */, _message)));
         }
         TestMessagesAsync(req, res) {
             let _self = this;
             let _message = req.params.message != undefined ? req.params.message : req.body.message;
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, Utility_1.Utility.stringsUtility.format('{0}{1} {2} {3}{4} {5}', Utility_1.Utility.method.getMethodName(_self), ":" /* TWOPOINTS */, this.Version, "Recieved" /* RECIEVED */, ":" /* TWOPOINTS */, _message)));
-                    resolve(yield Utility_1.Utility.Messages.sendObjectMessageAsync(200 /* OK */, "Ok" /* OK */, Utility_1.Utility.stringsUtility.format('{0} {1} {2}{3} {4}', Utility_1.Utility.method.getMethodName(_self), this.Version, "Recieved" /* RECIEVED */, ":" /* TWOPOINTS */, _message)));
+                    res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, Utility_1.stringsUtility.format('{0}{1} {2} {3}{4} {5}', Utility_1.method.getMethodName(_self), ":" /* TWOPOINTS */, this.Version, "Recieved" /* RECIEVED */, ":" /* TWOPOINTS */, _message)));
+                    resolve(yield Utility_1.Messages.sendObjectMessageAsync(200 /* OK */, "Ok" /* OK */, Utility_1.stringsUtility.format('{0} {1} {2}{3} {4}', Utility_1.method.getMethodName(_self), this.Version, "Recieved" /* RECIEVED */, ":" /* TWOPOINTS */, _message)));
                 }
                 catch (error) {
-                    reject(yield Utility_1.Utility.Messages.sendObjectMessageAsync(500 /* INTERNAL_SERVER_ERROR */, error, Utility_1.Utility.method.getMethodName(_self) + ' ' + this.Version));
+                    reject(yield Utility_1.Messages.sendObjectMessageAsync(500 /* INTERNAL_SERVER_ERROR */, error, Utility_1.method.getMethodName(_self) + ' ' + this.Version));
                 }
             }));
         }

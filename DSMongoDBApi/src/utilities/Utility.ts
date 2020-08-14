@@ -4,7 +4,7 @@ import { restify } from 'restify';
 import * as fs from 'fs';
 import { messageObject } from '../api/models/messageObject';
 
-export namespace Utility {
+// export namespace Utility {
 
     export class version {
         private _version: string;
@@ -141,4 +141,4 @@ export namespace Utility {
         }
     }
 
-}
+// }

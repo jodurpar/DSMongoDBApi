@@ -21,18 +21,18 @@ const MongoDb = require("../../../../drivers/controller/MongoDb");
 const decorators_1 = require("../../../decorators/decorators");
 var api100;
 (function (api100) {
-    let connections = class connections extends Utility_1.Utility.version {
+    let connections = class connections extends Utility_1.version {
         addConnections(req, res) {
             let _self = this;
             try {
                 MongoDb.addConnections(JSON.parse(req.params.connections), function (err, doc) {
-                    res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, 'Connection set to:' + req.params.connections, Utility_1.Utility.method.getMethodName(_self)));
+                    res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, 'Connection set to:' + req.params.connections, Utility_1.method.getMethodName(_self)));
                 }, function (e, doc) {
-                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.Utility.method.getMethodName(_self)));
+                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.method.getMethodName(_self)));
                 });
             }
             catch (e) {
-                res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.Utility.stringsUtility.format('{0} {1} {2}', Utility_1.Utility.method.getMethodName(_self), ":" /* TWOPOINTS */, req.params.connection)));
+                res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.stringsUtility.format('{0} {1} {2}', Utility_1.method.getMethodName(_self), ":" /* TWOPOINTS */, req.params.connection)));
             }
         }
         addConnectionsAsync(req, res) {
@@ -42,16 +42,16 @@ var api100;
                     try {
                         yield MongoDb.addConnectionsAsync(JSON.parse(req.params.connections), function (err, doc) {
                             return __awaiter(this, void 0, void 0, function* () {
-                                resolve(yield res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, err, doc)));
+                                resolve(yield res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, err, doc)));
                             });
                         }, function (e, doc) {
                             return __awaiter(this, void 0, void 0, function* () {
-                                reject(res.send(500 /* INTERNAL_SERVER_ERROR */, yield Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.Utility.method.getMethodName(_self))));
+                                reject(res.send(500 /* INTERNAL_SERVER_ERROR */, yield Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.method.getMethodName(_self))));
                             });
                         });
                     }
                     catch (e) {
-                        reject(res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.Utility.stringsUtility.format('{0} {1} {2}', Utility_1.Utility.method.getMethodName(_self), ":" /* TWOPOINTS */, req.params.connection))));
+                        reject(res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, Utility_1.stringsUtility.format('{0} {1} {2}', Utility_1.method.getMethodName(_self), ":" /* TWOPOINTS */, req.params.connection))));
                     }
                 }));
             });

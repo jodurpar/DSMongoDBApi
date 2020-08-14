@@ -1,7 +1,7 @@
 ﻿import { restify } from 'restify';
 
 import { Common } from '../common/common';
-import { Utility } from '../../utilities/Utility';
+import { Messages } from '../../utilities/Utility';
 
 export class setGeneralRoute {
 
@@ -21,7 +21,7 @@ export class setGeneralRoute {
                 try {
                     resolve(Common.executeSync(req, res, next, pathName, className + '.' + methodName));
                 } catch (e) {
-                    reject(Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, className + CommonConstants.POINT + methodName));
+                    reject(Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, className + CommonConstants.POINT + methodName));
                 }
             })
         });
@@ -34,7 +34,7 @@ export class setGeneralRoute {
                         try {
                             resolve(await Common.executeAsync(req, res, next, pathName, className + CommonConstants.POINT + methodName));
                         } catch (e) {
-                            reject(Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, className + CommonConstants.POINT + methodName));
+                            reject(Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, className + CommonConstants.POINT + methodName));
                         }
                     })
                 }
@@ -43,7 +43,7 @@ export class setGeneralRoute {
                         try {
                             resolve(await Common.executeAsync(req, res, next, pathName, className + '.' + methodName));
                         } catch (e) {
-                            reject(Utility.Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, className + CommonConstants.POINT + methodName));
+                            reject(Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, className + CommonConstants.POINT + methodName));
                         }
                     })
                 }

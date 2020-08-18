@@ -1,9 +1,14 @@
 
+/**
+ * DSMongoApi
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 
 import path = require('path');
 
 import * as restify from 'restify';
-import Bunyan = require('./src/utilities/Bunyan');
+import { Bunyan as _Bunyan } from './src/utilities/Bunyan';
 import { logsStructure } from './src/api/models/logStructures';
 import { Messages, fileUtility } from './src/utilities/Utility';
 import { AuthClients, AuthClient } from './src/api/models/AuthClients';
@@ -12,19 +17,17 @@ import { apiData } from "./src/api/common/apiData";
 import { Connection } from './src/api/models/Connection';
 
 const corssMidleware = require('restify-cors-middleware');
+let _logLevel = 'info';
 
-export let _apiData = apiData;
-
-export let  connections: Array<Connection> = fileUtility.readFileAsObject('./mongoDatabases.json');
-
-if (connections === undefined || !Array.isArray(connections)) connections = new Array<Connection>();
 
 // #region apiData
+
+export let _apiData = apiData;
 
 for (let j = 0; j < process.argv.length; j++) {
     let arg = process.argv[j].toLowerCase();
     switch (arg) {
-         case '--host':
+        case '--host':
         case '--h': _apiData.apiHost = process.argv[j + 1];
             break;
         case '--port':
@@ -36,15 +39,40 @@ for (let j = 0; j < process.argv.length; j++) {
         case '--name':
         case '--n': _apiData.apiName = process.argv[j + 1];
             break;
+        case '--loglevel':
+        case '--l': _logLevel = process.argv[j + 1];
+            break;
         default: break;
     }
 }
+
+// #endregion
+
+// #region Setting logs
+
+export let Bunyan = new _Bunyan(_logLevel);
+
+// #endregion
+
+export let  connections: Array<Connection> = fileUtility.readFileAsObject('./mongoDatabases.json');
+if (connections === undefined || !Array.isArray(connections)) connections = new Array<Connection>();
+
+// #region initial logs
 
 Bunyan.Log.info('Api name: %s', _apiData.apiName);
 Bunyan.Log.info('Api description: %s', _apiData.apiDescription);
 Bunyan.Log.info('Api version: %s', _apiData.apiVersion);
 Bunyan.Log.info('Api host: %s', _apiData.apiHost);
 Bunyan.Log.info('Api port: %s', _apiData.apiPort);
+
+Bunyan.ElLog.info('Api name: %s', _apiData.apiName);
+Bunyan.ElLog.info('Api description: %s', _apiData.apiDescription);
+Bunyan.ElLog.info('Api version: %s', _apiData.apiVersion);
+Bunyan.ElLog.info('Api host: %s', _apiData.apiHost);
+Bunyan.ElLog.info('Api port: %s', _apiData.apiPort);
+
+Bunyan.ElLog.error('Error: %s', 'Blup!');
+
 
 // #endregion
 

@@ -12,11 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fileUtility = exports.stringsUtility = exports.method = exports.status = exports.params = exports.Messages = exports.version = void 0;
 const fs = require("fs");
 const messageObject_1 = require("../api/models/messageObject");
-// export namespace Utility {
+const app_1 = require("./../../app");
 class version {
     constructor() {
-        this._version = "1.0";
+        this._version = '1.0';
     }
+    //     private _currentMethod: string;
     get Version() { return this._version; }
     set Version(value) {
         if (value != undefined)
@@ -67,8 +68,8 @@ class params extends version {
                 options = req.params.options;
             }
         }
-        catch (e) {
-            console.log(e.message);
+        catch (error) {
+            app_1.Bunyan.Log.error(`Params assign, ${error.message}`);
         }
         return [database, collection, filter === undefined || (typeof filter) === "object" ? filter : JSON.parse(filter), data, options];
     }
@@ -110,7 +111,8 @@ class fileUtility extends version {
         try {
             return (fs.readFileSync(fileName, 'utf8'));
         }
-        catch (_a) {
+        catch (error) {
+            app_1.Bunyan.Log.error(`Can't read file, ${error}`);
             return '';
         }
     }
@@ -119,11 +121,10 @@ class fileUtility extends version {
             return (JSON.parse(fs.readFileSync(fileName, 'utf8').replace(/\r\n/g, '').replace(/\n/g, '').trim()));
         }
         catch (error) {
-            console.log('**' + error);
+            app_1.Bunyan.Log.error(`Can't read file, ${error}`);
             return {};
         }
     }
 }
 exports.fileUtility = fileUtility;
-// }
 //# sourceMappingURL=Utility.js.map

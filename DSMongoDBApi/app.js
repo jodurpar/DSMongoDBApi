@@ -1,17 +1,20 @@
 "use strict";
+/**
+ * DSMongoApi
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.server = exports.connections = exports._apiData = void 0;
+exports.server = exports.connections = exports.Bunyan = exports._apiData = void 0;
 const restify = require("restify");
-const Bunyan = require("./src/utilities/Bunyan");
+const Bunyan_1 = require("./src/utilities/Bunyan");
 const Utility_1 = require("./src/utilities/Utility");
 const routes_1 = require("./src/api/routes/routes");
 const apiData_1 = require("./src/api/common/apiData");
 const corssMidleware = require('restify-cors-middleware');
-exports._apiData = apiData_1.apiData;
-exports.connections = Utility_1.fileUtility.readFileAsObject('./mongoDatabases.json');
-if (exports.connections === undefined || !Array.isArray(exports.connections))
-    exports.connections = new Array();
+let _logLevel = 'info';
 // #region apiData
+exports._apiData = apiData_1.apiData;
 for (let j = 0; j < process.argv.length; j++) {
     let arg = process.argv[j].toLowerCase();
     switch (arg) {
@@ -31,14 +34,32 @@ for (let j = 0; j < process.argv.length; j++) {
         case '--n':
             exports._apiData.apiName = process.argv[j + 1];
             break;
+        case '--loglevel':
+        case '--l':
+            _logLevel = process.argv[j + 1];
+            break;
         default: break;
     }
 }
-Bunyan.Log.info('Api name: %s', exports._apiData.apiName);
-Bunyan.Log.info('Api description: %s', exports._apiData.apiDescription);
-Bunyan.Log.info('Api version: %s', exports._apiData.apiVersion);
-Bunyan.Log.info('Api host: %s', exports._apiData.apiHost);
-Bunyan.Log.info('Api port: %s', exports._apiData.apiPort);
+// #endregion
+// #region Setting logs
+exports.Bunyan = new Bunyan_1.Bunyan(_logLevel);
+// #endregion
+exports.connections = Utility_1.fileUtility.readFileAsObject('./mongoDatabases.json');
+if (exports.connections === undefined || !Array.isArray(exports.connections))
+    exports.connections = new Array();
+// #region initial logs
+exports.Bunyan.Log.info('Api name: %s', exports._apiData.apiName);
+exports.Bunyan.Log.info('Api description: %s', exports._apiData.apiDescription);
+exports.Bunyan.Log.info('Api version: %s', exports._apiData.apiVersion);
+exports.Bunyan.Log.info('Api host: %s', exports._apiData.apiHost);
+exports.Bunyan.Log.info('Api port: %s', exports._apiData.apiPort);
+exports.Bunyan.ElLog.info('Api name: %s', exports._apiData.apiName);
+exports.Bunyan.ElLog.info('Api description: %s', exports._apiData.apiDescription);
+exports.Bunyan.ElLog.info('Api version: %s', exports._apiData.apiVersion);
+exports.Bunyan.ElLog.info('Api host: %s', exports._apiData.apiHost);
+exports.Bunyan.ElLog.info('Api port: %s', exports._apiData.apiPort);
+exports.Bunyan.ElLog.error('Error: %s', 'Blup!');
 // #endregion
 // Create restify objects
 exports.server = restify.createServer({
@@ -60,7 +81,7 @@ exports.server.pre(cors.preflight);
 exports.server.pre(cors.actual);
 exports.server.pre(function (req, res, next) {
     if (!req.headers["accept-version" /* ACCEPTVERSION */]) {
-        Bunyan.Log.info('----> no version sent...updating to 1.0.0');
+        exports.Bunyan.Log.info('----> no version sent...updating to 1.0.0');
         req._version = '1.0.0';
         req.headers["accept-version" /* ACCEPTVERSION */] = req._version;
     }
@@ -78,13 +99,13 @@ exports.server.on('restifyError', function (req, res, err, callback) {
 });
 process.on('uncaughtException', function (err) {
     if (err.stack.indexOf('elasticsearch') > 0) {
-        Bunyan.Log.info('elasticsearch not running');
-        Bunyan.elasticseachDown();
+        exports.Bunyan.Log.info('elasticsearch not running');
+        exports.Bunyan.elasticseachDown();
     }
     else
         console.log('Caught exception: ' + err);
 });
-Bunyan.Log.info('setting routes...');
+exports.Bunyan.Log.info('setting routes...');
 (new routes_1.Routes()).setRoutes(exports.server);
 // #region Server default routes
 exports.server.get('/*', restify.plugins.serveStatic({
@@ -95,13 +116,13 @@ exports.server.get('/', function (req, res, next) {
     next();
 });
 // #endregion
-Bunyan.Log.info('setting metrics...');
+exports.Bunyan.Log.info('setting metrics...');
 // #region Server statistics
 exports.server.on('after', restify.plugins.metrics({ server: exports.server }, function (err, metrics, req, res, route) {
-    Bunyan.Log.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
+    exports.Bunyan.Log.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
 }));
 // #endregion
 exports.server.listen(exports._apiData.apiPort, function () {
-    Bunyan.Log.info('%s listening at %s', exports.server.name, exports.server.url);
+    exports.Bunyan.Log.info('%s listening at %s', exports.server.name, exports.server.url);
 });
 //# sourceMappingURL=app.js.map

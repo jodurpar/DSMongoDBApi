@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Routes = void 0;
-const Banyan = require("../../utilities/Bunyan");
+const app_1 = require("../../../app");
 const Utility_1 = require("../../utilities/Utility");
 const setGeneralRoute_1 = require("./setGeneralRoute");
 class Routes extends Utility_1.version {
@@ -42,11 +42,11 @@ class Routes extends Utility_1.version {
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'get', '/ReadSwagger', undefined, '', '/swagger', 'swagger', 'readSwagger').then(result => { }).catch(e => { });
                 ;
                 // #endregion
-                Banyan.Log.info('Registered');
+                app_1.Bunyan.Log.info('Routes registered');
                 return;
             }
             catch (e) {
-                Banyan.Log.error(Utility_1.Messages.sendMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, "Unable to execute SetRoutes."));
+                app_1.Bunyan.Log.error(Utility_1.Messages.sendMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, "Unable to execute SetRoutes."));
                 return;
             }
         });

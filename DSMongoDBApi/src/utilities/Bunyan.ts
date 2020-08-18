@@ -1,22 +1,31 @@
-﻿
+﻿/**
+ * Bunyan log module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
+
+
 var bunyan = require('bunyan');
 import BunyanElasticSearch = require('bunyan-elasticsearch-bulk');
 import { fileUtility } from '../utilities/Utility';
 import { _apiData } from '../../app';
 
-namespace Utility {
     export class Bunyan {
-        private _version: string;
+        private _version: string = '1.0';
+        private _level: string = 'info';
         private _log: any;
         private _elLog: any;
-        private _ielLog: any;
 
-        public get Version(): string { return this._version; };
-        public set Version(value: string) {
-            if (value != undefined) this._version = value;
+
+        constructor(level: string) {
+            this._level = level;
         }
 
-        
+        public get Version(): string { return this._version; };
+        public set Level(value: string) {
+            this._level = value;
+        }
+
 
         public get Log(): any {
             if (!this._log) {
@@ -25,16 +34,9 @@ namespace Utility {
             return this._log
         };
         public get ElLog(): any {
-            if (this._elLog != undefined) { return this._elLog }
-            else { return this._ielLog; }
+            if (!this._elLog ) { return this._log }
+            return this._elLog;
         };
- 
-        
-
-        constructor() {
-            this._version = "1.0";
-            this._ielLog = new esLog();
-        }
 
         elasticseachDown() {
             this._elLog = undefined;
@@ -50,14 +52,16 @@ namespace Utility {
         createLoggers() {
             this._log = bunyan.createLogger({
                 name: _apiData.apiName,                     
-                level: 'trace',      // Optional, 'trace', debug, info, warn, error, fatal
+                level: this._level,      // Optional, 'trace', debug, info, warn, error, fatal
                 stream: process.stdout,           // Optional, see "Streams" section
             });
             this._elLog = bunyan.createLogger({
                 name: 'elastic',                     
-                level: 'trace',      // Optional, 'trace', debug, info, warn, error, fatal
+                level: this._level,      // Optional, 'trace', debug, info, warn, error, fatal
                 stream: BunyanElasticSearch({
-                    indexPattern: `${_apiData.apiName}`, 
+                    // indexPattern: 'dsmongoapi', // `${_apiData.apiName}`, 
+                    indexPattern: `[${_apiData.apiName.toLowerCase()}-]YYYY.MM.DD`,
+                    index: 'dsmongoapi',
                     type: 'logs',
                     node: 'http://localhost:9200'
                 }),
@@ -74,17 +78,4 @@ namespace Utility {
         }
     }
 
-    class esLog
-    {
-        constructor() {
-        
-        }
-
-        info(...args) {
-            console.log(args);
-        }
-
-    }
- }
-
- export = new Utility.Bunyan();
+ 

@@ -47,6 +47,7 @@
     <Content Include="src\api-docs\swaggerdoc.js" />
     <Content Include="src\mongoDatabases.json" />
     <Content Include="tsconfig.json" />
+    <Content Include="tsconfig.release.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dist\" />

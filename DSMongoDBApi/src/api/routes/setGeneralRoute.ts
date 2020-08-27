@@ -1,4 +1,10 @@
-﻿import { restify } from 'restify';
+﻿/**
+ * Utilities for routes module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
+
+import { restify } from 'restify';
 
 import { Common } from '../common/common';
 import { Messages } from '../../utilities/Utility';

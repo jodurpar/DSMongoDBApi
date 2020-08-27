@@ -1,18 +1,20 @@
-﻿import { restify } from 'restify';
+﻿
+/**
+ * Health module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
+
+import { restify } from 'restify';
 
 import { version, Messages, method } from '../../../utilities/Utility'
 import { IHealth } from '../../interfaces/get/IHealth';
-import { IMongoDb } from '../../../drivers/interface/IMongoDb';
-import { Connection } from '../../models/Connection';
 
 const MongoClient = require('mongodb').MongoClient;
-
-
 
 import { Authorization, getMethodName } from '../../decorators/decorators';
 import { _apiData } from '../../../../app';
 
-// var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('./mongoDatabases.json');
 import { connections } from '../../../../app';
 
 export namespace api100 {
@@ -122,8 +124,6 @@ export namespace api100 {
                             }
                         })
                     }
-
-                    //})
                 }
                 catch (e) {
                     if (connections) {

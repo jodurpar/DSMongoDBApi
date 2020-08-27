@@ -1,4 +1,11 @@
-﻿import { restify } from 'restify';
+﻿
+/**
+ * Add simple connection module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
+
+import { restify } from 'restify';
 
 import { version, method, Messages, stringsUtility } from '../../../../utilities/Utility'
 import { IConnections } from '../../../interfaces/put/Iconnections';

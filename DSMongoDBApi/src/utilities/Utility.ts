@@ -1,4 +1,8 @@
-﻿
+﻿/**
+ * Utility class module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 
 import { restify } from 'restify';
 import * as fs from 'fs';
@@ -6,7 +10,7 @@ import { messageObject } from '../api/models/messageObject';
 import { Bunyan } from './../../app';
 
 export class version {
-    private _version: string = '1.0';
+    private _version: string = '1.0.0';
 //     private _currentMethod: string;
 
     public get Version(): string { return this._version; }

@@ -1,14 +1,16 @@
-﻿
+﻿/**
+ * MongoDb utility module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 
 import { IMongoDb } from '../interface/IMongoDb';
 import { Connection } from '../../api/models/Connection';
-import { Messages } from '../../utilities/Utility';
 
 
 const MongoClient = require('mongodb').MongoClient;
 const Mongo = require('mongodb');
 
-// var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
 import { connections }  from '../../../app';
 
 

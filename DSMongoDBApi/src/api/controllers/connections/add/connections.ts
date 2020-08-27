@@ -1,4 +1,10 @@
-﻿import { restify } from 'restify';
+﻿/**
+ * Add multiple Connections module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
+
+import { restify } from 'restify';
 
 import { version, Messages, method, stringsUtility } from '../../../../utilities/Utility'
 import { IConnections } from '../../../interfaces/put/Iconnections';

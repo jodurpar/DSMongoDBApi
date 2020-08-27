@@ -1,4 +1,8 @@
-﻿
+﻿/**
+ * Common execute class module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 
 import { Messages, version } from '../../utilities/Utility';
 import { api100 } from '../controllers/messages/Messages';

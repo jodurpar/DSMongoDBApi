@@ -7,7 +7,7 @@
 import { restify } from 'restify';
 import * as fs from 'fs';
 import { messageObject } from '../api/models/messageObject';
-import { Bunyan } from './../../app';
+import { Log } from './../../app';
 
 export class version {
     private _version: string = '1.0.0';
@@ -75,7 +75,7 @@ export class params extends version {
 
         }
         catch (error) {
-            Bunyan.Log.error(`Params assign, ${error.message}`)
+            Log.error(`Params assign, ${error.message}`)
         }
 
         return [database, collection, filter === undefined || (typeof filter) === "object" ? filter : JSON.parse(filter), data, options];
@@ -124,7 +124,7 @@ export class fileUtility extends version {
             return (fs.readFileSync(fileName, 'utf8'));
         }
         catch (error) {
-            Bunyan.Log.error(`Can't read file, ${error}`)
+            Log.error(`Can't read file, ${error}`)
             return '';
         }
     }
@@ -134,7 +134,7 @@ export class fileUtility extends version {
             return (JSON.parse(fs.readFileSync(fileName, 'utf8').replace(/\r\n/g, '').replace(/\n/g, '').trim()));
         }
         catch (error) {
-            Bunyan.Log.error(`Can't read file, ${error}`)
+            Log.error(`Can't read file, ${error}`)
             return {};
         }
     }

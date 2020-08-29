@@ -7,10 +7,11 @@
 
 var bunyan = require('bunyan');
 import BunyanElasticSearch = require('bunyan-elasticsearch-bulk');
-import { fileUtility } from '../utilities/Utility';
-import { _apiData } from '../../app';
+import { fileUtility, stringsUtility } from '../utilities/Utility';
+import { _apiData, _logLevel } from '../../app';
 
-    export class Bunyan {
+
+    class Bunyan {
         private _version: string = '1.0';
         private _level: string = 'info';
         private _log: any;
@@ -24,8 +25,12 @@ import { _apiData } from '../../app';
         public get Version(): string { return this._version; };
         public set Level(value: string) {
             this._level = value;
+            this.createLoggers();
         }
 
+        public get Level(): string {
+            return this._level;
+        }
 
         public get Log(): any {
             if (!this._log) {
@@ -76,6 +81,22 @@ import { _apiData } from '../../app';
 
             })
         }
+}
+
+class _Log {
+    _Bunyan : Bunyan;
+
+    constructor(level) {
+        this._Bunyan = new Bunyan(level);
     }
 
+    public info(...args) {
+        this._Bunyan.Log.info(...args);
+    }
+    public error(...args) {
+        this._Bunyan.Log.error(...args);
+    }
+}
+
+export default new _Log(_logLevel);
  

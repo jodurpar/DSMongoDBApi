@@ -8,7 +8,7 @@
 import path = require('path');
 
 import * as restify from 'restify';
-import { Bunyan as _Bunyan } from './src/utilities/Bunyan';
+import * as restifySwaggerJsdoc from 'restify-swagger-jsdoc';
 import { logsStructure } from './src/api/models/logStructures';
 import { Messages, fileUtility } from './src/utilities/Utility';
 import { AuthClients, AuthClient } from './src/api/models/AuthClients';
@@ -17,7 +17,7 @@ import { apiData } from "./src/api/common/apiData";
 import { Connection } from './src/api/models/Connection';
 
 const corssMidleware = require('restify-cors-middleware');
-let _logLevel = 'info';
+export let _logLevel = 'info';
 
 
 // #region apiData
@@ -50,7 +50,12 @@ for (let j = 0; j < process.argv.length; j++) {
 
 // #region Setting logs
 
-export let Bunyan = new _Bunyan(_logLevel);
+// _logLevel = 'error';
+
+import _Log from './src/utilities/Bunyan';
+
+// export let Bunyan = new _Bunyan(_logLevel);
+export let Log = _Log;
 
 // #endregion
 
@@ -59,20 +64,17 @@ if (connections === undefined || !Array.isArray(connections)) connections = new 
 
 // #region initial logs
 
-Bunyan.Log.info('Api name: %s', _apiData.apiName);
-Bunyan.Log.info('Api description: %s', _apiData.apiDescription);
-Bunyan.Log.info('Api version: %s', _apiData.apiVersion);
-Bunyan.Log.info('Api host: %s', _apiData.apiHost);
-Bunyan.Log.info('Api port: %s', _apiData.apiPort);
+Log.info('Api name: %s', _apiData.apiName);
+Log.info('Api description: %s', _apiData.apiDescription);
+Log.info('Api version: %s', _apiData.apiVersion);
+Log.info('Api host: %s', _apiData.apiHost);
+Log.info('Api port: %s', _apiData.apiPort);
 
-Bunyan.ElLog.info('Api name: %s', _apiData.apiName);
-Bunyan.ElLog.info('Api description: %s', _apiData.apiDescription);
-Bunyan.ElLog.info('Api version: %s', _apiData.apiVersion);
-Bunyan.ElLog.info('Api host: %s', _apiData.apiHost);
-Bunyan.ElLog.info('Api port: %s', _apiData.apiPort);
-
-Bunyan.ElLog.error('Error: %s', 'Blup!');
-
+//Bunyan.Log.info('Api name: %s', _apiData.apiName);
+//Bunyan.Log.info('Api description: %s', _apiData.apiDescription);
+//Bunyan.Log.info('Api version: %s', _apiData.apiVersion);
+//Bunyan.Log.info('Api host: %s', _apiData.apiHost);
+//Bunyan.Log.info('Api port: %s', _apiData.apiPort);
 
 // #endregion
 
@@ -89,7 +91,7 @@ const cors = corssMidleware({
     exposeHeaders: []
 })
 
-//parsing settings
+// parsing settings
 server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser({ mapParams: true }));
 server.use(restify.plugins.bodyParser({ mapParams: true }));
@@ -102,7 +104,6 @@ server.pre(cors.actual);
 server.pre(function (req, res, next) {
 
     if (!req.headers[CommonConstants.ACCEPTVERSION]) {
-        Bunyan.Log.info('----> no version sent...updating to 1.0.0');
         req._version = '1.0.0';
         req.headers[CommonConstants.ACCEPTVERSION] = req._version;
     }
@@ -124,39 +125,40 @@ server.on('restifyError', function (req, res, err, callback) {
 
 process.on('uncaughtException', function (err) {
     if (err.stack.indexOf('elasticsearch') > 0) {
-        Bunyan.Log.info('elasticsearch not running');
-        Bunyan.elasticseachDown();
+        Log.info('elasticsearch not running');
+        // Bunyan.elasticseachDown();
     }
     else console.log('Caught exception: ' + err);
 });
 
-Bunyan.Log.info('setting routes...');
+Log.info('setting routes...');
 
 (new Routes()).setRoutes(server);
 
-// #region Server default routes
+// #region swagger
 
-server.get('/*', restify.plugins.serveStatic({
-    directory: './api-docs',
-}));
-
-server.get('/', function (req, res, next) {
-    res.redirect(server.url.replace('[::]', 'localhost') + '/Swagger', next);
-    next();
+restifySwaggerJsdoc.createSwaggerPage({
+    title: _apiData.apiName, // Page title
+    description: _apiData.apiDescription,
+    version: _apiData.apiVersion, // Server version
+    server: server, // Restify server instance created with restify.createServer()
+    path: '/swagger', // Public url where the swagger page will be available
+    apis: ['swagger/swaggerdoc.js']
+    
 });
 
 // #endregion
 
-
-Bunyan.Log.info('setting metrics...');
+Log.info('setting metrics...');
 
 // #region Server statistics
 server.on('after', restify.plugins.metrics({ server: server },
     function (err, metrics, req, res, route) {
-        Bunyan.Log.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
+        Log.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
     }));
 // #endregion
 
+
 server.listen(_apiData.apiPort, function () {
-    Bunyan.Log.info('%s listening at %s', server.name, server.url);
+    Log.info('%s listening at %s', server.name, server.url);
 })

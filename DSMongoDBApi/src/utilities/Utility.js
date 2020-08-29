@@ -74,7 +74,7 @@ class params extends version {
             }
         }
         catch (error) {
-            app_1.Bunyan.Log.error(`Params assign, ${error.message}`);
+            app_1.Log.error(`Params assign, ${error.message}`);
         }
         return [database, collection, filter === undefined || (typeof filter) === "object" ? filter : JSON.parse(filter), data, options];
     }
@@ -117,7 +117,7 @@ class fileUtility extends version {
             return (fs.readFileSync(fileName, 'utf8'));
         }
         catch (error) {
-            app_1.Bunyan.Log.error(`Can't read file, ${error}`);
+            app_1.Log.error(`Can't read file, ${error}`);
             return '';
         }
     }
@@ -126,7 +126,7 @@ class fileUtility extends version {
             return (JSON.parse(fs.readFileSync(fileName, 'utf8').replace(/\r\n/g, '').replace(/\n/g, '').trim()));
         }
         catch (error) {
-            app_1.Bunyan.Log.error(`Can't read file, ${error}`);
+            app_1.Log.error(`Can't read file, ${error}`);
             return {};
         }
     }

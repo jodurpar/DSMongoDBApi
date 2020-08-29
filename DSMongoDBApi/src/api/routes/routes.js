@@ -47,11 +47,11 @@ class Routes extends Utility_1.version {
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'get', '/ReadSwagger', undefined, '', '/swagger', 'swagger', 'readSwagger').then(result => { }).catch(e => { });
                 ;
                 // #endregion
-                app_1.Bunyan.Log.info('Routes registered');
+                app_1.Log.info('Routes registered');
                 return;
             }
             catch (e) {
-                app_1.Bunyan.Log.error(Utility_1.Messages.sendMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, "Unable to execute SetRoutes."));
+                app_1.Log.error(Utility_1.Messages.sendMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, "Unable to execute SetRoutes."));
                 return;
             }
         });

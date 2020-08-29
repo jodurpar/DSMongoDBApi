@@ -2,14 +2,14 @@
  * 24/07/2020 - Jose Durán Pareja
  * 
  * Contains api basic data
- * V0.0.0 - First version
+ * V1.0.0 - First version
  */
 
 
 class _apiData {
     
     private _apiName : string = 'dsMongoDBApi';
-    private _apiVersion : string = '0.0.1';
+    private _apiVersion : string = '1.0.0';
     private _apiSupportedVersions : [string] = ['1.0.0'];
     private _apiHost : string = 'localhost';
     private _apiPort : string = '51234';

@@ -5,7 +5,7 @@
  * 17.08.2020 - @JoseDuranPareja
  * */
 
-import { Bunyan } from '../../../app';
+import { Log } from '../../../app';
 import { Messages, version } from '../../utilities/Utility';
 
 import { setGeneralRoute } from './setGeneralRoute';
@@ -47,12 +47,12 @@ export class Routes extends version implements IRoutes {
 
             // #endregion
 
-            Bunyan.Log.info('Routes registered');
+            Log.info('Routes registered');
             return;
         }
 
         catch (e) {
-            Bunyan.Log.error(Messages.sendMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, "Unable to execute SetRoutes."));
+            Log.error(Messages.sendMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, "Unable to execute SetRoutes."));
             return;
         }
     }

@@ -5,7 +5,6 @@
  * 17.08.2020 - @JoseDuranPareja
  * */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Bunyan = void 0;
 var bunyan = require('bunyan');
 const BunyanElasticSearch = require("bunyan-elasticsearch-bulk");
 const Utility_1 = require("../utilities/Utility");
@@ -68,5 +67,16 @@ class Bunyan {
         });
     }
 }
-exports.Bunyan = Bunyan;
+class _Log {
+    constructor(level) {
+        this._Bunyan = new Bunyan(level);
+    }
+    info(...args) {
+        this._Bunyan.Log.info(...args);
+    }
+    error(...args) {
+        this._Bunyan.Log.error(...args);
+    }
+}
+exports.default = new _Log(app_1._logLevel);
 //# sourceMappingURL=Bunyan.js.map

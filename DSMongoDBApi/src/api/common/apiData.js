@@ -3,14 +3,14 @@
  * 24/07/2020 - Jose Dur�n Pareja
  *
  * Contains api basic data
- * V0.0.0 - First version
+ * V1.0.0 - First version
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.apiData = void 0;
 class _apiData {
     constructor() {
         this._apiName = 'dsMongoDBApi';
-        this._apiVersion = '0.0.1';
+        this._apiVersion = '1.0.0';
         this._apiSupportedVersions = ['1.0.0'];
         this._apiHost = 'localhost';
         this._apiPort = '51234';

@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * Utility class module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -15,7 +20,7 @@ const messageObject_1 = require("../api/models/messageObject");
 const app_1 = require("./../../app");
 class version {
     constructor() {
-        this._version = '1.0';
+        this._version = '1.0.0';
     }
     //     private _currentMethod: string;
     get Version() { return this._version; }

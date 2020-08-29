@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * MongoDb utility module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,7 +15,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const MongoClient = require('mongodb').MongoClient;
 const Mongo = require('mongodb');
-// var connections: Array<Connection> = Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
 const app_1 = require("../../../app");
 class MongoDb {
     constructor() {

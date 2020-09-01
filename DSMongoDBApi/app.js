@@ -43,7 +43,7 @@ for (let j = 0; j < process.argv.length; j++) {
 }
 // #endregion
 // #region Setting logs
-exports._logLevel = 'error';
+// _logLevel = 'error';
 const Bunyan_1 = require("./src/utilities/Bunyan");
 // export let Bunyan = new _Bunyan(_logLevel);
 exports.Log = Bunyan_1.default;

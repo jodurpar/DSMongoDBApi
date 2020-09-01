@@ -25,7 +25,7 @@ import { _apiData, _logLevel } from '../../app';
         public get Version(): string { return this._version; };
         public set Level(value: string) {
             this._level = value;
-            this.createLoggers();
+            this.create();
         }
 
         public get Level(): string {
@@ -34,7 +34,7 @@ import { _apiData, _logLevel } from '../../app';
 
         public get Log(): any {
             if (!this._log) {
-                this.createLoggers();
+                this.create();
             }
             return this._log
         };
@@ -47,14 +47,14 @@ import { _apiData, _logLevel } from '../../app';
             this._elLog = undefined;
         }
 
-        formattedLog(Bunyanlog: any, error: HTTPStatusCodes, cat: string, sub_cat: string, text_message: string, ...extendeddata) {
-            let message = { 'error': error, 'cat': cat, 'sub_cat': sub_cat } 
+        formattedLog(Bunyanlog: any, error: HTTPStatusCodes, type: string,  cat: string, sub_cat: string, text_message: string, ...extendeddata) {
+            let message = { type: error, 'cat': cat, 'sub_cat': sub_cat } 
             message['extended'] = extendeddata;
             Bunyanlog.info(message,text_message);
         }
 
 
-        createLoggers() {
+        create() {
             this._log = bunyan.createLogger({
                 name: _apiData.apiName,                     
                 level: this._level,      // Optional, 'trace', debug, info, warn, error, fatal
@@ -74,6 +74,16 @@ import { _apiData, _logLevel } from '../../app';
 
         }
 
+        createLogger(logger) {
+            bunyan.createLogger(logger);
+        }
+
+        createLoggers(loggers: []) {
+            loggers.forEach(logger => {
+                bunyan.createLogger(logger);
+            })
+        }
+
         // TODO load bunyan loggers from file
         createLoggersFromFile() {
             let loggers : [] = fileUtility.readFileAsObject('./bunyanloggers.json');
@@ -81,6 +91,7 @@ import { _apiData, _logLevel } from '../../app';
 
             })
         }
+
 }
 
 class _Log {
@@ -89,13 +100,27 @@ class _Log {
     constructor(level) {
         this._Bunyan = new Bunyan(level);
     }
+    public trace(...args) {
+        this._Bunyan.Log.trace(...args);
+    }
+    public debug(...args) {
+        this._Bunyan.Log.debug(...args);
+    }
 
     public info(...args) {
         this._Bunyan.Log.info(...args);
     }
+    public warn(...args) {
+        this._Bunyan.Log.warn(...args);
+    }
+
     public error(...args) {
         this._Bunyan.Log.error(...args);
     }
+    public fatal(...args) {
+        this._Bunyan.Log.fatal(...args);
+    }
+
 }
 
 export default new _Log(_logLevel);

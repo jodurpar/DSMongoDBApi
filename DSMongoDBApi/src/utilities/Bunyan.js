@@ -19,10 +19,14 @@ class Bunyan {
     ;
     set Level(value) {
         this._level = value;
+        this.create();
+    }
+    get Level() {
+        return this._level;
     }
     get Log() {
         if (!this._log) {
-            this.createLoggers();
+            this.create();
         }
         return this._log;
     }
@@ -37,12 +41,12 @@ class Bunyan {
     elasticseachDown() {
         this._elLog = undefined;
     }
-    formattedLog(Bunyanlog, error, cat, sub_cat, text_message, ...extendeddata) {
-        let message = { 'error': error, 'cat': cat, 'sub_cat': sub_cat };
+    formattedLog(Bunyanlog, error, type, cat, sub_cat, text_message, ...extendeddata) {
+        let message = { type: error, 'cat': cat, 'sub_cat': sub_cat };
         message['extended'] = extendeddata;
         Bunyanlog.info(message, text_message);
     }
-    createLoggers() {
+    create() {
         this._log = bunyan.createLogger({
             name: app_1._apiData.apiName,
             level: this._level,
@@ -60,6 +64,14 @@ class Bunyan {
             }),
         });
     }
+    createLogger(logger) {
+        bunyan.createLogger(logger);
+    }
+    createLoggers(loggers) {
+        loggers.forEach(logger => {
+            bunyan.createLogger(logger);
+        });
+    }
     // TODO load bunyan loggers from file
     createLoggersFromFile() {
         let loggers = Utility_1.fileUtility.readFileAsObject('./bunyanloggers.json');
@@ -71,11 +83,23 @@ class _Log {
     constructor(level) {
         this._Bunyan = new Bunyan(level);
     }
+    trace(...args) {
+        this._Bunyan.Log.trace(...args);
+    }
+    debug(...args) {
+        this._Bunyan.Log.debug(...args);
+    }
     info(...args) {
         this._Bunyan.Log.info(...args);
     }
+    warn(...args) {
+        this._Bunyan.Log.warn(...args);
+    }
     error(...args) {
         this._Bunyan.Log.error(...args);
+    }
+    fatal(...args) {
+        this._Bunyan.Log.fatal(...args);
     }
 }
 exports.default = new _Log(app_1._logLevel);

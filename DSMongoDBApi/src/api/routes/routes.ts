@@ -25,11 +25,11 @@ export class Routes extends version implements IRoutes {
 
             // #region controllers
 
-			setGeneralRoute.Set(server, 'get', '/TestMessages', '/TestMessagesAsync', '/:message', '/messages', 'Messages', 'TestMessages').then(result => { }).catch(e => { });
+			setGeneralRoute.Set(server, 'get', '/Test', '/TestAsync', '/:message', '/messages', 'Messages', 'Test').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'get', '/Health', '/HealthAsync', '', '/health', 'Health', 'Health').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'get', '/Collections/Drop', '/CollectionsAsync/Drop', '', '/collections/drop', 'collections', 'dropCollection').then(result => { }).catch(e => { });
-			setGeneralRoute.Set(server, 'put', '/Connection', '/ConnectionAsync', '', '/connections/add', 'connection', 'addConnection').then(result => { }).catch(e => { });
-            setGeneralRoute.Set(server, 'put', '/Connections', '/ConnectionsAsync', '', '/connections/add', 'connections', 'addConnections').then(result => { }).catch(e => { });
+			setGeneralRoute.Set(server, 'put', '/Connection', '', '', '/connections/add', 'connection', 'addConnection').then(result => { }).catch(e => { });
+            setGeneralRoute.Set(server, 'put', '/Connections', '', '', '/connections/add', 'connections', 'addConnections').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'get', '/Documents', '/DocumentsAsync', '', '/documents/get', 'Documents', 'GetDocuments').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'put', '/Documents', '/DocumentsAsync', '', '/documents/put', 'Documents', 'PutDocuments').then(result => { }).catch(e => { });
 			setGeneralRoute.Set(server, 'put', '/Documents', '/DocumentsAsync', '/:database/:collection', '/Documents/put', 'Documents', 'PutDocuments').then(result => { }).catch(e => { });
@@ -40,10 +40,16 @@ export class Routes extends version implements IRoutes {
 
             // #endregion
 
-            // #region swagger
+            // #region loggers
 
-			setGeneralRoute.Set(server, 'get', '/Swagger', undefined, '', '/swagger', 'swagger', 'swagger').then(result => { }).catch(e => { });;
-			setGeneralRoute.Set(server, 'get', '/ReadSwagger', undefined, '', '/swagger', 'swagger', 'readSwagger').then(result => { }).catch(e => { });;
+            setGeneralRoute.Set(server, 'put', '/ConsoleLogDown', '', '', '/logs/console', 'Console', 'Down').then(result => { }).catch(e => { });
+            setGeneralRoute.Set(server, 'put', '/ConsoleLogUp', '', '', '/logs/console', 'Console', 'Up').then(result => { }).catch(e => { });
+
+            setGeneralRoute.Set(server, 'put', '/ElasticLogDown', '', '', '/logs/elastic', 'Elastic', 'Down').then(result => { }).catch(e => { });
+            setGeneralRoute.Set(server, 'put', '/ElasticLogUp', '', '', '/logs/elastic', 'Elastic', 'Up').then(result => { }).catch(e => { });
+
+            setGeneralRoute.Set(server, 'put', '/LogLevel', '', '', '/logs/level', 'Level', 'Set').then(result => { }).catch(e => { });
+
 
             // #endregion
 
@@ -52,7 +58,7 @@ export class Routes extends version implements IRoutes {
         }
 
         catch (e) {
-            Log.error(Messages.sendMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, "Unable to execute SetRoutes."));
+            Log.fatal(Messages.sendMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR, e.message, "Unable to execute SetRoutes."));
             return;
         }
     }

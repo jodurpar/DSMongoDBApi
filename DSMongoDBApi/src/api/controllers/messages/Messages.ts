@@ -11,7 +11,7 @@ export namespace api100 {
     export class Messages extends version implements IMessages {
 
         @getMethodName
-        public TestMessages(req: restify.request, res: restify.response) {
+        public Test(req: restify.request, res: restify.response) {
             let _message = req.params.message != undefined ? req.params.message : req.body.message;
             res.send(HTTPStatusCodes.OK,
                 MessagesUtil.sendObjectMessage(HTTPStatusCodes.OK,
@@ -28,7 +28,7 @@ export namespace api100 {
         }
 
         @getMethodName
-        public TestMessagesAsync(req: restify.request, res: restify.response): Promise<object> {
+        public TestAsync(req: restify.request, res: restify.response): Promise<object> {
             let _self = this;
             let _message = req.params.message != undefined ? req.params.message : req.body.message;
             return new Promise<object>(async (resolve, reject) => {

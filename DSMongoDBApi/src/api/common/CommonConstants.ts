@@ -30,5 +30,6 @@ declare const enum CommonConstants {
     POINT = '.',
     RECIEVED = 'Recieved',
     TRUE = 'true',
-    TWOPOINTS = ':'
+    TWOPOINTS = ':',
+    SUCCESSFULLY = 'successfully'
 }

@@ -39,6 +39,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dist\" />
+    <Folder Include="src\api\controllers\logs\" />
+    <Folder Include="src\api\controllers\logs\console\" />
+    <Folder Include="src\api\controllers\logs\elastic\" />
+    <Folder Include="src\api\controllers\logs\level\" />
     <Folder Include="swagger\" />
     <Folder Include="src\" />
     <Folder Include="src\api\common\" />
@@ -84,6 +88,9 @@
     <TypeScriptCompile Include="src\api\controllers\documents\patch\Documents.ts" />
     <TypeScriptCompile Include="src\api\controllers\documents\put\Documents.ts" />
     <TypeScriptCompile Include="src\api\controllers\health\Health.ts" />
+    <TypeScriptCompile Include="src\api\controllers\logs\console\Console.ts" />
+    <TypeScriptCompile Include="src\api\controllers\logs\elastic\Elastic.ts" />
+    <TypeScriptCompile Include="src\api\controllers\logs\level\Level.ts" />
     <TypeScriptCompile Include="src\api\controllers\messages\Messages.ts" />
     <TypeScriptCompile Include="src\api\controllers\swagger\swagger.ts" />
     <TypeScriptCompile Include="src\api\decorators\decorators.ts" />

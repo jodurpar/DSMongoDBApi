@@ -5,14 +5,16 @@
  * 17.08.2020 - @JoseDuranPareja
  * */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.server = exports.connections = exports.Log = exports._apiData = exports._logLevel = void 0;
+exports.server = exports.connections = exports.Log = exports._apiData = exports._logType = exports._logLevel = void 0;
 const restify = require("restify");
 const restifySwaggerJsdoc = require("restify-swagger-jsdoc");
 const Utility_1 = require("./src/utilities/Utility");
 const routes_1 = require("./src/api/routes/routes");
 const apiData_1 = require("./src/api/common/apiData");
+const Bunyan_1 = require("./src/utilities/Bunyan");
 const corssMidleware = require('restify-cors-middleware');
 exports._logLevel = 'info';
+exports._logType = 'c';
 // #region apiData
 exports._apiData = apiData_1.apiData;
 for (let j = 0; j < process.argv.length; j++) {
@@ -38,15 +40,17 @@ for (let j = 0; j < process.argv.length; j++) {
         case '--l':
             exports._logLevel = process.argv[j + 1];
             break;
+        case '--logtype':
+        case '--g':
+            exports._logType = process.argv[j + 1];
+            break;
         default: break;
     }
 }
 // #endregion
 // #region Setting logs
-// _logLevel = 'error';
-const Bunyan_1 = require("./src/utilities/Bunyan");
-// export let Bunyan = new _Bunyan(_logLevel);
-exports.Log = Bunyan_1.default;
+exports.Log = new Bunyan_1._Log(exports._logLevel, exports._logType);
+;
 // #endregion
 exports.connections = Utility_1.fileUtility.readFileAsObject('./mongoDatabases.json');
 if (exports.connections === undefined || !Array.isArray(exports.connections))
@@ -57,11 +61,6 @@ exports.Log.info('Api description: %s', exports._apiData.apiDescription);
 exports.Log.info('Api version: %s', exports._apiData.apiVersion);
 exports.Log.info('Api host: %s', exports._apiData.apiHost);
 exports.Log.info('Api port: %s', exports._apiData.apiPort);
-//Bunyan.Log.info('Api name: %s', _apiData.apiName);
-//Bunyan.Log.info('Api description: %s', _apiData.apiDescription);
-//Bunyan.Log.info('Api version: %s', _apiData.apiVersion);
-//Bunyan.Log.info('Api host: %s', _apiData.apiHost);
-//Bunyan.Log.info('Api port: %s', _apiData.apiPort);
 // #endregion
 // Create restify objects
 exports.server = restify.createServer({
@@ -100,8 +99,8 @@ exports.server.on('restifyError', function (req, res, err, callback) {
 });
 process.on('uncaughtException', function (err) {
     if (err.stack.indexOf('elasticsearch') > 0) {
+        exports.Log.elasticDown();
         exports.Log.info('elasticsearch not running');
-        // Bunyan.elasticseachDown();
     }
     else
         console.log('Caught exception: ' + err);

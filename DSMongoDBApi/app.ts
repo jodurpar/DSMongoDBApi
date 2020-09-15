@@ -15,9 +15,11 @@ import { AuthClients, AuthClient } from './src/api/models/AuthClients';
 import { Routes } from './src/api/routes/routes';
 import { apiData } from "./src/api/common/apiData";
 import { Connection } from './src/api/models/Connection';
+import { _Log } from './src/utilities/Bunyan';
 
 const corssMidleware = require('restify-cors-middleware');
 export let _logLevel = 'info';
+export let _logType = 'c';
 
 
 // #region apiData
@@ -42,6 +44,9 @@ for (let j = 0; j < process.argv.length; j++) {
         case '--loglevel':
         case '--l': _logLevel = process.argv[j + 1];
             break;
+        case '--logtype':
+        case '--g' : _logType = process.argv[j + 1];
+            break;
         default: break;
     }
 }
@@ -50,12 +55,7 @@ for (let j = 0; j < process.argv.length; j++) {
 
 // #region Setting logs
 
-// _logLevel = 'error';
-
-import _Log from './src/utilities/Bunyan';
-
-// export let Bunyan = new _Bunyan(_logLevel);
-export let Log = _Log;
+ export let Log = new _Log(_logLevel, _logType);;
 
 // #endregion
 
@@ -69,12 +69,6 @@ Log.info('Api description: %s', _apiData.apiDescription);
 Log.info('Api version: %s', _apiData.apiVersion);
 Log.info('Api host: %s', _apiData.apiHost);
 Log.info('Api port: %s', _apiData.apiPort);
-
-//Bunyan.Log.info('Api name: %s', _apiData.apiName);
-//Bunyan.Log.info('Api description: %s', _apiData.apiDescription);
-//Bunyan.Log.info('Api version: %s', _apiData.apiVersion);
-//Bunyan.Log.info('Api host: %s', _apiData.apiHost);
-//Bunyan.Log.info('Api port: %s', _apiData.apiPort);
 
 // #endregion
 
@@ -125,8 +119,8 @@ server.on('restifyError', function (req, res, err, callback) {
 
 process.on('uncaughtException', function (err) {
     if (err.stack.indexOf('elasticsearch') > 0) {
+        Log.elasticDown();
         Log.info('elasticsearch not running');
-        // Bunyan.elasticseachDown();
     }
     else console.log('Caught exception: ' + err);
 });

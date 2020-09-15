@@ -48,37 +48,37 @@ export namespace api100 {
             }
         }
 
-        @getMethodName
-        public async addConnectionAsync(req: restify.request, res: restify.response): Promise<object> {
-            let _self = this;
-            return new Promise<object>(async (resolve, reject) => {
-                try {
+        //@getMethodName
+        //public async addConnectionAsync(req: restify.request, res: restify.response): Promise<object> {
+        //    let _self = this;
+        //    return new Promise<object>(async (resolve, reject) => {
+        //        try {
 
-                    await MongoDb.addConnectionAsync(JSON.parse(req.params.connection), async function (err, doc) {
-                        resolve(await res.send(HTTPStatusCodes.OK,
-                            Messages.sendObjectMessage(HTTPStatusCodes.OK,
-                                err,
-                                doc)));
-                    }, async function (e, doc) {
-                        reject(res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
-                            await Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
-                                e.message,
-                                method.getMethodName(_self))))
-                    }
-                    );
-                }
-                catch (e) {
-                    reject(res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
-                        Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
-                            e.message,
-                            stringsUtility.format('{0} {1} {2}',
-                                method.getMethodName(_self),
-                                CommonConstants.TWOPOINTS,
-                                req.params.connection)
-                        )
-                    ));
-                }
-            });
-        }
+        //            await MongoDb.addConnectionAsync(JSON.parse(req.params.connection), async function (err, doc) {
+        //                resolve(await res.send(HTTPStatusCodes.OK,
+        //                    Messages.sendObjectMessage(HTTPStatusCodes.OK,
+        //                        err,
+        //                        doc)));
+        //            }, async function (e, doc) {
+        //                reject(res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
+        //                    await Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
+        //                        e.message,
+        //                        method.getMethodName(_self))))
+        //            }
+        //            );
+        //        }
+        //        catch (e) {
+        //            reject(res.send(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
+        //                Messages.sendObjectMessage(HTTPStatusCodes.INTERNAL_SERVER_ERROR,
+        //                    e.message,
+        //                    stringsUtility.format('{0} {1} {2}',
+        //                        method.getMethodName(_self),
+        //                        CommonConstants.TWOPOINTS,
+        //                        req.params.connection)
+        //                )
+        //            ));
+        //        }
+        //    });
+        //}
     }
 }

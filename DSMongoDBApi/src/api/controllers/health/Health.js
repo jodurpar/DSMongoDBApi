@@ -33,7 +33,12 @@ var api100;
             return __awaiter(this, void 0, void 0, function* () {
                 yield this.Check()
                     .then(_message => {
-                    res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, _message));
+                    if (_message.databases[0].error) {
+                        res.send(404 /* NOT_FOUND */, Utility_1.Messages.sendObjectMessage(404 /* NOT_FOUND */, "No data for connection" /* NODATAFORCONNECTION */, _message));
+                    }
+                    else {
+                        res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, _message));
+                    }
                 })
                     .catch(e => {
                     res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
@@ -47,14 +52,26 @@ var api100;
                     try {
                         yield this.Check()
                             .then(_message => {
-                            Utility_1.Messages.sendObjectMessageAsync(200 /* OK */, "Ok" /* OK */, _message)
-                                .then(result => {
-                                res.send(200 /* OK */, result);
-                                resolve(result);
-                            })
-                                .catch(e => {
-                                res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
-                            });
+                            if (_message.databases[0].error) {
+                                Utility_1.Messages.sendObjectMessageAsync(404 /* NOT_FOUND */, "No data for connection" /* NODATAFORCONNECTION */, _message)
+                                    .then(result => {
+                                    res.send(404 /* NOT_FOUND */, result);
+                                    resolve(result);
+                                })
+                                    .catch(e => {
+                                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
+                                });
+                            }
+                            else {
+                                Utility_1.Messages.sendObjectMessageAsync(200 /* OK */, "Ok" /* OK */, _message)
+                                    .then(result => {
+                                    res.send(200 /* OK */, result);
+                                    resolve(result);
+                                })
+                                    .catch(e => {
+                                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
+                                });
+                            }
                         })
                             .catch(e => {
                             res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, "Error" /* ERROR */, e));
@@ -90,7 +107,7 @@ var api100;
                         let count = 0;
                         if (app_2.connections.length < 1) {
                             databases.push({ error: 'no active connections' });
-                            reject({ api: app_1._apiData, databases: databases });
+                            resolve({ api: app_1._apiData, databases: databases });
                         }
                         else {
                             app_2.connections.forEach((connection) => __awaiter(this, void 0, void 0, function* () {
@@ -117,12 +134,7 @@ var api100;
                         }
                     }
                     catch (e) {
-                        if (app_2.connections) {
-                            databases.push({ error: 'no active connections' });
-                        }
-                        else {
-                            databases.push({ error: 'connections ' + e });
-                        }
+                        databases.push({ error: 'connections ' + e });
                         reject({ api: app_1._apiData, databases: databases });
                     }
                 });

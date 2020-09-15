@@ -21,11 +21,11 @@ const decorators_1 = require("../../decorators/decorators");
 var api100;
 (function (api100) {
     let Messages = class Messages extends Utility_1.version {
-        TestMessages(req, res) {
+        Test(req, res) {
             let _message = req.params.message != undefined ? req.params.message : req.body.message;
             res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, Utility_1.stringsUtility.format('{0}{1} {2} {3}{4} {5}', Utility_1.method.getMethodName(this), ":" /* TWOPOINTS */, this.Version, "Recieved" /* RECIEVED */, ":" /* TWOPOINTS */, _message)));
         }
-        TestMessagesAsync(req, res) {
+        TestAsync(req, res) {
             let _self = this;
             let _message = req.params.message != undefined ? req.params.message : req.body.message;
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
@@ -41,10 +41,10 @@ var api100;
     };
     __decorate([
         decorators_1.getMethodName
-    ], Messages.prototype, "TestMessages", null);
+    ], Messages.prototype, "Test", null);
     __decorate([
         decorators_1.getMethodName
-    ], Messages.prototype, "TestMessagesAsync", null);
+    ], Messages.prototype, "TestAsync", null);
     Messages = __decorate([
         decorators_1.Authorization
     ], Messages);

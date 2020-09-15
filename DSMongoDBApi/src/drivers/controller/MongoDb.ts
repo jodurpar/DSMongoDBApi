@@ -11,7 +11,7 @@ import { Connection } from '../../api/models/Connection';
 const MongoClient = require('mongodb').MongoClient;
 const Mongo = require('mongodb');
 
-import { connections }  from '../../../app';
+import { connections } from '../../../app';
 
 
 class MongoDb implements IMongoDb {
@@ -20,16 +20,16 @@ class MongoDb implements IMongoDb {
 
     constructor() {
         this.databases = [];
-	}
+    }
 
-	public ObjectId(value: string) {
-		return new Mongo.ObjectId(value);
-	}
+    public ObjectId(value: string) {
+        return new Mongo.ObjectId(value);
+    }
 
     private getDb(connectionName: string, onComplete, onError) {
         try {
 
-			if (connections === undefined || connections.length <= 0) {
+            if (connections === undefined || connections.length <= 0) {
                 onError(new TypeError('No ' + CommonConstants.CONNECTIONS));
             }
 
@@ -38,8 +38,8 @@ class MongoDb implements IMongoDb {
             if (connection === undefined) {
                 onError(new TypeError(CommonConstants.CONNECTION + ' ' + connectionName + ' ' + CommonConstants.NOTFOUND));
             }
-			else {
-				let db = this.databases[connectionName];
+            else {
+                let db = this.databases[connectionName];
 
                 if (db == undefined) {
                     const _self = this;
@@ -63,7 +63,7 @@ class MongoDb implements IMongoDb {
                     onComplete(db);
                 }
             }
-		} catch (e) {
+        } catch (e) {
             onError(e);
         }
     }
@@ -140,7 +140,7 @@ class MongoDb implements IMongoDb {
     }
 
     addConnection(data: Connection, onComplete, onError) {
-        
+
         if (data === undefined) {
             onError(CommonConstants.NODATAFORCONNECTION);
             return (CommonConstants.NODATAFORCONNECTION);
@@ -181,17 +181,16 @@ class MongoDb implements IMongoDb {
     }
 
     addConnections(data: Array<Connection>, onComplete, onError) {
-
-        if (data === undefined || !Array.isArray(data) || data.length < 1) {
+        while (connections.length > 0) {
+            connections.pop();
+        }
+        if (data === undefined || !Array.isArray(data) ) {
             onError(CommonConstants.NODATAFORCONNECTION);
             return (CommonConstants.NODATAFORCONNECTION);
+
         }
-        else { // if (data[CommonConstants.CONNECTIONNAME] !== undefined && data['url'] !== undefined) {
+        else {
             try {
-                // connections = [];
-                while (connections.length > 0) {
-                    connections.pop();
-                }
                 for (let j = 0; j < data.length; j++) {
                     connections.push(data[j]);
                 }
@@ -203,9 +202,6 @@ class MongoDb implements IMongoDb {
                 return (error);
             }
         }
-        //else {
-        //    return (`Bad data ${data[CommonConstants.CONNECTIONNAME]} or ${data['url']}`)
-        //}
     }
 
     addConnectionsAsync(data: Array<Connection>, onComplete, onError) {
@@ -232,19 +228,19 @@ class MongoDb implements IMongoDb {
         });
     }
 
-    readDocuments(connectionName:string, collection:string, filter:object, selectedFields:object, onComplete, onError) {
+    readDocuments(connectionName: string, collection: string, filter: object, selectedFields: object, onComplete, onError) {
         try {
             this.getDb(connectionName, async function (db) {
                 if (db === undefined) {
                     onError(CommonConstants.NOCONNECTIONNAME, connectionName);
                 }
                 else {
-					try {
+                    try {
                         onComplete('', await db.collection(collection).find(filter)
                             .project(selectedFields)
                             .toArray()
                         )
-                    } catch (e ) {
+                    } catch (e) {
                         onError(JSON.stringify(e), []);
                     }
                 }
@@ -258,7 +254,7 @@ class MongoDb implements IMongoDb {
         }
     }
 
-    readDocumentsAsync(connectionName: string, collection: string, filter: object, selectedFields:object): Promise<any> {
+    readDocumentsAsync(connectionName: string, collection: string, filter: object, selectedFields: object): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {
             try {
                 await this.getDb(connectionName,
@@ -271,13 +267,13 @@ class MongoDb implements IMongoDb {
                                 db.collection(collection).find(filter)
                                     .project(selectedFields)
                                     .toArray(function (err, doc) {
-                                    if (err) {
-                                        reject(err);
-                                    }
-                                    else {
-                                        resolve(doc);
-                                    }
-                                });
+                                        if (err) {
+                                            reject(err);
+                                        }
+                                        else {
+                                            resolve(doc);
+                                        }
+                                    });
                             }
                         }
                         catch (e) {
@@ -297,25 +293,25 @@ class MongoDb implements IMongoDb {
     addDocuments(connectionName: string, collection: string, data: object, onComplete, onError) {
         try {
             this.getDb(connectionName, function (db) {
-				if (db === undefined) {
+                if (db === undefined) {
                     onError(CommonConstants.NOCONNECTIONNAME + ' ' + connectionName);
                 }
                 else {
                     db.collection(collection).insert(data, function (e, doc) {
-						if (e) {
-							onError(e, doc);
-							return;
+                        if (e) {
+                            onError(e, doc);
+                            return;
                         }
-						else {
-							onComplete(CommonConstants.OK, doc);
-							return;
+                        else {
+                            onComplete(CommonConstants.OK, doc);
+                            return;
                         }
                     });
                 }
             },
                 function (e) {
-					onError(e.message);
-					return;
+                    onError(e.message);
+                    return;
                 });
         }
         catch (e) {
@@ -411,7 +407,7 @@ class MongoDb implements IMongoDb {
                 if (db === undefined) {
                     onError(CommonConstants.NOCONNECTIONNAME + ' ' + connectionName);
                 }
-				else {
+                else {
                     db.collection(collection).findOneAndUpdate(filter, data, { multi: true }, function (e, doc) {
                         if (e) {
                             onError(e, doc);
@@ -438,7 +434,7 @@ class MongoDb implements IMongoDb {
                     if (db === undefined) {
                         reject(CommonConstants.NOCONNECTIONNAME + ' ' + connectionName);
                     }
-					else {
+                    else {
                         db.collection(collection).findOneAndUpdate(filter, data, { multi: true }, function (e, doc) {
                             if (e) {
                                 reject(e);
@@ -465,7 +461,7 @@ class MongoDb implements IMongoDb {
                 if (db === undefined) {
                     onError(CommonConstants.NOCONNECTIONNAME + ' ' + connectionName);
                 }
-				else {
+                else {
                     db.collection(collection).updateMany(filter, data, function (e, doc) {
                         if (e) {
                             onError(e, doc);
@@ -492,7 +488,7 @@ class MongoDb implements IMongoDb {
                     if (db === undefined) {
                         reject(CommonConstants.NOCONNECTIONNAME + ' ' + connectionName);
                     }
-					else {
+                    else {
                         db.collection(collection).updateMany(filter, data, function (e, doc) {
                             if (e) {
                                 reject(e);

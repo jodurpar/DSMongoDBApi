@@ -171,16 +171,15 @@ class MongoDb {
         }));
     }
     addConnections(data, onComplete, onError) {
-        if (data === undefined || !Array.isArray(data) || data.length < 1) {
+        while (app_1.connections.length > 0) {
+            app_1.connections.pop();
+        }
+        if (data === undefined || !Array.isArray(data)) {
             onError("No data for connection" /* NODATAFORCONNECTION */);
             return ("No data for connection" /* NODATAFORCONNECTION */);
         }
-        else { // if (data[CommonConstants.CONNECTIONNAME] !== undefined && data['url'] !== undefined) {
+        else {
             try {
-                // connections = [];
-                while (app_1.connections.length > 0) {
-                    app_1.connections.pop();
-                }
                 for (let j = 0; j < data.length; j++) {
                     app_1.connections.push(data[j]);
                 }
@@ -192,9 +191,6 @@ class MongoDb {
                 return (error);
             }
         }
-        //else {
-        //    return (`Bad data ${data[CommonConstants.CONNECTIONNAME]} or ${data['url']}`)
-        //}
     }
     addConnectionsAsync(data, onComplete, onError) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {

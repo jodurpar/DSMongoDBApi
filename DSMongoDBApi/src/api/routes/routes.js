@@ -46,6 +46,7 @@ class Routes extends Utility_1.version {
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/ConsoleLogUp', '', '', '/logs/console', 'Console', 'Up').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/ElasticLogDown', '', '', '/logs/elastic', 'Elastic', 'Down').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/ElasticLogUp', '', '', '/logs/elastic', 'Elastic', 'Up').then(result => { }).catch(e => { });
+                setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/StatisticsUp', '', '', '/logs/statistics', 'Statistics', 'Up').then(result => { }).catch(e => { });
                 setGeneralRoute_1.setGeneralRoute.Set(server, 'put', '/LogLevel', '', '', '/logs/level', 'Level', 'Set').then(result => { }).catch(e => { });
                 // #endregion
                 app_1.Log.info('Routes registered');

@@ -8,6 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports._Log = void 0;
 var bunyan = require('bunyan');
 const BunyanElasticSearch = require("bunyan-elasticsearch-bulk");
+const restify = require("restify");
 const app_1 = require("../../app");
 class DSBunyan {
     constructor(level, type) {
@@ -111,52 +112,46 @@ class _Log {
     level(level) {
         this._Bunyan.Level = level;
     }
+    // #region Server statistics
+    setBunyanServer(server) {
+        this._Server = server;
+    }
+    statisticsUp() {
+        let _self = this;
+        this._Server.on('after', restify.plugins.metrics({ server: this._Server }, function (err, metrics, req, res, route) {
+            _self.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
+        }));
+    }
+    // #endregion
     trace(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.trace(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.trace(...args);
-        }
+        this.writeLog('trace', ...args);
     }
     debug(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.debug(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.debug(...args);
-        }
+        this.writeLog('debug', ...args);
     }
     info(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.info(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.info(...args);
-        }
+        this.writeLog('info', ...args);
     }
     warn(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.warn(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.warn(...args);
-        }
+        this.writeLog('warn', ...args);
     }
     error(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.error(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.error(...args);
-        }
+        this.writeLog('error', ...args);
     }
     fatal(...args) {
+        this.writeLog('fatal', ...args);
+    }
+    writeLog(type, ...args) {
         if (this._Bunyan.Log) {
-            this._Bunyan.Log.fatal(...args);
+            this._Bunyan.Log[type](...args);
         }
         if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.fatal(...args);
+            this._Bunyan.ElLog[type](...args);
+        }
+    }
+    writeFormatedLog(type, cat, sub_cat, error, text_message, ...extendeddata) {
+        if (this._Bunyan.Log) {
+            this._Bunyan.formattedLog(this._Bunyan.Log, error, type, cat, sub_cat, text_message, ...extendeddata);
         }
     }
 }

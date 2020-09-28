@@ -20,6 +20,7 @@ import { _Log } from './src/utilities/Bunyan';
 const corssMidleware = require('restify-cors-middleware');
 export let _logLevel = 'info';
 export let _logType = 'c';
+export let _statistics = false;
 
 
 // #region apiData
@@ -46,6 +47,9 @@ for (let j = 0; j < process.argv.length; j++) {
             break;
         case '--logtype':
         case '--g' : _logType = process.argv[j + 1];
+            break;
+        case '--statictics':
+        case '--s': process.argv[j + 1] === 'true' ? _statistics = true : _statistics = false;
             break;
         default: break;
     }
@@ -89,6 +93,7 @@ const cors = corssMidleware({
 server.use(restify.plugins.acceptParser(server.acceptable));
 server.use(restify.plugins.queryParser({ mapParams: true }));
 server.use(restify.plugins.bodyParser({ mapParams: true }));
+server.use(restify.plugins.gzipResponse());
 
 server.pre(restify.pre.sanitizePath());
 
@@ -98,7 +103,7 @@ server.pre(cors.actual);
 server.pre(function (req, res, next) {
 
     if (!req.headers[CommonConstants.ACCEPTVERSION]) {
-        req._version = '1.0.0';
+        req._version = _apiData.apiVersion;
         req.headers[CommonConstants.ACCEPTVERSION] = req._version;
     }
 
@@ -125,6 +130,7 @@ process.on('uncaughtException', function (err) {
     else console.log('Caught exception: ' + err);
 });
 
+// Log.info('setting routes...');
 Log.info('setting routes...');
 
 (new Routes()).setRoutes(server);
@@ -146,10 +152,13 @@ restifySwaggerJsdoc.createSwaggerPage({
 Log.info('setting metrics...');
 
 // #region Server statistics
-server.on('after', restify.plugins.metrics({ server: server },
-    function (err, metrics, req, res, route) {
-        Log.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
-    }));
+
+Log.setBunyanServer(server);
+if (_statistics) {
+    Log.statisticsUp();
+}
+
+
 // #endregion
 
 

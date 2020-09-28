@@ -48,6 +48,8 @@ export class Routes extends version implements IRoutes {
             setGeneralRoute.Set(server, 'put', '/ElasticLogDown', '', '', '/logs/elastic', 'Elastic', 'Down').then(result => { }).catch(e => { });
             setGeneralRoute.Set(server, 'put', '/ElasticLogUp', '', '', '/logs/elastic', 'Elastic', 'Up').then(result => { }).catch(e => { });
 
+            setGeneralRoute.Set(server, 'put', '/StatisticsUp', '', '', '/logs/statistics', 'Statistics', 'Up').then(result => { }).catch(e => { });
+
             setGeneralRoute.Set(server, 'put', '/LogLevel', '', '', '/logs/level', 'Level', 'Set').then(result => { }).catch(e => { });
 
 

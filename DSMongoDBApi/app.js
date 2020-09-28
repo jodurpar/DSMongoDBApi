@@ -5,7 +5,7 @@
  * 17.08.2020 - @JoseDuranPareja
  * */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.server = exports.connections = exports.Log = exports._apiData = exports._logType = exports._logLevel = void 0;
+exports.server = exports.connections = exports.Log = exports._apiData = exports._statistics = exports._logType = exports._logLevel = void 0;
 const restify = require("restify");
 const restifySwaggerJsdoc = require("restify-swagger-jsdoc");
 const Utility_1 = require("./src/utilities/Utility");
@@ -15,6 +15,7 @@ const Bunyan_1 = require("./src/utilities/Bunyan");
 const corssMidleware = require('restify-cors-middleware');
 exports._logLevel = 'info';
 exports._logType = 'c';
+exports._statistics = false;
 // #region apiData
 exports._apiData = apiData_1.apiData;
 for (let j = 0; j < process.argv.length; j++) {
@@ -43,6 +44,10 @@ for (let j = 0; j < process.argv.length; j++) {
         case '--logtype':
         case '--g':
             exports._logType = process.argv[j + 1];
+            break;
+        case '--statictics':
+        case '--s':
+            process.argv[j + 1] === 'true' ? exports._statistics = true : exports._statistics = false;
             break;
         default: break;
     }
@@ -77,12 +82,13 @@ const cors = corssMidleware({
 exports.server.use(restify.plugins.acceptParser(exports.server.acceptable));
 exports.server.use(restify.plugins.queryParser({ mapParams: true }));
 exports.server.use(restify.plugins.bodyParser({ mapParams: true }));
+exports.server.use(restify.plugins.gzipResponse());
 exports.server.pre(restify.pre.sanitizePath());
 exports.server.pre(cors.preflight);
 exports.server.pre(cors.actual);
 exports.server.pre(function (req, res, next) {
     if (!req.headers["accept-version" /* ACCEPTVERSION */]) {
-        req._version = '1.0.0';
+        req._version = exports._apiData.apiVersion;
         req.headers["accept-version" /* ACCEPTVERSION */] = req._version;
     }
     res.setHeader('Content-Type', 'application/json');
@@ -105,6 +111,7 @@ process.on('uncaughtException', function (err) {
     else
         console.log('Caught exception: ' + err);
 });
+// Log.info('setting routes...');
 exports.Log.info('setting routes...');
 (new routes_1.Routes()).setRoutes(exports.server);
 // #region swagger
@@ -119,9 +126,10 @@ restifySwaggerJsdoc.createSwaggerPage({
 // #endregion
 exports.Log.info('setting metrics...');
 // #region Server statistics
-exports.server.on('after', restify.plugins.metrics({ server: exports.server }, function (err, metrics, req, res, route) {
-    exports.Log.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
-}));
+exports.Log.setBunyanServer(exports.server);
+if (exports._statistics) {
+    exports.Log.statisticsUp();
+}
 // #endregion
 exports.server.listen(exports._apiData.apiPort, function () {
     exports.Log.info('%s listening at %s', exports.server.name, exports.server.url);

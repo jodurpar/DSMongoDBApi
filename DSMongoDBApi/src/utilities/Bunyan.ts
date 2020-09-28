@@ -7,7 +7,8 @@
 
 var bunyan = require('bunyan');
 import BunyanElasticSearch = require('bunyan-elasticsearch-bulk');
-import { _apiData, _logLevel, _logType } from '../../app';
+import * as restify from 'restify';
+import { _apiData, _logLevel, _logType, _statistics } from '../../app';
 
 
 class DSBunyan {
@@ -114,6 +115,7 @@ class DSBunyan {
 
 export class _Log {
     _Bunyan: DSBunyan;
+    _Server: any;
 
     constructor(level, type) {
         this._Bunyan = new DSBunyan(level, type);
@@ -139,54 +141,55 @@ export class _Log {
         this._Bunyan.Level = level;
     }
 
+    // #region Server statistics
+
+    setBunyanServer(server: any) {
+        this._Server = server;
+    }
+
+    statisticsUp() {
+        let _self = this;
+        this._Server.on('after', restify.plugins.metrics({ server: this._Server },
+            function (err, metrics, req, res, route) {
+                _self.info({ method: metrics.method, path: metrics.path, latency: metrics.latency }, 'statistics');
+            }));
+
+    }
+
+    // #endregion
+
+
     public trace(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.trace(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.trace(...args);
-        }
+        this.writeLog('trace', ...args);
     }
     public debug(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.debug(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.debug(...args);
-        }
+        this.writeLog('debug', ...args);
     }
-
     public info(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.info(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.info(...args);
-        }
+        this.writeLog('info', ...args);
     }
     public warn(...args) {
+        this.writeLog('warn', ...args);
+    }
+    public error(...args) {
+        this.writeLog('error', ...args);
+    }
+    public fatal(...args) {
+        this.writeLog('fatal', ...args);
+    }
+
+    public writeLog(type: string, ...args) {
         if (this._Bunyan.Log) {
-            this._Bunyan.Log.warn(...args);
+            this._Bunyan.Log[type](...args);
         }
         if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.warn(...args);
+            this._Bunyan.ElLog[type](...args);
         }
     }
 
-    public error(...args) {
+    public writeFormatedLog(type, cat: string, sub_cat: string, error: HTTPStatusCodes, text_message, ...extendeddata) {
         if (this._Bunyan.Log) {
-            this._Bunyan.Log.error(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.error(...args);
-        }
-    }
-    public fatal(...args) {
-        if (this._Bunyan.Log) {
-            this._Bunyan.Log.fatal(...args);
-        }
-        if (this._Bunyan.ElLog) {
-            this._Bunyan.ElLog.fatal(...args);
+            this._Bunyan.formattedLog(this._Bunyan.Log, error, type, cat, sub_cat, text_message, ...extendeddata);
         }
     }
 

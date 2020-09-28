@@ -43,6 +43,7 @@
     <Folder Include="src\api\controllers\logs\console\" />
     <Folder Include="src\api\controllers\logs\elastic\" />
     <Folder Include="src\api\controllers\logs\level\" />
+    <Folder Include="src\api\controllers\logs\statistics\" />
     <Folder Include="swagger\" />
     <Folder Include="src\" />
     <Folder Include="src\api\common\" />
@@ -91,6 +92,7 @@
     <TypeScriptCompile Include="src\api\controllers\logs\console\Console.ts" />
     <TypeScriptCompile Include="src\api\controllers\logs\elastic\Elastic.ts" />
     <TypeScriptCompile Include="src\api\controllers\logs\level\Level.ts" />
+    <TypeScriptCompile Include="src\api\controllers\logs\statistics\Statistics.ts" />
     <TypeScriptCompile Include="src\api\controllers\messages\Messages.ts" />
     <TypeScriptCompile Include="src\api\controllers\swagger\swagger.ts" />
     <TypeScriptCompile Include="src\api\decorators\decorators.ts" />

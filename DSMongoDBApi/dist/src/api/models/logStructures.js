@@ -4,4 +4,3 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //export {
 //    logsStructure
 //};
-//# sourceMappingURL=logStructures.js.map

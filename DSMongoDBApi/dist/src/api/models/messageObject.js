@@ -9,4 +9,3 @@ class messageObject {
     }
 }
 exports.messageObject = messageObject;
-//# sourceMappingURL=messageObject.js.map

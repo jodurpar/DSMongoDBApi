@@ -130,12 +130,11 @@ process.on('uncaughtException', function (err) {
     else console.log('Caught exception: ' + err);
 });
 
-// Log.info('setting routes...');
-Log.info('setting routes...');
-
 (new Routes()).setRoutes(server);
 
 // #region swagger
+
+Log.info('setting swagger...');
 
 restifySwaggerJsdoc.createSwaggerPage({
     title: _apiData.apiName, // Page title
@@ -146,6 +145,9 @@ restifySwaggerJsdoc.createSwaggerPage({
     apis: ['swagger/swaggerdoc.js']
     
 });
+
+Log.info('set swagger successfully');
+
 
 // #endregion
 

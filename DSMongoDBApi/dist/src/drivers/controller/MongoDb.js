@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * MongoDb utility module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,10 +13,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const Utility_1 = require("../../utilities/Utility");
 const MongoClient = require('mongodb').MongoClient;
 const Mongo = require('mongodb');
-var connections = Utility_1.Utility.fileUtility.readFileAsObject('../mongoDatabases.json');
+const app_1 = require("../../../app");
 class MongoDb {
     constructor() {
         this.databases = [];
@@ -21,10 +25,10 @@ class MongoDb {
     }
     getDb(connectionName, onComplete, onError) {
         try {
-            if (connections === undefined || connections.length <= 0) {
+            if (app_1.connections === undefined || app_1.connections.length <= 0) {
                 onError(new TypeError('No ' + "Connections" /* CONNECTIONS */));
             }
-            const connection = connections.filter(x => x.connectionName === connectionName)[0];
+            const connection = app_1.connections.filter(x => x.connectionName === connectionName)[0];
             if (connection === undefined) {
                 onError(new TypeError("Connection" /* CONNECTION */ + ' ' + connectionName + ' ' + "not found" /* NOTFOUND */));
             }
@@ -60,7 +64,7 @@ class MongoDb {
     getDbAsync(connectionName) {
         return new Promise((resolve, reject) => {
             try {
-                let connection = connections.filter(x => x.connectionName === connectionName)[0];
+                let connection = app_1.connections.filter(x => x.connectionName === connectionName)[0];
                 if (connection === undefined) {
                     reject(new TypeError("Connection" /* CONNECTION */ + ' ' + connectionName + ' ' + "not found" /* NOTFOUND */));
                 }
@@ -68,7 +72,7 @@ class MongoDb {
                     let db = this.databases[connectionName];
                     if (db == undefined) {
                         let _self = this;
-                        MongoClient.connect(connection.url, { useNewUrlParser: true }, function (e, dbase) {
+                        MongoClient.connect(connection.url, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, dbase) {
                             try {
                                 if (e) {
                                     reject(e);
@@ -133,12 +137,52 @@ class MongoDb {
             onError("No data for connection" /* NODATAFORCONNECTION */);
             return ("No data for connection" /* NODATAFORCONNECTION */);
         }
-        else if (data["ConnectionName" /* CONNECTIONNAME */] != undefined && data['url'] != undefined) {
+        else if (data["connectionName" /* CONNECTIONNAME */] !== undefined && data['url'] !== undefined) {
             try {
-                let connection = { connectionName: data["ConnectionName" /* CONNECTIONNAME */], databaseName: data["databaseName" /* DATABASENAME */], url: data['url'], type: data['type'], user: data['user'], password: data['password'], encrypted: data['encrypted'] };
-                if (connections === undefined)
-                    connections = new Array();
-                connections.push(connection);
+                app_1.connections.push(data);
+                onComplete("Ok" /* OK */);
+                return ("Ok" /* OK */);
+            }
+            catch (error) {
+                onError(error);
+                return (error);
+            }
+        }
+        else {
+            return (`Bad data ${data["connectionName" /* CONNECTIONNAME */]} or ${data['url']}`);
+        }
+    }
+    addConnectionAsync(data, onComplete, onError) {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            if (data == undefined) {
+                onError("No data for connection" /* NODATAFORCONNECTION */);
+            }
+            else if (data["connectionName" /* CONNECTIONNAME */] != undefined && data['url'] != undefined) {
+                try {
+                    app_1.connections.push(data);
+                    onComplete("Ok" /* OK */);
+                    resolve({});
+                }
+                catch (error) {
+                    onError("Error" /* ERROR */ + ":" /* TWOPOINTS */ + ' ' + error);
+                    reject(error);
+                }
+            }
+        }));
+    }
+    addConnections(data, onComplete, onError) {
+        while (app_1.connections.length > 0) {
+            app_1.connections.pop();
+        }
+        if (data === undefined || !Array.isArray(data)) {
+            onError("No data for connection" /* NODATAFORCONNECTION */);
+            return ("No data for connection" /* NODATAFORCONNECTION */);
+        }
+        else {
+            try {
+                for (let j = 0; j < data.length; j++) {
+                    app_1.connections.push(data[j]);
+                }
                 onComplete("Ok" /* OK */);
                 return ("Ok" /* OK */);
             }
@@ -148,17 +192,19 @@ class MongoDb {
             }
         }
     }
-    addConnectionAsync(data, onComplete, onError) {
+    addConnectionsAsync(data, onComplete, onError) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             if (data == undefined) {
                 onError("No data for connection" /* NODATAFORCONNECTION */);
             }
-            else if (data["ConnectionName" /* CONNECTIONNAME */] != undefined && data['url'] != undefined) {
+            else if (data["connectionName" /* CONNECTIONNAME */] != undefined && data['url'] != undefined) {
                 try {
-                    let connection = { connectionName: data["ConnectionName" /* CONNECTIONNAME */], databaseName: data["databaseName" /* DATABASENAME */], url: data['url'], type: data['type'], user: data['user'], password: data['password'], encrypted: data['encrypted'] };
-                    if (connections === undefined)
-                        connections = new Array();
-                    connections.push(connection);
+                    while (app_1.connections.length > 0) {
+                        app_1.connections.pop();
+                    }
+                    for (let j = 0; j < data.length; j++) {
+                        app_1.connections.push(data[j]);
+                    }
                     onComplete("Ok" /* OK */);
                     resolve({});
                 }
@@ -442,4 +488,3 @@ class MongoDb {
 }
 module.exports = new MongoDb();
 //}
-//# sourceMappingURL=MongoDb.js.map

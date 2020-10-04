@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * Decorators module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMethodName = exports.Authorization = void 0;
 function Authorization(target) {
@@ -13,4 +18,3 @@ function getMethodName(target, name, desc) {
     };
 }
 exports.getMethodName = getMethodName;
-//# sourceMappingURL=decorators.js.map

@@ -12,6 +12,8 @@ import { IHealth } from '../../interfaces/get/IHealth';
 
 const MongoClient = require('mongodb').MongoClient;
 
+// import { MongoClient } from 'mongodb';
+
 import { Authorization, getMethodName } from '../../decorators/decorators';
 import { _apiData } from '../../../../app';
 
@@ -97,7 +99,7 @@ export namespace api100 {
 
         private async checkConnection(connection) {
             return new Promise<any>((resolve, reject) => {
-                MongoClient.connect(connection.url, { useNewUrlParser: true }, function (e, dbase) {
+                MongoClient.connect(connection.url, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, dbase) {
                     if (e) {
                         reject(e);
                     }

@@ -23,6 +23,8 @@ export class Routes extends version implements IRoutes {
 
         try {
 
+            Log.info('setting routes...');
+
             // #region controllers
 
 			setGeneralRoute.Set(server, 'get', '/Test', '/TestAsync', '/:message', '/messages', 'Messages', 'Test').then(result => { }).catch(e => { });

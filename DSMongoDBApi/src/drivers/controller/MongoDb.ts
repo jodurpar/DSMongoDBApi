@@ -80,7 +80,7 @@ class MongoDb implements IMongoDb {
                     let db = this.databases[connectionName];
                     if (db == undefined) {
                         let _self = this;
-                        MongoClient.connect(connection.url, { useNewUrlParser: true }, function (e, dbase) {
+                        MongoClient.connect(connection.url, { useNewUrlParser: true, useUnifiedTopology: true }, function (e, dbase) {
                             try {
                                 if (e) {
                                     reject(e);

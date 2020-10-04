@@ -21,29 +21,29 @@ const MongoDb = require("../../../../drivers/controller/MongoDb");
 const decorators_1 = require("../../../decorators/decorators");
 var api100;
 (function (api100) {
-    let Documents = class Documents extends Utility_1.Utility.version {
+    let Documents = class Documents extends Utility_1.version {
         DeleteDocuments(req, res) {
             const _self = this;
             try {
-                let [database, collection, filter] = Utility_1.Utility.params.assign(req);
+                let [database, collection, filter] = Utility_1.params.assign(req);
                 if (filter['_id'] !== undefined) {
                     filter = { _id: MongoDb.ObjectId(filter['_id']) };
                 }
                 MongoDb.deleteDocuments(database, collection, filter, function (err, doc) {
                     if (doc === undefined || doc === null || doc.n === undefined || doc.n === 0) {
-                        const error = Utility_1.Utility.status.getStatusFromMessage("not found" /* NOTFOUND */);
-                        res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.Utility.method.getMethodName(_self)));
+                        const error = Utility_1.status.getStatusFromMessage("not found" /* NOTFOUND */);
+                        res.send(error, Utility_1.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.method.getMethodName(_self)));
                     }
                     else {
-                        res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, err, doc));
+                        res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, err, doc));
                     }
                 }, function (e) {
-                    res.send(Utility_1.Utility.status.getStatusFromMessage(e.message), Utility_1.Utility.Messages.sendObjectMessage(Utility_1.Utility.status.getStatusFromMessage(e.message), e.message, Utility_1.Utility.method.getMethodName(_self)));
+                    res.send(Utility_1.status.getStatusFromMessage(e.message), Utility_1.Messages.sendObjectMessage(Utility_1.status.getStatusFromMessage(e.message), e.message, Utility_1.method.getMethodName(_self)));
                 });
             }
             catch (e) {
-                const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self)));
+                const error = Utility_1.status.getStatusFromMessage(e.message);
+                res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self)));
             }
         }
         DeleteDocumentsAsync(req, res) {
@@ -51,28 +51,28 @@ var api100;
                 const _self = this;
                 return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                     try {
-                        let [database, collection, filter] = Utility_1.Utility.params.assign(req);
+                        let [database, collection, filter] = Utility_1.params.assign(req);
                         if (filter['_id'] !== undefined) {
                             filter = { _id: MongoDb.ObjectId(filter['_id']) };
                         }
                         yield MongoDb.deleteDocumentsAsync(database, collection, filter)
                             .then((results) => __awaiter(this, void 0, void 0, function* () {
                             if (results === undefined || results === null || results.n === undefined || results.n === 0) {
-                                const error = Utility_1.Utility.status.getStatusFromMessage("not found" /* NOTFOUND */);
-                                resolve(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.Utility.method.getMethodName(_self))));
+                                const error = Utility_1.status.getStatusFromMessage("not found" /* NOTFOUND */);
+                                resolve(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, JSON.stringify(filter) + ': ' + "not found" /* NOTFOUND */, Utility_1.method.getMethodName(_self))));
                             }
                             else {
-                                resolve(yield res.send(200 /* OK */, Utility_1.Utility.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, results)));
+                                resolve(yield res.send(200 /* OK */, Utility_1.Messages.sendObjectMessage(200 /* OK */, "Ok" /* OK */, results)));
                             }
                         }))
                             .catch((e) => __awaiter(this, void 0, void 0, function* () {
-                            const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                            reject(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self))));
+                            const error = Utility_1.status.getStatusFromMessage(e.message);
+                            reject(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self))));
                         }));
                     }
                     catch (e) {
-                        const error = Utility_1.Utility.status.getStatusFromMessage(e.message);
-                        reject(yield res.send(error, Utility_1.Utility.Messages.sendObjectMessage(error, e.message, Utility_1.Utility.method.getMethodName(_self))));
+                        const error = Utility_1.status.getStatusFromMessage(e.message);
+                        reject(yield res.send(error, Utility_1.Messages.sendObjectMessage(error, e.message, Utility_1.method.getMethodName(_self))));
                     }
                 }));
             });
@@ -89,4 +89,3 @@ var api100;
     ], Documents);
     api100.Documents = Documents;
 })(api100 = exports.api100 || (exports.api100 = {}));
-//# sourceMappingURL=Documents.js.map

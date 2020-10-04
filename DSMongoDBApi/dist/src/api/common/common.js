@@ -1,4 +1,9 @@
 "use strict";
+/**
+ * Common execute class module
+ * Version 1.0.0
+ * 17.08.2020 - @JoseDuranPareja
+ * */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -11,7 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Common = void 0;
 const Utility_1 = require("../../utilities/Utility");
-class Common extends Utility_1.Utility.version {
+class Common extends Utility_1.version {
     static executeFunctionByName(functionName, context, req, res) {
         var namespaces = functionName.split(".");
         var func = namespaces.pop();
@@ -93,14 +98,14 @@ class Common extends Utility_1.Utility.version {
                     }
                 })
                     .catch(function (e) {
-                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers['accept-version']));
+                    res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers['accept-version']));
                 });
             }
             else
                 throw 'Bad route: ' + apiRoute;
         }
         catch (e) {
-            res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers['accept-version']));
+            res.send(500 /* INTERNAL_SERVER_ERROR */, Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers['accept-version']));
         }
         finally {
             next();
@@ -124,18 +129,18 @@ class Common extends Utility_1.Utility.version {
                             });
                         }
                         catch (e) {
-                            res.send(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, req.getRoute()));
+                            res.send(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, req.getRoute()));
                         }
                     }))
                         .catch(function (e) {
-                        res.send(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers["accept-version" /* ACCEPTVERSION */]));
+                        res.send(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers["accept-version" /* ACCEPTVERSION */]));
                     });
                 }
                 else
-                    res.send(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, 'Bad route:' + apiRoute, ApiCalls[1] + ': ' + req.headers["accept-version" /* ACCEPTVERSION */]));
+                    res.send(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, 'Bad route:' + apiRoute, ApiCalls[1] + ': ' + req.headers["accept-version" /* ACCEPTVERSION */]));
             }
             catch (e) {
-                res.send(Utility_1.Utility.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers["accept-version" /* ACCEPTVERSION */]));
+                res.send(Utility_1.Messages.sendObjectMessage(500 /* INTERNAL_SERVER_ERROR */, e.message, ApiCalls[1] + ': ' + req.headers["accept-version" /* ACCEPTVERSION */]));
             }
             finally {
                 next();
@@ -144,4 +149,3 @@ class Common extends Utility_1.Utility.version {
     }
 }
 exports.Common = Common;
-//# sourceMappingURL=common.js.map

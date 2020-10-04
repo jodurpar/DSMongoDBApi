@@ -22,7 +22,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.api100 = void 0;
 const Utility_1 = require("../../../utilities/Utility");
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
+const mongodb_1 = require("mongodb");
 const decorators_1 = require("../../decorators/decorators");
 const app_1 = require("../../../../app");
 const app_2 = require("../../../../app");
@@ -88,7 +89,7 @@ var api100;
         checkConnection(connection) {
             return __awaiter(this, void 0, void 0, function* () {
                 return new Promise((resolve, reject) => {
-                    MongoClient.connect(connection.url, { useNewUrlParser: true }, function (e, dbase) {
+                    mongodb_1.MongoClient.connect(connection.url, { useNewUrlParser: true }, function (e, dbase) {
                         if (e) {
                             reject(e);
                         }

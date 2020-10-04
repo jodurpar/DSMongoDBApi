@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
+    <Content Include="dist\swagger\swaggerdoc.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\mongoDatabases.json" />
@@ -39,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dist\" />
+    <Folder Include="dist\swagger\" />
     <Folder Include="src\api\controllers\logs\" />
     <Folder Include="src\api\controllers\logs\console\" />
     <Folder Include="src\api\controllers\logs\elastic\" />

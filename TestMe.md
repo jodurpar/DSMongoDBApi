@@ -5,7 +5,7 @@
 
 - To test it, simple run "node app.js". When done, you recieved this (or similar) log message 
    ```javascript
-   {"name":"standard","extra":"dsMONGODBApi","hostname":"DESKTOP-Q800056","pid":11552,"level":30,"msg":"dsMongoDBApi listening at http://[::]:51234","time":"2020-09-01T12:26:21.321Z","v":0}
+   {"name":"standard","extra":"dsMongoDBApi","hostname":"DESKTOP-Q800056","pid":11552,"level":30,"msg":"dsMongoDBApi listening at http://[::]:51234","time":"2020-09-01T12:26:21.321Z","v":0}
    ```
 
 ## Run in local
@@ -15,9 +15,9 @@
 ## Run in docker
  - Enter in command prompt.
  - Navigate to api home folder / src and then run webpack
- - Navigate  to api home folder / dist and then run "docker build -t dsexample:dsexample . --no-cache" to build api image
+ - Navigate  to api home folder / dist and then run "docker build -t dsmongodb:dsmongodb . --no-cache" to build api image
  - Create and configure mongo oficial image.
- - Run "docker run -d --name dsexample -p 51234:51234 dsexample:dsexample" or use kitematic to run mongo image and dsexample image created before.
+ - Run "docker run -d --name dsmongodb -p 51234:51234 dsmongodb:dsmongodb" or use kitematic to run mongo image and dsmongodb image created before.
 
 ### Testing in a browser
     

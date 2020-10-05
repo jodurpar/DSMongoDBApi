@@ -23,7 +23,7 @@
     
 - Go to your browser and navigate to http://localhost:51234/Swagger . If all are ok, you will see this screen:
  
-![Swagger Screen](https://github.com/jodurpar/DSMongoDBApi/blob/master/BrowserSwagger.PNG)
+![Swagger Screen](https://github.com/jodurpar/DSMongoDBApi/blob/master/BrowserSwagger.png)
 
 - You don't need MongoDb to test this api. Just use TestMessages or TestMessagesAsync. Enter one message and you got your message back in response
 

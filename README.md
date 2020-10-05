@@ -67,7 +67,7 @@ and learning to those who, like me, want to start working with nodejs / typescri
 - Run swagger from this api
   - localhost:51234
   
-  ![Swagger Screen](https://github.com/jodurpar/DSMongoDBApi/blob/master/BrowserSwagger.PNG)
+  ![Swagger Screen](https://github.com/jodurpar/DSMongoDBApi/blob/master/BrowserSwagger.png)
 
 - None endpoint are set. Before use it, set the databases conection with the api calls localhost:51234/connection or /connections with 
    #### Single database

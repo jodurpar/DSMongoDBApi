@@ -48,7 +48,7 @@ for (let j = 0; j < process.argv.length; j++) {
         case '--logtype':
         case '--g' : _logType = process.argv[j + 1];
             break;
-        case '--statictics':
+        case '--statistics':
         case '--s': process.argv[j + 1] === 'true' ? _statistics = true : _statistics = false;
             break;
         default: break;

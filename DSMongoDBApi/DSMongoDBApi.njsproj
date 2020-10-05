@@ -30,11 +30,18 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="app.ts" />
+    <Content Include="changelog.md" />
     <Content Include="dist\swagger\swaggerdoc.js" />
+    <Content Include="dist\webpack.config.js" />
+    <Content Include="dockerfile" />
+    <Content Include="mitLicense.md" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Content Include="src\mongoDatabases.json" />
+    <Content Include="BrowserSwagger.png" />
     <Content Include="swagger\swaggerdoc.js" />
+    <Content Include="TestMe.md" />
+    <Content Include="TestMessage.PNG" />
     <Content Include="tsconfig.json" />
     <Content Include="tsconfig.release.json" />
   </ItemGroup>

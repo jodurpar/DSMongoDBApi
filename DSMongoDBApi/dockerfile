@@ -9,7 +9,7 @@ RUN mkdir /app/node_modules
 
 WORKDIR .
 
-ADD ./docker/DSMongoApi.js ./app/ 
+ADD ./docker/DSMongoDBApi.js ./app/ 
 	ADD ./docker/swagger/ ./app/swagger/
 	ADD node_modules/ ./app/node_modules/
 
@@ -22,4 +22,4 @@ RUN ls -la /app/*
 
 
 EXPOSE 51234
-CMD ["node", "DSMongoApi"]
+CMD ["node", "DSMongoDBApi"]

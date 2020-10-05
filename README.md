@@ -3,15 +3,14 @@
 
 ## Why.
 
--    This is one of my firstapi/microservice in Typescript. 
--    I have written code for many years, and, although one day I was good at writing, now, over the years, I am good at detecting needs and proposing solutions to common problems, in computer science or in life itself.
+-    This is one of my api/microservice projects in Typescript. 
+-    I'm write code for many years and, although one day I was good at writing, now, over the years, I am comfortable detecting needs and proposing solutions to common problems, in computer science or in life itself.
 -    In this set of apis, I have not paid too much attention to the details. There are many and very good professionals who will, surely, much better than me.
 -    My intention, always has been, is to create a prototype with a simple idea that allows others to develop it. Something similar to a proof of concept.
 -    This is the first of a series of projects that I will put in gitgub at everyone's disposal:
 
      - Mongo's api (the first one)
      - Translations api
-     - Access to files api
      - SqlServer api
      - MySql API
 

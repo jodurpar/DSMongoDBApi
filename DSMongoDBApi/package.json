@@ -23,7 +23,6 @@
     "mongodb": "^3.5.9",
     "restify": "^8.5.1",
     "restify-cors-middleware": "^1.1.1",
-    "restify-swagger-jsdoc": "^3.2.4",
-    "swagger-jsdoc": "^4.0.0"
+    "restify-swagger-jsdoc": "^3.2.4"
   }
 }

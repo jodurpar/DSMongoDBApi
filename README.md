@@ -10,6 +10,7 @@
 -    This is the first of a series of projects that I will put in gitgub at everyone's disposal:
 
      - Mongo's api (the first one)
+     - DSDeviceDetect api
      - Translations api
      - SqlServer api
      - MySql API
@@ -46,7 +47,7 @@ and learning to those who, like me, want to start working with nodejs / typescri
    ```javascript
     "outDir": "./dist",
    ```
-- Run webpack in the dist folder command prompt. This make a /dist folder with DsExample.js file.
+- Run webpack in the dist folder command prompt. This make a /dist folder with DsMongoDBApi.js file.
 - At command prompt: webpack --config=webpack.config.js
 
 ### Docker container.

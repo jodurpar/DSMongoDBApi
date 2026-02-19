@@ -31,7 +31,13 @@ A secure, high-performance proxy for MongoDB with Role-Based Access Control (RBA
      - `MONGODB_DATABASE`: Default database name.
      - `PORT`: API port (default `15240`).
 
-4. **Compile and Run**:
+4. **Testing**:
+   - Run unit tests using Jest:
+     ```bash
+     npm test
+     ```
+
+5. **Compile and Run**:
    ```bash
    npm run build
    npm start

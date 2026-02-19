@@ -48,6 +48,13 @@ Once running, access the interactive documentation at:
 
 For detailed CRUD examples and coding integration, visit the [GitHub Repository](https://github.com/jodurpar/DSMongoDBApi).
 
+## 🧪 Testing
+
+The project includes a suite of unit tests built with Jest to ensure query parsing and connection management accuracy. To run them locally:
+```bash
+npm test
+```
+
 ## 🔐 Security
 Ensure you configure your RBAC settings if you intend to use this in production. The proxy requires `client-authorization` headers for mapped roles.
 

@@ -51,7 +51,7 @@ docker run -d --name dsmongodb -p 15240:15240 generic-mongodb-proxy
 Once the API is running, access the interactive docs at:
 `http://localhost:15240/docs`
 
-![Swagger Screen](./BrowserSwagger.png)
+![Swagger Screen](./BrowserSwagger.jpg)
 
 ### Core Endpoints
 

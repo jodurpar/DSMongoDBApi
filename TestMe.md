@@ -31,7 +31,7 @@ This is the documentation for the **Generic MongoDB Data Proxy V2.0**, now runni
 
 ### Testing in a browser
     
-![Swagger Screen](./BrowserSwagger.png)
+![Swagger Screen](./BrowserSwagger.jpg)
 
 ![TestMessages Screen](./TestMessage.jpg)
 

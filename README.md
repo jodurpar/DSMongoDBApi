@@ -23,7 +23,7 @@ A secure, high-performance proxy for MongoDB with Role-Based Access Control (RBA
    ```
 3. **Configure Environment**: Create a `.env` file or set variables:
    - `PORT`: 15240 (default)
-   - `MONGODB_URI`: Your Mongo connection string
+   - `MONGODB_URI`: Your Mongo connection string (e.g., `mongodb://localhost:27017` or `mongodb://user:pass@host:27018`)
 4. **Compile and Run**:
    ```bash
    npm run build
@@ -36,12 +36,30 @@ A secure, high-performance proxy for MongoDB with Role-Based Access Control (RBA
 
 ### Running with Docker
 
-```bash
-# Build the image
-docker build -t generic-mongodb-proxy .
+You can build the image locally or pull the official image from Docker Hub.
 
-# Run the container
-docker run -d --name dsmongodb -p 15240:15240 generic-mongodb-proxy
+#### Using Docker Hub
+```bash
+docker pull jodurpar/dsmongodbapi:latest
+
+# Run with standard MongoDB port
+docker run -d --name dsmongodb -p 15240:15240 jodurpar/dsmongodbapi:latest
+```
+
+#### Local Build
+```bash
+docker build -t generic-mongodb-proxy .
+```
+
+#### Custom MongoDB Configuration
+If your MongoDB is on a non-standard port (e.g., 27018), use the `MONGODB_URI` environment variable:
+
+```bash
+docker run -d \
+  --name dsmongodb \
+  -p 15240:15240 \
+  -e MONGODB_URI="mongodb://host.docker.internal:27018" \
+  jodurpar/dsmongodbapi:latest
 ```
 
 ## 📖 API Usage

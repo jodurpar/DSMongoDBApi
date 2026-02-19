@@ -21,9 +21,16 @@ A secure, high-performance proxy for MongoDB with Role-Based Access Control (RBA
    cd DSMongoDBApi/DSMongoDBApi
    npm install
    ```
-3. **Configure Environment**: Create a `.env` file or set variables:
-   - `PORT`: 15240 (default)
-   - `MONGODB_URI`: Your Mongo connection string (e.g., `mongodb://localhost:27017` or `mongodb://user:pass@host:27018`)
+3. **Configure Environment**:
+   - For local development, it is recommended to use a `.env` file. You can create one from the provided template:
+     ```bash
+     cp .env.example .env
+     ```
+   - Main variables:
+     - `MONGODB_URI`: Connection string (e.g., `mongodb://localhost:27017` or `mongodb://user:pass@host:27018`).
+     - `MONGODB_DATABASE`: Default database name.
+     - `PORT`: API port (default `15240`).
+
 4. **Compile and Run**:
    ```bash
    npm run build

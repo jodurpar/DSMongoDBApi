@@ -45,12 +45,12 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
     // 2. Register Swagger UI
     await server.register(fastifySwaggerUi, {
         routePrefix: '/docs',
-        staticCSP: true,
-        transformStaticCSP: (header) => header,
         uiConfig: {
             docExpansion: 'list',
             deepLinking: true
-        }
+        },
+        transformStaticCSP: () =>
+            "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
     });
 
     // 3. Register Authentication & RBAC

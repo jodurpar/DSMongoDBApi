@@ -184,21 +184,6 @@ export async function registerGenericRoutes(
         }
     }, controller.deleteDocuments.bind(controller));
 
-    // 4. Collections/Drop
-    server.get('/Collections/Drop', {
-        schema: {
-            summary: 'Drop Collection (Warning!)',
-            tags: ['collections'],
-            querystring: {
-                type: 'object',
-                properties: {
-                    database: { type: 'string' },
-                    collection: { type: 'string' }
-                },
-                required: ['database', 'collection']
-            }
-        }
-    }, controller.dropCollection.bind(controller));
 
     // 5. RESTful V2 routes (v1 prefix)
     server.get('/api/v1/:collection', controller.list.bind(controller));

@@ -92,25 +92,6 @@ export class CollectionController {
         }
     }
 
-    /**
-     * Legacy TestMe.md style: GET /Collections/Drop?database=...&collection=...
-     */
-    async dropCollection(request: FastifyRequest, reply: FastifyReply) {
-        const { database, collection } = request.query as any;
-        const repository = new MongoRepository<any>(this.mongodbUri, database || this.mongodbDatabase, collection);
-
-        try {
-            // Simple delete many as a 'soft' alternative or true drop if driver allows
-            const result = await repository.deleteMany({});
-            return {
-                responseCode: 200,
-                status: 'ok'
-            };
-        } catch (err) {
-            request.log.error({ err }, `Error in dropCollection`);
-            return reply.code(500).send({ error: 'Internal server error' });
-        }
-    }
 
     // --- RE-IMPLEMENTING STANDARD V2 METHODS ---
 

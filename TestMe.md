@@ -1,253 +1,174 @@
-# DSMongoDBApi
+# DSMongoDBApi V2.0 (Modern)
 
+This is the documentation for the **Generic MongoDB Data Proxy V2.0**, now running on **Fastify** and featuring a dynamic query engine and RBAC (Role-Based Access Control).
 
 ## Test Examples
 
-- To test it, simple run "node app.js". When done, you recieved this (or similar) log message 
+- To test it, simply run `npm run dev` (development) or `npm start` (production). When done, you will receive a log similar to this:
    ```javascript
-   {"name":"standard","extra":"dsMongoDBApi","hostname":"DESKTOP-Q800056","pid":11552,"level":30,"msg":"dsMongoDBApi listening at http://[::]:51234","time":"2020-09-01T12:26:21.321Z","v":0}
+   [15:30:45.123] INFO (11552): Server listening on http://0.0.0.0:15240
+   [15:30:45.124] INFO (11552): Swagger documentation available at http://localhost:15240/docs
    ```
 
 ## Run in local
- - Enter in command prompt.
- - Navigate to api src folder and then run "node app"
+ - Open your terminal.
+ - Navigate to the project root folder.
+ - Install dependencies (if not done yet): `npm install`
+ - Run in development mode: `npm run dev`
+ - Access the API at `http://localhost:15240`
 
 ## Run in docker
- - Enter in command prompt.
- - Navigate to api home folder / src and then run webpack
- - Navigate  to api home folder / dist and then run "docker build -t dsmongodb:dsmongodb . --no-cache" to build api image
- - Create and configure mongo oficial image.
- - Run "docker run -d --name dsmongodb -p 51234:51234 dsmongodb:dsmongodb" or use kitematic to run mongo image and dsmongodb image created before.
+ - Build the image from the root folder:
+   ```bash
+   npm run build
+   docker build -t generic-mongodb-proxy .
+   ```
+ - Run the container:
+   ```bash
+   docker run -d --name dsmongodb -p 15240:15240 generic-mongodb-proxy
+   ```
+   *Note: Ensure your MongoDB instance is accessible. Within Docker, you might need to use `host.docker.internal` for local MongoDB.*
 
 ### Testing in a browser
     
-- Go to your browser and navigate to http://localhost:51234/Swagger . If all are ok, you will see this screen:
- 
-![Swagger Screen](https://github.com/jodurpar/DSMongoDBApi/blob/master/BrowserSwagger.png)
+![Swagger Screen](./BrowserSwagger.png)
 
-- You don't need MongoDb to test this api. Just use TestMessages or TestMessagesAsync. Enter one message and you got your message back in response
+![TestMessages Screen](./TestMessage.jpg)
 
-![TestMessages Screen](https://github.com/jodurpar/DSMongoDBApi/blob/master/TestMessage.PNG)
+#### Call Result
+![TestMessages Result](./TestMessageResult.jpg)
 
-### Testing in Postman
+### Testing in Postman / API Client
 
-- __Run Postman__ 
-- __HealthCheck__
- ```javascript
-    localhost:51234/Health
- ```
-  - In the response body can recieve this JSON object
- ```javascript
-    {
+- **HealthCheck**
+  ```javascript
+  GET http://localhost:15240/Health
+  ```
+  - Sample Response:
+  ```javascript
+  {
     "responseCode": 200,
     "status": "Ok",
     "data": {
         "api": {
             "apiName": "dsMongoDBApi",
-            "apiVersion": "0.4.2",
-            "apiSupportedVersions": [
-                "1.0.0"
-            ], 
+            "apiVersion": "2.0.0",
+            "apiSupportedVersions": ["1.0.0"],
             "apiHost": "localhost",
-            "apiPort": "51234",
-            "apiDescription": "Demonstrating how to describe a RESTful API with Restify, MongoDb, Swagger and Bunyan logs with Elastic"
+            "apiPort": "15240",
+            "apiDescription": "Demonstrating how to describe a RESTful API with Fastify, MongoDb, Swagger and Pino logs"
         },
         "databases": [
-            {
-                "connectionName": "Translations",
-                "databaseName": "Translations",
-                "url": "mongodb://localhost:27017",
-                "status": "Ok"
-            }
+            { "connectionName": "Primary", "databaseName": "Curiosity", "url": "mongodb://localhost:27017", "status": "Ok" },
+            { "connectionName": "Primary", "databaseName": "admin", "url": "mongodb://localhost:27017", "status": "Ok" }
         ]
     }
-}
- ```
-- __For TestMessage, select GET verb and enter__
-   ```javascript
-   localhost:51234/TestMessages/This is one message
-   ```
-   - In the response body can recieve this JSON object
-   ```javascript
-    {
-    "responseCode:": 200,
+  }
+  ```
+
+- **Echo Test Message**
+  ```javascript
+  GET http://localhost:15240/TestMessages/Hello World
+  ```
+  - Response:
+  ```javascript
+  {
+    "responseCode": 200,
     "status": "Ok",
-    "data": "TestMessages: 1.0.0 Recieved: This is one message"
-    }
-   ```
-   - If there are any error, you may recieve the HTTP error. The "1.0.0" literal is de last versión of this api.
+    "data": "TestMessages: 1.0.0 Recieved: Hello World"
+  }
+  ```
+
+## Documents CRUD operations (Dynamic Queries)
+
+The V2.0 API supports dynamic routing where the `database` and `collection` are passed as query parameters.
+
+### 1. Get Documents
+Select **GET** and enter:
+```javascript
+http://localhost:15240/Documents?database=test&collection=testCollection&filter={"name":"My name"}&selectedFields={"name":1,"address":1}
+```
+*   **database**: Target MongoDB database.
+*   **collection**: Target collection.
+*   **filter**: (Optional) MongoDB JSON filter.
+*   **selectedFields**: (Optional) JSON projection (e.g., `{"name":1}`).
+
+### 2. Put (Create) Document
+Select **PUT** and enter:
+```javascript
+http://localhost:15240/Documents?database=test&collection=testCollection
+```
+Body (JSON):
+```javascript
+{
+  "name": "New Entry",
+  "address": "Street 123"
+}
+```
+
+### 3. Patch (Update) Documents
+Select **PATCH** and enter:
+```javascript
+http://localhost:15240/Documents?database=test&collection=testCollection&filter={"name":"New Entry"}
+```
+Body (JSON update):
+```javascript
+{
+  "address": "Updated Street 456"
+}
+```
+
+### 4. Delete Documents
+Select **DELETE** and enter:
+```javascript
+http://localhost:15240/Documents?database=test&collection=testCollection&filter={"name":"New Entry"}
+```
+
+## Security (RBAC)
+The API uses Role-Based Access Control. Ensure you include the necessary headers:
+- `client-authorization`: Application ID/Name.
+- `client-authentication`: Token or Secret (depending on environment config).
+- `accept-version`: `1.0.0` (for compatibility).
+
+*Example Headers:*
+```http
+client-authorization: MyWebApp
+client-authentication: app-secret-key
+accept-version: 1.0.0
+```
 
 
-- __For Documents CRUD operations__
-    - _Get documents_. For get documents you need provide database name, collection name and filter in the request
-      - database is the database id. This id will match with the id of your entry in the mongoDatabases.json file.
-      - collection is the name collection when you looking for.
-      - filter is a JSON object contains the mongodb filter structure for search data
-      - selectedFields is a JSON object contains the mongodb object to filter the fields returned (vg: { "fieldname": 1}, causes only fielName to be returned, put { "fieldname": 0}, to hide this field in the response)
-        - Example: Select GET and enter
-          ```javascript
-          localhost:51234/Documents?database=test&collection=testCollection&filter={"name":"My name" }&selectedFields= {"name":1,"address":1}
-          ```
-          You can recieve this json array:
-            ```javascript
-                [
-                    {
-                    "_id": "5b8a383fad881f6df0290fb8",
-                    "name": "My name",
-                    "address": "street X"
-                    },
-                    {
-                    "_id": "5b8a380fad881f6df0290fb7",
-                    "name": "My name",
-                    "address": "street Y"
-                    }
-                ]
-            ```
-            All the documents with name equals to "My name" are returned in one array of JSON documents.
-    _ _Put documents_. For add documents to the collection you need provide database name and collection name in the request
-      - database is the database id. This id will match with the id of your entry in the mongoDatabases.json file.
-      - collection is the name collection when you want add the document.
-      - Example: Select PUT verb and enter
-          ```javascript
-          localhost:51234/Documents?database=test&collection=testCollection
-          ```
-      - In the _body_ of the request you need enter the JSON objet to add. For example:
-         ```javascript
-            {
-            "name": "My best friend name",
-            "address": "Is my neighbour"
-            }
-        ```
-        You can recieve this JSON data:
-           ```javascript
-       
-                {
-                "name": "My best friend name",
-                "address": "Is my neighbour",
-                "_id": "5b8ac2b9d4189f7bd44375e2"
-                }
-        }
-            ```
-    - _Patch documents_. For update one or more documents you need provide database name, collection name, the filter and options value in the request
-      - database is the database id. This id will match with the id of your entry in the mongoDatabases.json file.
-      - collection is the name collection when the update document are.
-      - filter is a JSON object contains the mongodb filter structure for search data
-      - options is optional.  If set you can enter if all or only the first document matches with the filter is updated. Is set to false by default. The value may be { "multi" : "true"}
-        - Example: Select PATCH verb and enter
-         ```javascript
-         localhost:51234/Documents?database=test&collection=testCollection&filter={"name":"My best friend name" }
-         ```
-      - In the _body_ of the request you need enter the JSON objet to update. For example:
-         ```javascript
-        {
-        "address": "Another address"
-        }
-        ```
-        You can recieve this JSON data:
-        ```javascript
-         {
-               "_id": "5b8ac2b9d4189f7bd44375e2",
-               "name": "My best friend name",
-               "address": "Is my neighbour"
-        }
-        ```
-        If now you get the document can see this JSON object:
-        ```javascript
-        { 
-            "_id" : ObjectId("5b8ac2b9d4189f7bd44375e2"), 
-            "name" : "My best friend name", 
-            "address" : "Another address"
-        }
-        ```
-    - _Delete documents_ For delete one document you need provide database name, collection name and the filter in the request
-      - database is the database id. This id will match with the id of your entry in the mongoDatabases.json file.
-      - collection is the name collection when the document are.
-      - filter is a JSON object contains the mongodb filter structure for search data
-        - Example: Select DELETE verb and enter
-          ```javascript
-            localhost:51234/Documents?database=test&collection=testCollection&filter={"name":"My best friend name"}
-          ```
-          You can recieve this JSON data
-          ```javascript
-            {
-            "responseCode:": 200,
-            "status": "Ok",
-            "data": {
-                "ok": 1,
-                "n": 1
-                }
-            }
-          ```
-          If get now the document you recieve a HTTP 404 error.
+## Use the API from code 
 
-    - ___Special feature___: Drop collections. Be careful, there are not silver bullit
-    - You need provide database name, collection name in the request
-    - Example: Setlet GET verb and enter
-       ```javascript
-        http://localhost:51234/Collections/Drop?database=test&collection=testCollection
-       ```
-        You can recieve this JSON data:
-        ```javascript
-            {
-            "responseCode:": 200,
-            "status": "ok"
-            }
-        ```
-        Now your collection and data are gone definitely.
+### Angular Typescript Example (V2.0 Compatible)
+```typescript
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-## Use the api from your code 
+export class HttpclientService {
+  constructor(private http: HttpClient) {}
 
-    You need an http client to access to the api.
+  public async getData<T>(database: string, collection: string, filter: string): Promise<T> {
+    const url = `http://localhost:15240/Documents`;
+    const params = new HttpParams()
+      .set('database', database)
+      .set('collection', collection)
+      .set('filter', filter);
 
-### Angular Typescript code
-#### Get data, same aplies to all others CRUD operations, you can see the swagger example to reply
- 
-   ```javascript
-        import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+    const headers = new HttpHeaders()
+      .set('client-authorization', 'MyAngularApp')
+      .set('accept-version', '1.0.0');
 
-        export class HttpclientService {
-
-        constructor(public http: HttpClient) {
-            }
-
-        public getData<T>(urlParams: string, myParams : HttpParams = undefined) : Promise<T> {
-
-        let url = 'localhost:51234' + urlParams;
-
-        let promise = new Promise<T>((resolve, reject) => {
-
-        try {
-
-            let myheaders = new HttpHeaders();
-            myheaders.set("client-authorization", "Myapp");
-            myheaders = myheaders.append("client-authentication", "app");
-            myheaders = myheaders.append("accept-version", "1.0.0");
-
-            this.http.get(url, { headers: myheaders , params : myParams})
-                .toPromise()
-                .then(response => {
-                resolve(response as T);
-            } )
-        } catch (e) {
-        reject([]);
-        }
-        });
-        return promise;
-       }
-    }
-   ```
-
-### C# Code (same to all .NET)
-
+    return this.http.get<T>(url, { headers, params }).toPromise();
+  }
+}
+```
 
 ### Author
-
 **José Durán Pareja**
-
 * [github/jodurpar](https://github.com/jodurpar)
 
 ### License
-
-Copyright © 2020, 2020 [José Durán Pareja](https://github.com/jodurpar).
+Copyright © 2020-2026 [José Durán Pareja](https://github.com/jodurpar).
 Released under the [MIT License](./mitLicense.md).
+
 

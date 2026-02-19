@@ -1,28 +1,58 @@
 {
-  "name": "dsmongodb-api",
-  "version": "0.0.0",
-  "description": "DSMongoDBApi",
-  "main": "app.js",
-  "author": {
-    "name": "Jose Duran Pareja"
+  "name": "generic-mongodb-proxy",
+  "version": "1.0.0",
+  "description": "Generic MongoDB Data Proxy with Fastify, RBAC, and Dynamic Query Engine",
+  "main": "dist/server.js",
+  "author": "Jose Duran Pareja",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
   },
   "scripts": {
-    "build": "tsc --build",
-    "clean": "tsc --build --clean",
-    "start": "set NODE_ENV=production && node app"
-  },
-  "devDependencies": {
-    "@types/node": "^8.0.14",
-    "typescript": "^3.2.2",
-    "webpack": "^5.76.0",
-    "webpack-cli": "^5.0.1"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "docker:build": "docker build -t generic-mongodb-proxy .",
+    "docker:run": "docker run -p 3000:3000 generic-mongodb-proxy"
   },
   "dependencies": {
-    "bunyan": "^1.8.14",
-    "bunyan-elasticsearch-bulk": "^2.0.4",
-    "mongodb": "^3.5.9",
-    "restify": "^8.5.1",
-    "restify-cors-middleware": "^1.1.1",
-    "restify-swagger-jsdoc": "^3.3.0"
+    "@fastify/auth": "^4.2.0",
+    "@fastify/swagger": "^8.12.0",
+    "@fastify/swagger-ui": "^1.10.0",
+    "fastify": "^4.26.2",
+    "mongodb": "^6.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "yaml": "^2.3.4",
+    "pino": "^8.19.0",
+    "pino-pretty": "^10.3.1",
+    "dotenv": "^16.4.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "@types/jest": "^29.5.11",
+    "@types/jsonwebtoken": "^9.0.5",
+    "typescript": "^5.3.3",
+    "ts-node-dev": "^2.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0"
+  },
+  "keywords": [
+    "mongodb",
+    "proxy",
+    "fastify",
+    "rest",
+    "api",
+    "rbac",
+    "query-parser"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jodurpar/DSMongoDBApi.git"
   }
 }

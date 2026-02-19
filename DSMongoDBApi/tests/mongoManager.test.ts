@@ -42,8 +42,6 @@ describe('MongoConnectionManager', () => {
     });
 
     test('should throw error if getDb is called before connect', () => {
-        // We need to clear internal state for a fresh test if possible
-        // but since it's a singleton we'll use a unique key
         const freshUri = 'mongodb://other:27017';
         expect(() => manager.getDb(freshUri, 'otherDb')).toThrow(/not connected/);
     });

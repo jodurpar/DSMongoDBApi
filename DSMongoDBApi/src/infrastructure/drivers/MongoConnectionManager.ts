@@ -83,4 +83,19 @@ export class MongoConnectionManager {
         }
         return db;
     }
+
+    /**
+     * List all databases for a given URI.
+     */
+    async listDatabases(uri: string): Promise<string[]> {
+        let client = this.clients.get(uri);
+        if (!client) {
+            client = new MongoClient(uri);
+            await client.connect();
+            this.clients.set(uri, client);
+        }
+        const adminDb = client.db('admin');
+        const dbs = await adminDb.admin().listDatabases();
+        return dbs.databases.map(db => db.name);
+    }
 }

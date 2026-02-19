@@ -8,13 +8,17 @@ export declare class MongoRepository<T extends Document> implements IRepository<
     private readonly uri;
     private readonly databaseName;
     private readonly collectionName;
-    private db;
-    private collection;
+    private db?;
+    private collection?;
     constructor(uri: string, databaseName: string, collectionName: string);
     /**
      * Ensure the repository is connected (call this before any operation if not already connected).
      */
     connect(): Promise<void>;
+    /**
+     * Internal helper to ensure the collection is ready.
+     */
+    private ensureCollection;
     find(filter: Record<string, any>, options?: FindOptions): Promise<T[]>;
     findOne(filter: Record<string, any>, options?: FindOneOptions): Promise<T | null>;
     insertOne(document: Omit<T, '_id'>): Promise<InsertOneResult>;

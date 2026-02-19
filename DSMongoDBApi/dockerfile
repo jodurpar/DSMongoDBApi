@@ -3,9 +3,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Install ALL dependencies (including devDependencies like typescript)
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
 
+# Copy source and build
 COPY . .
 RUN npm run build
 
@@ -22,9 +24,11 @@ ENV LOG_LEVEL=info
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nodejs -u 1001
 
+# Copy ONLY built files and production dependencies
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
 COPY --from=builder --chown=nodejs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nodejs:nodejs /app/package.json ./package.json
+COPY --from=builder --chown=nodejs:nodejs /app/src/shared/config ./src/shared/config
 
 USER nodejs
 

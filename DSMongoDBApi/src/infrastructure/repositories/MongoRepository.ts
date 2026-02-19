@@ -16,8 +16,8 @@ import {
  * @typeparam T - The entity type (must have an optional _id field of type ObjectId or string).
  */
 export class MongoRepository<T extends Document> implements IRepository<T> {
-    private db: Db;
-    private collection: Collection<T>;
+    private db?: Db;
+    private collection?: Collection<T>;
 
     constructor(
         private readonly uri: string,
@@ -25,8 +25,13 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
         private readonly collectionName: string
     ) {
         const manager = MongoConnectionManager.getInstance();
-        this.db = manager.getDb(uri, databaseName);
-        this.collection = this.db.collection<T>(collectionName);
+        try {
+            // Try to get cached connection if it exists
+            this.db = manager.getDb(uri, databaseName);
+            this.collection = this.db.collection<T>(collectionName);
+        } catch (e) {
+            // Connection will be established via connect() later
+        }
     }
 
     /**
@@ -38,8 +43,19 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
         this.collection = this.db.collection<T>(this.collectionName);
     }
 
+    /**
+     * Internal helper to ensure the collection is ready.
+     */
+    private async ensureCollection(): Promise<Collection<T>> {
+        if (!this.collection) {
+            await this.connect();
+        }
+        return this.collection!;
+    }
+
     async find(filter: Record<string, any>, options?: FindOptions): Promise<T[]> {
-        const cursor = this.collection.find(this.normalizeFilter(filter));
+        const col = await this.ensureCollection();
+        const cursor = col.find(this.normalizeFilter(filter));
         if (options?.sort) {
             cursor.sort(options.sort);
         }
@@ -56,7 +72,8 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
     }
 
     async findOne(filter: Record<string, any>, options?: FindOneOptions): Promise<T | null> {
-        const cursor = this.collection.find(this.normalizeFilter(filter));
+        const col = await this.ensureCollection();
+        const cursor = col.find(this.normalizeFilter(filter));
         if (options?.sort) {
             cursor.sort(options.sort);
         }
@@ -67,7 +84,8 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
     }
 
     async insertOne(document: Omit<T, '_id'>): Promise<InsertOneResult> {
-        const result = await this.collection.insertOne(document as any);
+        const col = await this.ensureCollection();
+        const result = await col.insertOne(document as any);
         return {
             acknowledged: result.acknowledged,
             insertedId: result.insertedId,
@@ -75,7 +93,8 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
     }
 
     async insertMany(documents: Omit<T, '_id'>[]): Promise<InsertManyResult> {
-        const result = await this.collection.insertMany(documents as any[]);
+        const col = await this.ensureCollection();
+        const result = await col.insertMany(documents as any[]);
         return {
             acknowledged: result.acknowledged,
             insertedIds: Object.values(result.insertedIds),
@@ -87,8 +106,9 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
         update: Record<string, any>,
         options?: UpdateOptions
     ): Promise<UpdateResult> {
+        const col = await this.ensureCollection();
         const updateFilter: UpdateFilter<T> = { $set: update as any };
-        const result = await this.collection.updateOne(this.normalizeFilter(filter), updateFilter, {
+        const result = await col.updateOne(this.normalizeFilter(filter), updateFilter, {
             upsert: options?.upsert ?? false,
         });
         return {
@@ -105,8 +125,9 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
         update: Record<string, any>,
         options?: UpdateOptions
     ): Promise<UpdateResult> {
+        const col = await this.ensureCollection();
         const updateFilter: UpdateFilter<T> = { $set: update as any };
-        const result = await this.collection.updateMany(this.normalizeFilter(filter), updateFilter, {
+        const result = await col.updateMany(this.normalizeFilter(filter), updateFilter, {
             upsert: options?.upsert ?? false,
         });
         return {
@@ -119,7 +140,8 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
     }
 
     async deleteOne(filter: Record<string, any>): Promise<DeleteResult> {
-        const result = await this.collection.deleteOne(this.normalizeFilter(filter));
+        const col = await this.ensureCollection();
+        const result = await col.deleteOne(this.normalizeFilter(filter));
         return {
             acknowledged: result.acknowledged,
             deletedCount: result.deletedCount,
@@ -127,7 +149,8 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
     }
 
     async deleteMany(filter: Record<string, any>): Promise<DeleteResult> {
-        const result = await this.collection.deleteMany(this.normalizeFilter(filter));
+        const col = await this.ensureCollection();
+        const result = await col.deleteMany(this.normalizeFilter(filter));
         return {
             acknowledged: result.acknowledged,
             deletedCount: result.deletedCount,
@@ -135,11 +158,13 @@ export class MongoRepository<T extends Document> implements IRepository<T> {
     }
 
     async count(filter: Record<string, any>): Promise<number> {
-        return this.collection.countDocuments(this.normalizeFilter(filter));
+        const col = await this.ensureCollection();
+        return col.countDocuments(this.normalizeFilter(filter));
     }
 
     async exists(filter: Record<string, any>): Promise<boolean> {
-        const count = await this.collection.countDocuments(this.normalizeFilter(filter), { limit: 1 });
+        const col = await this.ensureCollection();
+        const count = await col.countDocuments(this.normalizeFilter(filter), { limit: 1 });
         return count > 0;
     }
 

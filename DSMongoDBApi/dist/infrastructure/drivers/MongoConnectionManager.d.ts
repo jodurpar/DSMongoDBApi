@@ -26,5 +26,9 @@ export declare class MongoConnectionManager {
      * Get a Db instance if already connected, otherwise throws.
      */
     getDb(uri: string, dbName: string): Db;
+    /**
+     * List all databases for a given URI.
+     */
+    listDatabases(uri: string): Promise<string[]>;
 }
 //# sourceMappingURL=MongoConnectionManager.d.ts.map

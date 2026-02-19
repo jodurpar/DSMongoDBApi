@@ -1,1 +1,0 @@
-{"version":3,"file":"IDocuments.d.ts","sourceRoot":"","sources":["../../../../src/api/interfaces/put/IDocuments.ts"],"names":[],"mappings":"AAGI,MAAM,WAAW,UAAU;IACvB,YAAY,CAAC,UAAU,EAAE,MAAM,EAAE,IAAI,EAAE,GAAG,GAAG,MAAM,CAAC;IACpD,iBAAiB,CAAC,UAAU,EAAE,MAAM,EAAE,IAAI,EAAE,GAAG,GAAG,OAAO,CAAC,MAAM,CAAC,CAAC;CACrE"}

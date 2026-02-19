@@ -1,1 +1,0 @@
-{"version":3,"file":"logStructures.d.ts","sourceRoot":"","sources":["../../../src/api/models/logStructures.ts"],"names":[],"mappings":"AAeA,MAAM,WAAW,aAAa;IAC1B,KAAK,EAAE,eAAe,CAAC;IACvB,GAAG,EAAE,MAAM,CAAC;IACZ,OAAO,EAAE,MAAM,CAAC;IAChB,OAAO,EAAE,MAAM,CAAC;IAChB,IAAI,EAAE,MAAM,CAAC;IACb,SAAS,EAAE,GAAG,EAAE,CAAA;CACnB"}

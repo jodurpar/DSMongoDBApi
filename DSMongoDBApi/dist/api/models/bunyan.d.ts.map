@@ -1,0 +1,1 @@
+{"version":3,"file":"bunyan.d.ts","sourceRoot":"","sources":["../../../src/api/models/bunyan.ts"],"names":[],"mappings":"AACA,qBAAa,YAAY;IACrB,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,MAAM,EAAE,GAAG,CAAC;CACf;AAED,qBAAa,MAAM;IACf,MAAM,EAAE,OAAO,CAAC;IAChB,GAAG,EAAE,YAAY,CAAC;CACrB"}

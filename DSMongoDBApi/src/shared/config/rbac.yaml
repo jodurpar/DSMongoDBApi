@@ -1,0 +1,42 @@
+# RBAC Configuration for Generic MongoDB Proxy
+# Define roles and their permissions per collection.
+# Use '*' for wildcard collection or permission.
+# Permissions: GET (read), POST (create), PUT (update), DELETE (delete), PATCH (partial update)
+# The role is extracted from the JWT token claim 'role'.
+
+roles:
+  admin:
+    - collection: "*"
+      permissions: ["*"]
+  
+  reader:
+    - collection: "users"
+      permissions: ["GET"]
+    - collection: "logs"
+      permissions: ["GET"]
+    - collection: "products"
+      permissions: ["GET"]
+  
+  editor:
+    - collection: "users"
+      permissions: ["GET", "POST", "PUT", "PATCH"]
+    - collection: "products"
+      permissions: ["GET", "POST", "PUT", "PATCH"]
+    - collection: "logs"
+      permissions: ["GET"]
+  
+  auditor:
+    - collection: "*"
+      permissions: ["GET"]
+
+# Optional: default role when no role is present in JWT (if enforce_auth is false)
+default_role: "reader"
+
+# Enforce authentication (if false, requests without valid JWT will be assigned default_role)
+enforce_auth: true
+
+# JWT configuration
+jwt:
+  secret_env: "JWT_SECRET"  # environment variable name holding the secret
+  issuer: "generic-mongodb-proxy"
+  audience: "generic-mongodb-proxy-clients"

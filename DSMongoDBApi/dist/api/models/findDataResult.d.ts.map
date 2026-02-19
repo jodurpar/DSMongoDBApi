@@ -1,0 +1,1 @@
+{"version":3,"file":"findDataResult.d.ts","sourceRoot":"","sources":["../../../src/api/models/findDataResult.ts"],"names":[],"mappings":"AACA,MAAM,MAAM,cAAc,GAAG;IACzB,QAAQ,EAAE,MAAM,CAAC;IACjB,KAAK,EAAE,MAAM,CAAC;IACd,IAAI,EAAE,MAAM,CAAC;IACb,IAAI,EAAE,MAAM,CAAA;CACf,CAAA"}

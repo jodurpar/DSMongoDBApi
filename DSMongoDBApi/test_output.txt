@@ -1,0 +1,105 @@
+﻿  console.log
+    [RBAC BOOT] AUTH_ENABLED=false
+
+      at RbacMiddleware.fromFile (src/application/middleware/rbac.ts:41:17)
+
+  console.log
+    [ROUTES] Registering routes...
+
+      at registerGenericRoutes (src/infrastructure/http/routes/genericRoutes.ts:10:13)
+
+  console.log
+    [ROUTES] Diagnostic route registered.
+
+      at registerGenericRoutes (src/infrastructure/http/routes/genericRoutes.ts:16:13)
+
+  console.log
+    [ROUTES] Routes registered complete.
+
+      at registerGenericRoutes (src/infrastructure/http/routes/genericRoutes.ts:194:13)
+
+{"level":50,"time":1771515748709,"pid":34796,"hostname":"WIN-D5TK2C9L1KG","reqId":"req-1","err":{"type":"TypeError","message":"Cannot read properties of undefined (reading 'listDatabases')","stack":"TypeError: Cannot read properties of undefined (reading 'listDatabases')\n    at Object.<anonymous> (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\infrastructure\\http\\routes\\genericRoutes.ts:71:36)\n    at preHandlerCallback (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:139:37)\n    at validationCompleted (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:123:5)\n    at preValidationCallback (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:100:5)\n    at handler (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:77:7)\n    at handleRequest (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:24:5)\n    at runPreParsing (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\route.js:613:5)\n    at next (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\hooks.js:233:9)\n    at handleResolve (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\hooks.js:250:7)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)"},"msg":"Could not list databases"}
+{"level":50,"time":1771515748724,"pid":34796,"hostname":"WIN-D5TK2C9L1KG","reqId":"req-4","err":{"type":"TypeError","message":"Cannot read properties of undefined (reading 'connect')","stack":"TypeError: Cannot read properties of undefined (reading 'connect')\n    at MongoRepository.connect (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\infrastructure\\repositories\\MongoRepository.ts:42:33)\n    at MongoRepository.ensureCollection (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\infrastructure\\repositories\\MongoRepository.ts:51:24)\n    at MongoRepository.find (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\infrastructure\\repositories\\MongoRepository.ts:57:32)\n    at CollectionController.getDocuments (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\api\\controllers\\CollectionController.ts:23:48)\n    at preHandlerCallback (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:139:37)\n    at validationCompleted (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:123:5)\n    at preValidationCallback (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:100:5)\n    at handler (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:77:7)\n    at handleRequest (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:24:5)\n    at runPreParsing (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\route.js:613:5)\n    at next (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\hooks.js:233:9)\n    at handleResolve (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\hooks.js:250:7)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)"},"msg":"Error in getDocuments"}
+{"level":50,"time":1771515748734,"pid":34796,"hostname":"WIN-D5TK2C9L1KG","reqId":"req-5","err":{"type":"TypeError","message":"Cannot read properties of undefined (reading 'connect')","stack":"TypeError: Cannot read properties of undefined (reading 'connect')\n    at MongoRepository.connect (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\infrastructure\\repositories\\MongoRepository.ts:42:33)\n    at MongoRepository.ensureCollection (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\infrastructure\\repositories\\MongoRepository.ts:51:24)\n    at MongoRepository.insertOne (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\infrastructure\\repositories\\MongoRepository.ts:87:32)\n    at CollectionController.putDocument (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\src\\api\\controllers\\CollectionController.ts:41:45)\n    at preHandlerCallback (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:139:37)\n    at validationCompleted (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:123:5)\n    at preValidationCallback (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:100:5)\n    at handler (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\handleRequest.js:77:7)\n    at C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\contentTypeParser.js:199:9\n    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)\n    at done (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\contentTypeParser.js:192:14)\n    at Parser.defaultJsonParser [as fn] (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\contentTypeParser.js:304:5)\n    at Request.onEnd (C:\\Desarrollos 2026\\Repositorios\\Apis\\DsMongoDBApi\\DSMongoDBApi\\DSMongoDBApi\\node_modules\\fastify\\lib\\contentTypeParser.js:283:27)\n    at Request.emit (node:events:508:28)\n    at endReadableNT (node:internal/streams/readable:1701:12)\n    at processTicksAndRejections (node:internal/process/task_queues:89:21)"},"msg":"Error in putDocument"}
+node.exe : FAIL tests/api.integration.test.ts
+En línea: 1 Carácter: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\Jose 
+Duran Pareja\AppD ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL tests/a 
+   pi.integration.test.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  API Integration Tests
+    ÔêÜ GET /Health should return 200 and status Ok (124 
+ms)
+    ÔêÜ GET /WhoAmI should return version info (2 ms)
+    ÔêÜ GET /TestMessages/:message should echo back (1 ms)
+    ├ù GET /Documents should return document list (8 ms)
+    ├ù PUT /Documents should create a document (4 ms)
+
+  ÔùÅ API Integration Tests ÔÇ║ GET /Documents should 
+return document list
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+    [0m [90m  97 |[39m         })[33m;[39m
+     [90m  98 |[39m
+    [31m[1m>[22m[39m[90m  99 |[39m         expect(re
+sponse[33m.[39mstatusCode)[33m.[39mtoBe([35m200[39m)
+[33m;[39m
+     [90m     |[39m                                     
+[31m[1m^[22m[39m
+     [90m 100 |[39m         [36mconst[39m payload 
+[33m=[39m [33mJSON[39m[33m.[39mparse(response[33m.
+[39mpayload)[33m;[39m
+     [90m 101 |[39m         expect([33mArray[39m[33m.
+[39misArray(payload))[33m.[39mtoBe([36mtrue[39m)[33m
+;[39m
+     [90m 102 |[39m         expect(payload[[35m0[39m]
+[33m.[39mname)[33m.[39mtoBe([32m'Test'[39m)[33m;[39
+m[0m
+
+      at Object.<anonymous> 
+(tests/api.integration.test.ts:99:37)
+
+  ÔùÅ API Integration Tests ÔÇ║ PUT /Documents should 
+create a document
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 500
+
+    [0m [90m 114 |[39m         })[33m;[39m
+     [90m 115 |[39m
+    [31m[1m>[22m[39m[90m 116 |[39m         expect(re
+sponse[33m.[39mstatusCode)[33m.[39mtoBe([35m200[39m)
+[33m;[39m
+     [90m     |[39m                                     
+[31m[1m^[22m[39m
+     [90m 117 |[39m         [36mconst[39m payload 
+[33m=[39m [33mJSON[39m[33m.[39mparse(response[33m.
+[39mpayload)[33m;[39m
+     [90m 118 |[39m         
+expect(payload[33m.[39mname)[33m.[39mtoBe([32m'New 
+Doc'[39m)[33m;[39m
+     [90m 119 |[39m         expect(payload[33m.[39m_id
+)[33m.[39mtoBe([32m'1'[39m)[33m;[39m[0m
+
+      at Object.<anonymous> 
+(tests/api.integration.test.ts:116:37)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 3 passed, 5 total
+Snapshots:   0 total
+Time:        4.344 s
+Ran all test suites matching 
+/tests\\api.integration.test.ts/i.
+Force exiting Jest: Have you considered using 
+`--detectOpenHandles` to detect async operations that 
+kept running after all tests finished?

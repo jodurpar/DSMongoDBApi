@@ -17,6 +17,9 @@ Complete transition from legacy architecture to a modern, high-performance web f
   - Added `CONTRIBUTING.md` and `NOTICE.md` based on company standards.
   - New high-resolution documentation images (`.jpg`).
 - **VS Code Optimization**: Added `.vscode` folder with debug targets, settings, and recommended extensions.
+- **Unit Testing**: Implemented a comprehensive test suite using Jest for `QueryParser` and `MongoConnectionManager`.
+- **Docker Hub Documentation**: Added `readmeHub.md` specifically for Docker Hub and enhanced main `README.md` with multi-scenario Docker instructions.
+- **Environment Management**: Improved `.env` documentation and included `.env.example` for easier local setup.
 - **Diagnostic API**: New `/WhoAmI` endpoint for version identification.
 
 ### Changed

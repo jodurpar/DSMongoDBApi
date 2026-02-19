@@ -113,10 +113,14 @@ The API expects the following headers for authorized requests:
 Permissions are defined in `src/shared/config/rbac.yaml`.
 
 ## 🧪 Examples & Testing
+ 
+ For detailed examples and postman collections, see [TestMe.md](./TestMe.md).
+ 
+## 🏛️ Architecture & Roadmap
 
-For detailed examples and postman collections, see [TestMe.md](./TestMe.md).
-
-### Author
+For a detailed technical analysis of the project's state, strengths, and future roadmap, read the [ARCHITECTURE_REVIEW.md](./DSMongoDBApi/ARCHITECTURE_REVIEW.md).
+ 
+ ### Author
 
 **José Durán Pareja**
 * [github/jodurpar](https://github.com/jodurpar)

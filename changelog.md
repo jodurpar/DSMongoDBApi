@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. The format 
 
 ### Added
 - **CORS Support**: Integrated `@fastify/cors` to enable Cross-Origin Resource Sharing. This allows web-based clients (browsers) to interact with the API securely. Configured to mirror request origins and allow standard CRUD methods and headers.
+- **Forensic Architecture Review**: Added `ARCHITECTURE_REVIEW.md` containing a deep-dive analysis of the project's strengths, critical deficiencies (RBAC resolution, validation gaps), and a 4-phase strategic roadmap for production hardening.
 
 ### Fixed
 - **Integration Test Stability**: Updated tests to handle CORS middleware registration without impacting logic.

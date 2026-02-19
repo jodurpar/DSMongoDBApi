@@ -1,6 +1,6 @@
 {
   "name": "generic-mongodb-proxy",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "Generic MongoDB Data Proxy with Fastify, RBAC, and Dynamic Query Engine",
   "main": "dist/server.js",
   "author": "Jose Duran Pareja",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
     "test": "jest",
     "lint": "eslint src --ext .ts",

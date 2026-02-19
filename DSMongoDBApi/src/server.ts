@@ -10,7 +10,7 @@ import { MongoRepository } from './infrastructure/repositories/MongoRepository';
 import { MongoConnectionManager } from './infrastructure/drivers/MongoConnectionManager';
 
 // Load environment variables
-const PORT = parseInt(process.env.PORT || '3000', 10);
+const PORT = parseInt(process.env.PORT || '15240', 10);
 const HOST = process.env.HOST || '0.0.0.0';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 const MONGODB_DATABASE = process.env.MONGODB_DATABASE || 'test';

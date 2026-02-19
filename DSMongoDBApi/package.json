@@ -15,7 +15,7 @@
     "test": "jest",
     "lint": "eslint src --ext .ts",
     "docker:build": "docker build -t generic-mongodb-proxy .",
-    "docker:run": "docker run -p 3000:3000 generic-mongodb-proxy"
+    "docker:run": "docker run -p 15240:15240 generic-mongodb-proxy"
   },
   "dependencies": {
     "@fastify/auth": "^4.2.0",

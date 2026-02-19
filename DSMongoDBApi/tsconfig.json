@@ -42,6 +42,10 @@
     "node_modules",
     "dist",
     "**/*.test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "app.ts",
+    "src/api/**/*",
+    "src/drivers/**/*",
+    "src/utilities/**/*"
   ]
 }

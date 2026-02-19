@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.4] - 2026-02-20
+
+### 🚀 Features & Security
+
+### Added
+- **CORS Support**: Integrated `@fastify/cors` to enable Cross-Origin Resource Sharing. This allows web-based clients (browsers) to interact with the API securely. Configured to mirror request origins and allow standard CRUD methods and headers.
+
+### Fixed
+- **Integration Test Stability**: Updated tests to handle CORS middleware registration without impacting logic.
+- **Docker Build Cache**: Optimized dependency installation steps for better build performance.
+
+---
+
 ## [2.0.3] - 2026-02-19
 
 ### 🔧 Build & Test Configuration

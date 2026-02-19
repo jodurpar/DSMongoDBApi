@@ -1,6 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
+import fastifyCors from '@fastify/cors';
 import fastifyAuth from '@fastify/auth';
 import pino from 'pino';
 import { registerRbac } from '../../application/middleware/rbac';
@@ -27,6 +28,13 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
     }
 
     const server = fastify({ logger: loggerOpts });
+
+    // 0. Register CORS (early)
+    await server.register(fastifyCors, {
+        origin: true, // Mirrors request origin, or '*'
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept']
+    });
 
     // 1. Register Swagger Base
     await server.register(fastifySwagger, {

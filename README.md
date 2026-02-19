@@ -9,6 +9,7 @@ A secure, high-performance proxy for MongoDB with Role-Based Access Control (RBA
 - **RBAC Security**: Granular control over who can read, write, or delete data based on application roles.
 - **Swagger Documentation**: Interactive API documentation built-in.
 - **Pino Logging**: High-speed, JSON-based logging with pretty-print option for development.
+- **CORS Support**: Ready for web browser integration with pre-configured cross-origin policies.
 - **Docker Ready**: Optimized Dockerfile for production deployment.
 
 ## ⚙️ Installation

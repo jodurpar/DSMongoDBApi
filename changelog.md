@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2026-02-19
+
+### 🐛 Bugfix
+
+### Fixed
+- **Swagger UI `ERR_SSL_PROTOCOL_ERROR`**: `staticCSP: true` in `@fastify/swagger-ui` automatically injected the `upgrade-insecure-requests` directive into the `Content-Security-Policy` response header, causing all browsers to forcibly upgrade HTTP static asset requests to HTTPS. Since the server does not terminate TLS, this resulted in `ERR_SSL_PROTOCOL_ERROR` on all Swagger UI static resources (`index.css`, `swagger-ui-bundle.js`, etc.). Fixed by removing `staticCSP: true` and replacing it with a manual CSP string via `transformStaticCSP` that retains security controls (`default-src`, `script-src`, `style-src`, `img-src`) without the offending directive.
+
+---
+
 ## [2.0.1] - 2026-02-19
+
 
 ### 🔧 Hotfix & Code Cleanup
 

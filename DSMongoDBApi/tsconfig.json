@@ -20,27 +20,11 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "src/server.ts",
-    "src/infrastructure/**/*",
-    "src/application/**/*",
-    "src/api/controllers/CollectionController.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "src/drivers",
-    "src/utilities",
-    "src/api/common",
-    "src/api/decorators",
-    "src/api/interfaces",
-    "src/api/models",
-    "src/api/routes",
-    "src/api/controllers/health",
-    "src/api/controllers/messages",
-    "src/api/controllers/connections",
-    "src/api/controllers/documents",
-    "src/api/controllers/collections",
-    "src/api/controllers/logs",
-    "src/api/controllers/swagger"
+    "tests"
   ]
 }

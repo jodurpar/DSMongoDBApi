@@ -19,6 +19,7 @@ const NODE_ENV = process.env.NODE_ENV || 'production';
 const appConfig: AppConfig = {
     port: PORT,
     host: HOST,
+    reportedHost: REPORTED_HOST,
     mongodbUri: MONGODB_URI,
     mongodbDatabase: MONGODB_DATABASE,
     rbacConfigPath: RBAC_CONFIG_PATH,
@@ -42,8 +43,8 @@ async function start() {
         // 3. Start Listening
         await server.listen({ port: PORT, host: HOST });
 
-        server.log.info(`Server listening on http://${HOST}:${PORT}`);
-        server.log.info(`Swagger documentation available at http://${HOST}:${PORT}/docs`);
+        server.log.info(`Server listening on http://${REPORTED_HOST}:${PORT}`);
+        server.log.info(`Swagger documentation available at http://${REPORTED_HOST}:${PORT}/docs`);
 
         // Graceful Shutdown
         const shutdown = async () => {

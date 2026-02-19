@@ -3,6 +3,7 @@ import pino from 'pino';
 export interface AppConfig {
     port: number;
     host: string;
+    reportedHost: string;
     mongodbUri: string;
     mongodbDatabase: string;
     rbacConfigPath: string;

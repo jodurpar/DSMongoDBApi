@@ -2,7 +2,28 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2026-02-19
+
+### 🔧 Hotfix & Code Cleanup
+
+### Fixed
+- **Legacy code removal**: Completely purged all Restify v1 remnants (`src/api/common/`, `src/api/decorators/`, `src/api/interfaces/`, `src/api/models/`, `src/api/routes/`, `src/api/controllers/health|collections|connections|documents|logs|messages|swagger/`, `src/utilities/`, `src/drivers/`). The codebase now contains exclusively the Fastify v2 architecture.
+- **RBAC bypass bug**: Removed dead code comparison `lowerUrl === '/Health'` (string was already lowercased, making the check unreachable).
+- **JSON.parse unhandled exceptions**: All `JSON.parse()` calls in `CollectionController` (getDocuments, patchDocuments, deleteDocuments) now wrapped in `try/catch` returning `400 Bad Request` with a descriptive message instead of an unhandled `500`.
+- **Dead variable `REPORTED_HOST`**: Was computed in `server.ts` but never used. Now correctly propagated through `AppConfig` → `app.ts` → `genericRoutes.ts` as the authoritative reported host for Swagger and Health endpoint.
+- **Host duplication in `genericRoutes.ts`**: Removed local `process.env` reads for `PORT`/`API_HOST_NAME` inside the route handler. Those values now flow from the config object, ensuring a single source of truth.
+- **Docker HEALTHCHECK missing**: Added `HEALTHCHECK` directive to Dockerfile so Docker/Kubernetes can correctly monitor container liveness via `GET /Health`.
+- **`tsconfig.json` over-engineered excludes**: Simplified to `"include": ["src/**/*"]` — no more manual per-directory exclusions needed since legacy code is gone.
+
+### Added
+- **Swagger Request Body for PUT and PATCH**: `PUT /Documents` and `PATCH /Documents` now declare a full `body` schema in Swagger, rendering the **Request Body** JSON editor in Swagger UI so users can input the document to insert or the fields to update directly from the browser.
+- **`RBAC_CONFIG_PATH` ENV in Dockerfile**: Added to the production stage environment to avoid relying on the default relative path at runtime.
+- **`reportedHost` in `AppConfig`**: New field propagated from `API_HOST_NAME` env var. Used in Swagger server URL and Health response for accurate host reporting in containerized environments.
+
+---
+
 ## [2.0.0] - 2026-02-19
+
 
 ### 🚀 Remastered (Major Update)
 Complete transition from legacy architecture to a modern, high-performance web framework.

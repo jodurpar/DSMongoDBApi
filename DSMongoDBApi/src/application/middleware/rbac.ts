@@ -48,7 +48,7 @@ export class RbacMiddleware {
             const lowerUrl = url.split('?')[0].toLowerCase().replace(/\/+$/, '') || '/';
 
             // 1. ABSOLUTE BYPASS (Must run before anything)
-            if (lowerUrl === '/health' || lowerUrl.startsWith('/testmessages') || lowerUrl.startsWith('/docs')) {
+            if (lowerUrl === '/health' || lowerUrl.startsWith('/docs')) {
                 return;
             }
 
@@ -90,7 +90,10 @@ export class RbacMiddleware {
     }
 
     private extractCollectionFromUrl(url: string): string | null {
-        const match = url.match(/^\/(?:api\/v\d+\/)?([^\/?]+)/);
+        // Since we only use /Documents?collection=... or similar, 
+        // the collection is usually in the query string which is NOT handled here.
+        // For /Documents, we might want to check the query string instead of the path.
+        const match = url.match(/^\/([^\/?]+)/);
         return match && match[1] ? match[1] : null;
     }
 

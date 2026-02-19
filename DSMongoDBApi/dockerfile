@@ -20,6 +20,7 @@ ENV NODE_ENV=production
 ENV PORT=15240
 ENV HOST=0.0.0.0
 ENV LOG_LEVEL=info
+ENV RBAC_CONFIG_PATH=./src/shared/config/rbac.yaml
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nodejs -u 1001
@@ -33,5 +34,8 @@ COPY --from=builder --chown=nodejs:nodejs /app/src/shared/config ./src/shared/co
 USER nodejs
 
 EXPOSE 15240
+
+HEALTHCHECK --interval=15s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget -qO- http://localhost:15240/Health || exit 1
 
 CMD ["node", "dist/server.js"]

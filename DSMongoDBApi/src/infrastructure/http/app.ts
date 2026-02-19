@@ -9,6 +9,7 @@ import { registerGenericRoutes } from './routes/genericRoutes';
 export interface AppConfig {
     port: number;
     host: string;
+    reportedHost: string;
     mongodbUri: string;
     mongodbDatabase: string;
     rbacConfigPath: string;
@@ -36,7 +37,7 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
                 version: '2.0.0',
             },
             servers: [
-                { url: `http://localhost:${config.port}`, description: 'Local Development' }
+                { url: `http://${config.reportedHost}:${config.port}`, description: 'Local Development' }
             ]
         },
     });
@@ -57,7 +58,7 @@ export async function createServer(config: AppConfig): Promise<FastifyInstance> 
     await registerRbac(server, config.rbacConfigPath);
 
     // 4. Register API Routes (BEFORE listen, within createServer)
-    await registerGenericRoutes(server, config.mongodbUri, config.mongodbDatabase);
+    await registerGenericRoutes(server, config.mongodbUri, config.mongodbDatabase, config.reportedHost, config.port);
 
     return server;
 }

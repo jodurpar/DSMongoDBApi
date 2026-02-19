@@ -5,15 +5,11 @@ import { MongoConnectionManager } from '../../drivers/MongoConnectionManager';
 export async function registerGenericRoutes(
     server: FastifyInstance,
     mongodbUri: string,
-    mongodbDatabase: string
+    mongodbDatabase: string,
+    reportedHost: string,
+    port: number
 ) {
     console.log('[ROUTES] Registering routes...');
-
-    // 0. Diagnostic Route
-    server.get('/WhoAmI', async () => {
-        return { version: '2.1.0-DIAGNOSTIC', buildDate: new Date().toISOString(), message: 'I AM THE NEW CODE' };
-    });
-    console.log('[ROUTES] Diagnostic route registered.');
 
     const controller = new CollectionController(mongodbUri, mongodbDatabase);
 
@@ -62,9 +58,6 @@ export async function registerGenericRoutes(
             }
         }
     }, async (request) => {
-        const port = process.env.PORT || '15240';
-        const host = process.env.API_HOST_NAME || 'localhost';
-
         const manager = MongoConnectionManager.getInstance();
         let dbList: string[] = [];
         try {
@@ -82,8 +75,8 @@ export async function registerGenericRoutes(
                     apiName: 'dsMongoDBApi',
                     apiVersion: '2.0.0',
                     apiSupportedVersions: ['1.0.0'],
-                    apiHost: host,
-                    apiPort: port,
+                    apiHost: reportedHost,
+                    apiPort: String(port),
                     apiDescription: 'Demonstrating how to describe a RESTful API with Fastify, MongoDb, Swagger and Pino logs'
                 },
                 databases: dbList.map(name => ({
@@ -96,29 +89,7 @@ export async function registerGenericRoutes(
         };
     });
 
-    // Compatibility redirect
-    server.get('/health', async (request, reply) => reply.redirect('/Health'));
-
-    // 2. TestMessages (Echo feature)
-    server.get('/TestMessages/:message', {
-        schema: {
-            description: 'Echo back a test message',
-            summary: 'Test Echo',
-            params: {
-                type: 'object',
-                properties: { message: { type: 'string' } }
-            }
-        }
-    }, async (request) => {
-        const { message } = request.params as { message: string };
-        return {
-            responseCode: 200,
-            status: 'Ok',
-            data: `TestMessages: 1.0.0 Recieved: ${message}`
-        };
-    });
-
-    // 3. Documents CRUD (Query-params based, as per TestMe.md)
+    // 2. Documents CRUD (Query-params based, as per TestMe.md)
     server.get('/Documents', {
         schema: {
             summary: 'Get Documents (TestMe Style)',
@@ -139,14 +110,30 @@ export async function registerGenericRoutes(
     server.put('/Documents', {
         schema: {
             summary: 'Add Document (TestMe Style)',
+            description: 'Inserts a new document into the specified collection. The request body is the JSON document to insert.',
             tags: ['documents'],
             querystring: {
                 type: 'object',
                 properties: {
-                    database: { type: 'string' },
-                    collection: { type: 'string' }
+                    database: { type: 'string', description: 'Target database name' },
+                    collection: { type: 'string', description: 'Target collection name' }
                 },
                 required: ['database', 'collection']
+            },
+            body: {
+                type: 'object',
+                description: 'The JSON document to insert. Any valid JSON object is accepted.',
+                additionalProperties: true
+            },
+            response: {
+                200: {
+                    description: 'Document inserted successfully',
+                    type: 'object',
+                    properties: {
+                        _id: { type: 'string', description: 'The generated ObjectId of the new document' }
+                    },
+                    additionalProperties: true
+                }
             }
         }
     }, controller.putDocument.bind(controller));
@@ -154,16 +141,32 @@ export async function registerGenericRoutes(
     server.patch('/Documents', {
         schema: {
             summary: 'Update Documents (TestMe Style)',
+            description: 'Updates documents matching the filter. The request body is the $set update object. Add `options={"multi":"true"}` to update all matching documents.',
             tags: ['documents'],
             querystring: {
                 type: 'object',
                 properties: {
-                    database: { type: 'string' },
-                    collection: { type: 'string' },
-                    filter: { type: 'string' },
-                    options: { type: 'string' }
+                    database: { type: 'string', description: 'Target database name' },
+                    collection: { type: 'string', description: 'Target collection name' },
+                    filter: { type: 'string', description: 'JSON filter object (URL-encoded). Example: {"_id":"..."} ' },
+                    options: { type: 'string', description: 'JSON options object. Use {"multi":"true"} to update all matches.' }
                 },
                 required: ['database', 'collection']
+            },
+            body: {
+                type: 'object',
+                description: 'Fields to update ($set). Any valid JSON object with the fields to modify.',
+                additionalProperties: true
+            },
+            response: {
+                200: {
+                    description: 'Update result',
+                    type: 'object',
+                    properties: {
+                        acknowledged: { type: 'boolean' }
+                    },
+                    additionalProperties: true
+                }
             }
         }
     }, controller.patchDocuments.bind(controller));
@@ -183,13 +186,6 @@ export async function registerGenericRoutes(
             }
         }
     }, controller.deleteDocuments.bind(controller));
-
-
-    // 5. RESTful V2 routes (v1 prefix)
-    server.get('/api/v1/:collection', controller.list.bind(controller));
-    server.post('/api/v1/:collection', controller.create.bind(controller));
-    server.put('/api/v1/:collection/:id', controller.update.bind(controller));
-    server.delete('/api/v1/:collection/:id', controller.delete.bind(controller));
 
     console.log('[ROUTES] Routes registered complete.');
 }

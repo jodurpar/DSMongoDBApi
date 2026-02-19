@@ -33,11 +33,6 @@ This is the documentation for the **Generic MongoDB Data Proxy V2.0**, now runni
     
 ![Swagger Screen](./BrowserSwagger.jpg)
 
-![TestMessages Screen](./TestMessage.jpg)
-
-#### Call Result
-![TestMessages Result](./TestMessageResult.jpg)
-
 ### Testing in Postman / API Client
 
 - **HealthCheck**
@@ -63,19 +58,6 @@ This is the documentation for the **Generic MongoDB Data Proxy V2.0**, now runni
             { "connectionName": "Primary", "databaseName": "admin", "url": "mongodb://localhost:27017", "status": "Ok" }
         ]
     }
-  }
-  ```
-
-- **Echo Test Message**
-  ```javascript
-  GET http://localhost:15240/TestMessages/Hello World
-  ```
-  - Response:
-  ```javascript
-  {
-    "responseCode": 200,
-    "status": "Ok",
-    "data": "TestMessages: 1.0.0 Recieved: Hello World"
   }
   ```
 
@@ -170,5 +152,3 @@ export class HttpclientService {
 ### License
 Copyright © 2020-2026 [José Durán Pareja](https://github.com/jodurpar).
 Released under the [MIT License](./mitLicense.md).
-
-

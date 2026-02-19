@@ -36,9 +36,9 @@ A secure, high-performance proxy for MongoDB with Role-Based Access Control (RBA
 
 ### Running with Docker
 
-You can build the image locally or pull the official image from Docker Hub.
+You can pull the official image from Docker Hub or build it locally.
 
-#### Using Docker Hub
+#### 1. Using Docker Hub (Recommended)
 ```bash
 docker pull jodurpar/dsmongodbapi:latest
 
@@ -46,13 +46,18 @@ docker pull jodurpar/dsmongodbapi:latest
 docker run -d --name dsmongodb -p 15240:15240 jodurpar/dsmongodbapi:latest
 ```
 
-#### Local Build
+#### 2. Local Build
+If you want to build the image yourself:
 ```bash
+# Build the image
 docker build -t generic-mongodb-proxy .
+
+# Run the local image
+docker run -d --name dsmongodb -p 15240:15240 generic-mongodb-proxy
 ```
 
 #### Custom MongoDB Configuration
-If your MongoDB is on a non-standard port (e.g., 27018), use the `MONGODB_URI` environment variable:
+In either case, if your MongoDB is on a non-standard port (e.g., 27018) or a different host, use the `MONGODB_URI` environment variable:
 
 ```bash
 docker run -d \

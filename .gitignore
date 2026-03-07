@@ -9,6 +9,7 @@
 /tmp
 /out-tsc
 *.js
+resumen*.md
 
 # User-specific files
 *.rsuser

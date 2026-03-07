@@ -1,0 +1,19 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/node_modules": true,
+        "dist": false // Keep dist visible but maybe dimmed
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "dist": true
+    },
+    "typescript.preferences.importModuleSpecifier": "non-relative"
+}

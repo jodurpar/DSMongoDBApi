@@ -1,140 +1,131 @@
-# DSMongoDBApi
+# DSMongoDBApi V2.0 (Fastify)
 
+A secure, high-performance proxy for MongoDB with Role-Based Access Control (RBAC) and dynamic query parsing. Now upgraded to Fastify for extreme performance and modern OpenAPI/Swagger support.
 
-## Why.
+## 🚀 Key Features
 
--    This is one of my api/microservice projects in Typescript. 
--    I'm write code for many years and, although one day I was good at writing, now, over the years, I am comfortable detecting needs and proposing solutions to common problems, in computer science or in life itself.
--    In this set of apis, I have not paid too much attention to the details. There are many and very good professionals who will, surely, much better than me.
--    My intention, always has been, is to create a prototype with a simple idea that allows others to develop it. Something similar to a proof of concept.
--    This is the first of a series of projects that I will put in gitgub at everyone's disposal:
+- **Fastify Core**: Significant performance improvements over legacy versions.
+- **Dynamic Queries**: Access any database and collection using query parameters.
+- **RBAC Security**: Granular control over who can read, write, or delete data based on application roles.
+- **Swagger Documentation**: Interactive API documentation built-in.
+- **Pino Logging**: High-speed, JSON-based logging with pretty-print option for development.
+- **CORS Support**: Ready for web browser integration with pre-configured cross-origin policies.
+- **Docker Ready**: Optimized Dockerfile for production deployment.
 
-     - Mongo's api (the first one)
-     - DSDeviceDetect api
-     - Translations api
-     - SqlServer api
-     - MySql API
+## ⚙️ Installation
 
-And finally, in this first phase, Charly's Api.
-Throughout these months, I will go up and complete some of them.
+### Local Development
 
-Some of this code are experimental. I enjoy to learn new techniques and concepts for me trying to understand 
-what is done in each of the phases so I can explain it later with an example. This is the case of this api.
-
-I know, I know. Comments are missing lack of documentation, the api is not complete ... 
-This is deliberate because I do not intend to make a finished commercial product. This is a template that serves as a base 
-and learning to those who, like me, want to start working with nodejs / typescript projects.
-
-## Install
-
-### In command prompt
-
-- Clone this project
-- Run npm install
-- Compile Typescript
-- Run node app.js
-
-### In visual studio 2019
-
-- Clone this project
-- To run and debug in visual studio environments, remove "outDir" line of "compilerOptions" element in tsconfig.json file.
-- Type F5 or start debugging
-
-
-### Webpack
-
-- Add "outDir" to tsconfig.json at "compilerOptions" element.   
-   ```javascript
-    "outDir": "./dist",
+1. **Clone the repository**
+2. **Install dependencies**:
+   ```bash
+   cd DSMongoDBApi/DSMongoDBApi
+   npm install
    ```
-- Run webpack in the dist folder command prompt. This make a /dist folder with DsMongoDBApi.js file.
-- At command prompt: webpack --config=webpack.config.js
+3. **Configure Environment**:
+   - For local development, it is recommended to use a `.env` file. You can create one from the provided template:
+     ```bash
+     cp .env.example .env
+     ```
+   - Main variables:
+     - `MONGODB_URI`: Connection string (e.g., `mongodb://localhost:27017` or `mongodb://user:pass@host:27018`).
+     - `MONGODB_DATABASE`: Default database name.
+     - `PORT`: API port (default `15240`).
 
-### Docker container.
+4. **Testing**:
+   - Run unit tests using Jest:
+     ```bash
+     npm test
+     ```
 
-- There are a docker file in the root folder. Run docker build to make a docker image. 
-- Build docker image: docker build -t dsmongodbapi:latest .
-- Create container either portainer, kitematic or another docker tool
-- Run container
-
-## Uninstall
-
-- Remove solution.
-- Remode docker container and images.
-
-## Usage
-
-- Run swagger from this api
-  - localhost:51234
-  
-  ![Swagger Screen](https://github.com/jodurpar/DSMongoDBApi/blob/master/BrowserSwagger.png)
-
-- None endpoint are set. Before use it, set the databases conection with the api calls localhost:51234/connection or /connections with 
-   #### Single database
-    ```javascript
-    {"test": "url": "mongodb://localhost:27017", "type": "MongoDb" , "user" : "your user", "password": "your password", "encrypted" : false}
+5. **Compile and Run**:
+   ```bash
+   npm run build
+   npm start
    ```
-    or
-   #### Multiple databases
-   ```javascript
-    [
-    {"test": "url": "mongodb://localhost:27017", "type": "MongoDb" , "user" : "your user", "password": "your password", "encrypted" : false}
-    {"test1": "url": "mongodb://localhost:27017", "type": "MongoDb" , "user" : "your user", "password": "your password", "encrypted" : false}    
-    ]
+   Or use development mode with auto-reload:
+   ```bash
+   npm run dev
    ```
->     
-    > "test" is the name of your personal connection, 
-    > url is de database connection string and 
-    > type must be "MongoDB"
-    > user (not implemented now) reserved for authenticated adatabase access.
-    > password (not implemented now) reserved for authenticated adatabase access.
-    > encrypted (not implemented now) reserved for authenticated adatabase access. If user and password are encrypted set to true.
 
-- Configure mongoDatabases.json at root to add your databases
-  - Remove existing Json data and add your own data
-   ```javascript
-    "test": { "url": "mongodb://localhost:27017", "type": "MongoDb" , "user" : "your user", "password": "your password", "encrypted" : false}
-   ```
->     
-    > "test" is the name of your personal connection, 
-    > url is de database connection string and 
-    > type must be "MongoDB"
-    > user (not implemented now) reserved for authenticated adatabase access.
-    > password (not implemented now) reserved for authenticated adatabase access.
-    > encrypted (not implemented now) reserved for authenticated adatabase access. If user and password are encrypted set to true.
+### Running with Docker
 
-- Run "node app.js" in to cloned directory once typescript are compiled.
-  - In adiction, you can overload the default api values set in apiData.json by enter this args in command line
-    - --a, --apidata : alternate apiData.json file
-    - --h, --host : alternate host name
-    - --p, --port : alternate port number
-    - --d, --description: alternate api description
-    - --n, --name: alternate api name
-    - --l, --loglevel: set logs level : one of these "trace, debug, info, warn, error, fatal"
-    - --g, --logtype: set logs type: "c" for console, "e" for elastic
-    - --s, --statistics: true or false
+You can pull the official image from Docker Hub or build it locally.
 
-- The api was configurate to run in localhost:51234, but can be changed editing  the file /src/api/common/apiData.ts
+#### 1. Using Docker Hub (Recommended)
+```bash
+docker pull jodurpar/dsmongodbapi:latest
 
-- If you want to build another break version (example another 2.0.0 version) simple copy and paste V1 to V2 folder and change all the references from V1 to V2 inside the files in the V2 folder.
-  > Also you need to add all api200 references where api100 references are used. This version only take care of the first number, because only mayor released are used.  
-  > 
+# Run with standard MongoDB port
+docker run -d --name dsmongodb -p 15240:15240 jodurpar/dsmongodbapi:latest
+```
 
+#### 2. Local Build
+If you want to build the image yourself:
+```bash
+# Build the image
+docker build -t generic-mongodb-proxy .
 
-## Test Examples
+# Run the local image
+docker run -d --name dsmongodb -p 15240:15240 generic-mongodb-proxy
+```
 
-* [TestExamples](https://github.com/jodurpar/DSMongoDBApi/blob/master/TestMe.md)
+#### Custom MongoDB Configuration
+In either case, if your MongoDB is on a non-standard port (e.g., 27018) or a different host, use the `MONGODB_URI` environment variable:
 
-### Author
+```bash
+docker run -d \
+  --name dsmongodb \
+  -p 15240:15240 \
+  -e MONGODB_URI="mongodb://host.docker.internal:27018" \
+  jodurpar/dsmongodbapi:latest
+```
 
-**Jos� Dur�n Pareja**
+## 📖 API Usage
 
+### Interactive Documentation (Swagger)
+
+Once the API is running, access the interactive docs at:
+`http://localhost:15240/docs`
+
+![Swagger Screen](./BrowserSwagger.jpg)
+
+### Core Endpoints
+
+#### 1. Health & Diagnostics
+- **GET** `/Health`: Returns API status and list of available MongoDB databases.
+- **GET** `/WhoAmI`: Returns version and build metadata.
+
+#### 2. Documents CRUD (Dynamic)
+Access documents by specifying `database` and `collection` in the query string.
+
+- **GET** `/Documents?database={db}&collection={coll}&filter={json}`
+- **PUT** `/Documents?database={db}&collection={coll}` (Body: JSON)
+- **PATCH** `/Documents?database={db}&collection={coll}&filter={json}` (Body: JSON update)
+- **DELETE** `/Documents?database={db}&collection={coll}&filter={json}`
+
+### 🔐 Security & RBAC
+
+The API expects the following headers for authorized requests:
+- `client-authorization`: Application name (used as role in RBAC).
+- `client-authentication`: (Optional) Secret token validation.
+
+Permissions are defined in `src/shared/config/rbac.yaml`.
+
+## 🧪 Examples & Testing
+ 
+ For detailed examples and postman collections, see [TestMe.md](./TestMe.md).
+ 
+## 🏛️ Architecture & Roadmap
+
+For a detailed technical analysis of the project's state, strengths, and future roadmap, read the [ARCHITECTURE_REVIEW.md](./DSMongoDBApi/ARCHITECTURE_REVIEW.md).
+ 
+ ### Author
+
+**José Durán Pareja**
 * [github/jodurpar](https://github.com/jodurpar)
 
 ### License
 
-Copyright � 2020, 2020 [Jos� Dur�n Pareja](https://github.com/jodurpar).
+Copyright © 2020-2026 [José Durán Pareja](https://github.com/jodurpar).
 Released under the [MIT License](./mitLicense.md).
-
-
-
